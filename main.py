@@ -1,4 +1,5 @@
 import os
+import asyncio
 import traceback
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -157,6 +158,7 @@ async def scan_label(file: UploadFile = File(...)):
     Accepts an uploaded image file, joins OCR detected text into a single string,
     extracts mandatory fields (MRP, Net Quantity, Mfg Date, and other Legal Metrology fields),
     evaluates compliance, maps bounding box coordinates for AR overlay, and returns JSON.
+    Executes in a worker thread via asyncio.to_thread to keep Uvicorn event loop completely unblocked.
     """
     if not file.filename:
         raise HTTPException(status_code=400, detail="No file uploaded or missing filename.")
@@ -167,26 +169,16 @@ async def scan_label(file: UploadFile = File(...)):
         if not image_bytes:
             raise HTTPException(status_code=400, detail="Uploaded file is empty.")
 
-        # 2. Get image dimensions for AR overlay scaling
-        img_arr = load_image(image_bytes)
-        img_h, img_w = img_arr.shape[:2]
-
-        # 3. Run OCR & join all detected text into one string (reusing img_arr)
-        full_text, raw_boxes = extract_text(img_arr)
-        raw_text = " ".join([box[1] for box in raw_boxes]) if raw_boxes else full_text
-
-        # 4. Extract all Legal Metrology fields
-        extracted_fields = extract_all_fields(raw_text)
-
-        # 5. Check compliance and generate field report
-        report = check_compliance(extracted_fields)
-
-        # 6. Map bounding boxes for AR overlay
-        field_locations = find_field_boxes(report, raw_boxes, img_w, img_h)
-
-        # 7. Return JSON with 'raw_text', 'report', 'image_meta', and 'field_locations'
-        return JSONResponse(
-            content={
+        # 2. Synchronous OCR pipeline executed in non-blocking worker thread
+        def run_ocr_pipeline(b):
+            img_arr = load_image(b)
+            img_h, img_w = img_arr.shape[:2]
+            full_text, raw_boxes = extract_text(img_arr)
+            raw_text = " ".join([box[1] for box in raw_boxes]) if raw_boxes else full_text
+            extracted_fields = extract_all_fields(raw_text)
+            report = check_compliance(extracted_fields)
+            field_locations = find_field_boxes(report, raw_boxes, img_w, img_h)
+            return {
                 "raw_text": raw_text,
                 "report": report,
                 "image_meta": {
@@ -195,7 +187,9 @@ async def scan_label(file: UploadFile = File(...)):
                 },
                 "field_locations": field_locations
             }
-        )
+
+        result = await asyncio.to_thread(run_ocr_pipeline, image_bytes)
+        return JSONResponse(content=result)
 
     except HTTPException:
         raise
