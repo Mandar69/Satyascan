@@ -3329,41 +3329,194 @@
     }
 
     function generateChatbotResponse(q, isHindi) {
-      const qLower = q.toLowerCase();
+      const qLower = q.toLowerCase().trim();
 
-      if (qLower.includes('9') || qLower.includes('mandatory') || qLower.includes('अनिवार्य') || qLower.includes('declarations')) {
-        return isHindi 
-          ? "विधिक मापविज्ञान नियम 6 के तहत 9 अनिवार्य घोषणाएं हैं: 1. वस्तु का नाम, 2. निर्माता का नाम व पता, 3. शुद्ध मात्रा, 4. निर्माण तिथि (MFD/PKD), 5. अधिकतम खुदरा मूल्य (MRP), 6. उपभोक्ता सहायता (Helpline & Email), 7. इकाई विक्रय मूल्य (USP), 8. उत्पत्ति देश, 9. आयाम / टुकड़ों की संख्या।"
-          : "Under Rule 6 of the Legal Metrology (Packaged Commodities) Rules, 2011, the 9 mandatory declarations are: 1. Generic Commodity Name, 2. Manufacturer/Packer Address, 3. Net Quantity in metric units, 4. Date of Manufacture/Packing, 5. MRP (inclusive of all taxes), 6. Consumer Care details (Helpline/Email), 7. Unit Sale Price (USP), 8. Country of Origin, 9. Item Count / Dimensions.";
-      }
-
-      if (qLower.includes('usp') || qLower.includes('unit sale') || qLower.includes('इकाई') || qLower.includes('प्रति ग्राम')) {
+      // ── GREETINGS ────────────────────────────────────────────────────────────
+      if (/^(hi|hello|hey|namaste|नमस्ते|हेलो|हाय|good morning|good evening|good afternoon|सुप्रभात|नमस्कार)/.test(qLower)) {
         return isHindi
-          ? "नियम 6(11) के अनुसार 100 ग्राम/मिली से अधिक वजन वाले पैकेट पर प्रति ग्राम या प्रति मिली मूल्य (उदा. Rs. 0.25/g) लिखना अनिवार्य है जिससे उपभोक्ता विभिन्न ब्रांड्स की तुलना कर सकें।"
-          : "Rule 6(11) mandates Unit Sale Price (USP) in Rs. per g or ml for packages >100g/100ml. This ensures transparent cost comparison for consumers across differently sized packaging.";
+          ? "नमस्ते! 🙏 मैं सत्य एआई हूँ। आप मुझसे Legal Metrology नियम 6, MRP, शुद्ध मात्रा, निर्माण तिथि, Country of Origin, USP, उपभोक्ता सहायता, या किसी भी अनुपालन नियम के बारे में पूछ सकते हैं।"
+          : "Hello! 👋 I'm Satya AI, your Legal Metrology compliance assistant. Ask me about Rule 6 declarations, MRP rules, Net Quantity, Manufacturing Dates, USP, Consumer Care, Country of Origin, or penalties under the Legal Metrology Act 2009!";
       }
 
-      if (qLower.includes('mrp') || qLower.includes('price') || qLower.includes('मूल्य') || qLower.includes('टैक्स')) {
+      // ── HOW ARE YOU / WHAT CAN YOU DO ────────────────────────────────────────
+      if (qLower.includes('how are you') || qLower.includes('what can you do') || qLower.includes('help') || qLower.includes('क्या कर सकते') || qLower.includes('मदद')) {
         return isHindi
-          ? "एमआरपी को 'MRP Rs. XX.XX (सभी करों सहित / incl. of all taxes)' के रूप में घोषित किया जाना चाहिए। अलग से टैक्स जोड़ना या स्टीकर चिपकाकर दाम बढ़ाना गैरकानूनी है।"
-          : "MRP must be stated explicitly as 'MRP Rs. XX.XX (incl. of all taxes)'. Charging above MRP or affixing unauthorized higher price stickers is a punishable offence under Section 36.";
+          ? "मैं ठीक हूँ, धन्यवाद! 😊 मैं आपकी इन विषयों में मदद कर सकता हूँ: MRP नियम, शुद्ध मात्रा, निर्माण तिथि, Country of Origin, USP, उपभोक्ता सहायता, नमूना उल्लंघन नोटिस, और नियम 6 की 9 अनिवार्य घोषणाएं।"
+          : "I'm great, thanks! 😊 I can help you with: MRP declaration rules, Net Quantity requirements, Manufacturing/Expiry Dates, Country of Origin, Unit Sale Price (USP), Consumer Care details, Rule 6 compliance checks, penalties for violations, and how to file consumer complaints!";
       }
 
-      if (qLower.includes('penalty') || qLower.includes('दंड') || qLower.includes('section 36') || qLower.includes('fine') || qLower.includes('सजा')) {
+      // ── WHAT IS SATYASCAN ────────────────────────────────────────────────────
+      if (qLower.includes('satyascan') || qLower.includes('satya') || qLower.includes('what is this') || qLower.includes('यह क्या है') || qLower.includes('एप')) {
         return isHindi
-          ? "विधिक मापविज्ञान अधिनियम 2009 की धारा 36(1) के अनुसार गैर-अनुपालक पैकेजिंग पर प्रथम अपराध पर ₹25,000 तक, द्वितीय अपराध पर ₹50,000 तक, और बार-बार उल्लंघन पर ₹1,00,000 तक जुर्माना या 1 वर्ष की जेल हो सकती है।"
-          : "Under Section 36(1) of the Legal Metrology Act, 2009, non-compliant packaging is punishable with fines up to ₹25,000 for first offence, ₹50,000 for second offence, and up to ₹1,00,000 or imprisonment up to 1 year for subsequent violations.";
+          ? "SatyaScan एक AI-संचालित प्री-पैकेज्ड वस्तु अनुपालन स्कैनर है जो उत्पाद लेबल की फोटो स्कैन करके Legal Metrology नियम 6 के 9 मापदंडों की जाँच करता है — MRP, शुद्ध मात्रा, निर्माता विवरण, तिथि, Country of Origin, आदि।"
+          : "SatyaScan is an AI-powered Pre-Packaged Commodity Compliance Scanner. It analyzes product label photos and verifies all 9 mandatory declarations under Legal Metrology Rule 6 — including MRP, Net Quantity, Manufacturer details, Manufacturing Date, Country of Origin, USP, and Consumer Care.";
       }
 
-      if (qLower.includes('origin') || qLower.includes('देश') || qLower.includes('उत्पत्ति') || qLower.includes('import')) {
+      // ── RULE 6 ───────────────────────────────────────────────────────────────
+      if (qLower.includes('rule 6') || qLower.includes('नियम 6') || qLower.includes('6(1)') || qLower.includes('packaged commodit')) {
         return isHindi
-          ? "नियम 6(1)(g) के अनुसार हर पैकेज पर निर्माण का देश (उदा. 'Country of Origin: India') साफ अक्षरों में लिखना जरूरी है।"
-          : "Rule 6(1)(g) requires the Country of Origin to be prominently declared on all domestic and imported consumer commodities.";
+          ? "नियम 6, Legal Metrology (Packaged Commodities) Rules 2011 का मुख्य प्रावधान है। इसके अंतर्गत हर प्री-पैकेज्ड वस्तु पर 9 अनिवार्य जानकारी होनी चाहिए: वस्तु का नाम, निर्माता का पता, शुद्ध मात्रा, MFD/PKD तिथि, MRP, उपभोक्ता हेल्पलाइन, USP, Country of Origin, और आयाम/टुकड़ों की संख्या।"
+          : "Rule 6 under the Legal Metrology (Packaged Commodities) Rules, 2011 is the core compliance rule. It mandates 9 declarations on every pre-packaged commodity: Generic Name, Manufacturer Address, Net Quantity, MFD/PKD Date, MRP incl. taxes, Consumer Helpline, Unit Sale Price (USP), Country of Origin, and Item Count/Dimensions.";
       }
 
-      return isHindi
-        ? "सत्य एआई विधिक मापविज्ञान (पैकेज्ड कमोडिटीज) नियमावली 2011 के अनुसार पैकेजिंग लेबल का सत्यापन करता है। आप एमआरपी, विनिर्माण तिथि, शुद्ध मात्रा, या किसी भी नियम पर प्रश्न पूछ सकते हैं।"
-        : "Satya AI conducts compliance verifications under the Legal Metrology (Packaged Commodities) Rules, 2011. You can ask about MRP rules, Net Quantity metric requirements, USP calculation, or penal consequences.";
+      // ── 9 MANDATORY DECLARATIONS ─────────────────────────────────────────────
+      if (qLower.includes('9') || qLower.includes('mandatory') || qLower.includes('अनिवार्य') || qLower.includes('declarations') || qLower.includes('घोषणाएं') || qLower.includes('required')) {
+        return isHindi
+          ? "नियम 6 के तहत 9 अनिवार्य घोषणाएं: 1️⃣ वस्तु का सामान्य नाम, 2️⃣ निर्माता/पैकर का पूरा पता, 3️⃣ शुद्ध मात्रा (मीट्रिक इकाई में), 4️⃣ निर्माण/पैकिंग तिथि (MFD/PKD), 5️⃣ MRP (सभी करों सहित), 6️⃣ उपभोक्ता सहायता (हेल्पलाइन + ईमेल), 7️⃣ इकाई विक्रय मूल्य (USP), 8️⃣ उत्पत्ति देश, 9️⃣ आयाम / टुकड़ों की संख्या।"
+          : "The 9 mandatory declarations under Rule 6: 1️⃣ Generic Commodity Name, 2️⃣ Manufacturer/Packer full address, 3️⃣ Net Quantity in metric units, 4️⃣ Manufacturing/Packing Date (MFD/PKD), 5️⃣ MRP inclusive of all taxes, 6️⃣ Consumer Care (Helpline + Email), 7️⃣ Unit Sale Price (USP) per g/ml, 8️⃣ Country of Origin, 9️⃣ Item Count or Dimensions.";
+      }
+
+      // ── MRP ──────────────────────────────────────────────────────────────────
+      if (qLower.includes('mrp') || qLower.includes('maximum retail') || qLower.includes('अधिकतम खुदरा') || qLower.includes('retail price')) {
+        return isHindi
+          ? "MRP (Maximum Retail Price) को 'MRP Rs. XX.XX (सभी करों सहित)' प्रारूप में स्पष्ट रूप से लिखना अनिवार्य है। MRP से अधिक मूल्य वसूलना, स्टीकर लगाकर दाम बढ़ाना, या MRP न लिखना — सभी दंडनीय अपराध हैं। बहु-स्तरीय मूल्य (dual MRP) भी अनुमति नहीं है।"
+          : "MRP (Maximum Retail Price) must be declared as 'MRP Rs. XX.XX (incl. of all taxes)' per Rule 6(1)(e). It is illegal to charge above MRP, fix additional stickers with higher prices, or display dual MRP for the same SKU. Violations are punishable under Section 36.";
+      }
+
+      // ── PRICE / OVERCHARGING ─────────────────────────────────────────────────
+      if (qLower.includes('overcharg') || qLower.includes('above mrp') || qLower.includes('extra charge') || qLower.includes('अधिक पैसा') || qLower.includes('ज्यादा पैसे') || qLower.includes('overpriced')) {
+        return isHindi
+          ? "यदि कोई दुकानदार MRP से अधिक पैसे मांगे, तो यह Legal Metrology Act 2009 की धारा 36 के तहत अपराध है। आप राज्य के Legal Metrology विभाग में शिकायत कर सकते हैं या National Consumer Helpline (1800-11-4000) पर कॉल करें।"
+          : "Charging above MRP is a punishable offence under Section 36 of the Legal Metrology Act, 2009. You can complain to the State Legal Metrology Department or call the National Consumer Helpline at 1800-11-4000. You can also file a complaint on the INGRAM portal (https://consumerhelpline.gov.in).";
+      }
+
+      // ── NET QUANTITY ─────────────────────────────────────────────────────────
+      if (qLower.includes('net quantity') || qLower.includes('net weight') || qLower.includes('शुद्ध मात्रा') || qLower.includes('weight') || qLower.includes('volume') || qLower.includes('gram') || qLower.includes('liter') || qLower.includes('मात्रा')) {
+        return isHindi
+          ? "शुद्ध मात्रा (Net Quantity) को मानक मीट्रिक इकाइयों में लिखना अनिवार्य है — ग्राम (g), किलोग्राम (kg), मिलीलीटर (ml), लीटर (l), या पीस (N)। यदि पैकेज में तरल हो तो ml/l में और ठोस हो तो g/kg में लिखें। नियम 6(1)(c) इसे अनिवार्य बनाता है।"
+          : "Net Quantity must be declared in standard metric units per Rule 6(1)(c): grams (g), kilograms (kg), millilitres (ml), litres (l), or number of pieces (N). Liquids must use volume units and solids must use weight units. Dual expression (e.g., 500g / 1.1 lb) is allowed but metric must be primary.";
+      }
+
+      // ── USP ──────────────────────────────────────────────────────────────────
+      if (qLower.includes('usp') || qLower.includes('unit sale') || qLower.includes('इकाई विक्रय') || qLower.includes('per gram') || qLower.includes('per ml') || qLower.includes('प्रति ग्राम') || qLower.includes('प्रति मिली')) {
+        return isHindi
+          ? "नियम 6(11) के अनुसार 100 ग्राम या 100 मिलीलीटर से अधिक वाले पैकेज पर इकाई विक्रय मूल्य (USP) लिखना अनिवार्य है। उदाहरण: 500g पैकेट पर 'Rs. 0.30/g' लिखना होगा। यह उपभोक्ता को विभिन्न ब्रांड्स की तुलना करने में मदद करता है।"
+          : "Unit Sale Price (USP) is mandatory under Rule 6(11) for packages exceeding 100g or 100ml. It must be expressed as price per unit (e.g., Rs. 0.30/g or Rs. 1.20/100ml). This helps consumers compare value across different pack sizes and brands.";
+      }
+
+      // ── MANUFACTURING DATE / EXPIRY ──────────────────────────────────────────
+      if (qLower.includes('date') || qLower.includes('expiry') || qLower.includes('expire') || qLower.includes('mfd') || qLower.includes('best before') || qLower.includes('use by') || qLower.includes('तिथि') || qLower.includes('एक्सपायरी') || qLower.includes('निर्माण तिथि') || qLower.includes('pkd')) {
+        return isHindi
+          ? "नियम 6(1)(d) के अनुसार निर्माण तिथि (MFD) या पैकिंग तिथि (PKD) अनिवार्य है। जल्दी खराब होने वाली वस्तुओं पर 'Best Before' या 'Use By' तिथि भी देनी होती है। तिथि का प्रारूप: MM/YYYY या DD/MM/YYYY। खाद्य पदार्थों के लिए FSSAI के अतिरिक्त नियम भी लागू होते हैं।"
+          : "Under Rule 6(1)(d), Manufacturing Date (MFD) or Packing Date (PKD) is mandatory on all pre-packaged commodities. Perishable items must also carry a 'Best Before' or 'Use By' date. Format must be clear (MM/YYYY or DD/MM/YYYY). For food items, FSSAI regulations additionally apply alongside Legal Metrology rules.";
+      }
+
+      // ── MANUFACTURER / ADDRESS ───────────────────────────────────────────────
+      if (qLower.includes('manufacturer') || qLower.includes('address') || qLower.includes('packer') || qLower.includes('निर्माता') || qLower.includes('पता') || qLower.includes('company')) {
+        return isHindi
+          ? "नियम 6(1)(a) के अनुसार निर्माता या पैकर का पूरा नाम, पंजीकृत व्यापारिक पता, और शहर/राज्य/पिन कोड लिखना अनिवार्य है। यदि वस्तु किसी और के लिए बनाई गई हो (contract manufacturing), तो दोनों का नाम और पता देना होगा।"
+          : "Rule 6(1)(a) requires the complete name and registered business address (including city, state, and PIN code) of the manufacturer or packer. For contract-manufactured products, both the brand owner's and manufacturer's name and address must be declared prominently.";
+      }
+
+      // ── CONSUMER CARE ────────────────────────────────────────────────────────
+      if (qLower.includes('consumer care') || qLower.includes('helpline') || qLower.includes('complaint') || qLower.includes('contact') || qLower.includes('उपभोक्ता') || qLower.includes('शिकायत') || qLower.includes('हेल्पलाइन') || qLower.includes('toll free')) {
+        return isHindi
+          ? "नियम 6(1)(f) के तहत हर पैकेज पर उपभोक्ता सहायता संपर्क (नाम, पता, टोल-फ्री नंबर, और ईमेल) देना अनिवार्य है। राष्ट्रीय उपभोक्ता हेल्पलाइन: 1800-11-4000 (मुफ्त)। INGRAM पोर्टल पर भी ऑनलाइन शिकायत दर्ज की जा सकती है।"
+          : "Rule 6(1)(f) mandates Consumer Care details — including name, address, toll-free number, and email — on every pre-packaged commodity. National Consumer Helpline: 1800-11-4000 (free). You can also file complaints online at the INGRAM portal (consumerhelpline.gov.in).";
+      }
+
+      // ── COUNTRY OF ORIGIN ────────────────────────────────────────────────────
+      if (qLower.includes('origin') || qLower.includes('made in') || qLower.includes('country') || qLower.includes('उत्पत्ति') || qLower.includes('मेड इन') || qLower.includes('import') || qLower.includes('china') || qLower.includes('india')) {
+        return isHindi
+          ? "नियम 6(1)(g) के अनुसार हर प्री-पैकेज्ड वस्तु पर 'Country of Origin: India' (या जहां से बनी हो) स्पष्ट रूप से लिखना जरूरी है। यह आयातित वस्तुओं के लिए विशेष रूप से अनिवार्य है।"
+          : "Under Rule 6(1)(g), Country of Origin must be prominently declared on every pre-packaged commodity (e.g., 'Country of Origin: India'). This is especially critical for imported goods. Failure to declare this is a direct violation punishable under Section 36.";
+      }
+
+      // ── PENALTY / FINE / LEGAL ACTION ────────────────────────────────────────
+      if (qLower.includes('penalty') || qLower.includes('fine') || qLower.includes('punish') || qLower.includes('section 36') || qLower.includes('jail') || qLower.includes('दंड') || qLower.includes('जुर्माना') || qLower.includes('जेल') || qLower.includes('सजा') || qLower.includes('legal action')) {
+        return isHindi
+          ? "Legal Metrology Act 2009 की धारा 36: प्रथम उल्लंघन — ₹25,000 तक जुर्माना। द्वितीय उल्लंघन — ₹50,000 तक। बार-बार उल्लंघन — ₹1,00,000 तक या 1 वर्ष की जेल। पैकेजिंग में जानबूझकर गलत जानकारी देना अधिक गंभीर अपराध है।"
+          : "Penalties under Legal Metrology Act, 2009 — Section 36: 1st offence: up to ₹25,000 fine. 2nd offence: up to ₹50,000. Subsequent offences: up to ₹1,00,000 or 1 year imprisonment. Willful misrepresentation on packaging attracts stricter penalties and legal prosecution.";
+      }
+
+      // ── FSSAI / FOOD PRODUCTS ────────────────────────────────────────────────
+      if (qLower.includes('fssai') || qLower.includes('food') || qLower.includes('खाना') || qLower.includes('खाद्य') || qLower.includes('edible') || qLower.includes('eat') || qLower.includes('nutrition')) {
+        return isHindi
+          ? "खाद्य उत्पादों पर Legal Metrology नियम 6 के साथ FSSAI नियम भी लागू होते हैं। FSSAI लाइसेंस नंबर (14 अंक), Nutritional Information (पोषण जानकारी), और Veg/Non-Veg प्रतीक चिह्न अनिवार्य हैं। FSSAI का लाइसेंस Food Safety and Standards Act 2006 के अंतर्गत आता है।"
+          : "Food products must comply with both Legal Metrology Rule 6 AND FSSAI regulations under the Food Safety and Standards Act, 2006. Additional mandatory declarations for food include: FSSAI License Number (14 digits), Nutritional Information table, Vegetarian/Non-Vegetarian symbol, and Allergen declarations.";
+      }
+
+      // ── HOW TO SCAN / USE APP ────────────────────────────────────────────────
+      if (qLower.includes('scan') || qLower.includes('how to') || qLower.includes('use') || qLower.includes('upload') || qLower.includes('camera') || qLower.includes('photo') || qLower.includes('स्कैन') || qLower.includes('कैसे') || qLower.includes('फोटो')) {
+        return isHindi
+          ? "SatyaScan उपयोग कैसे करें: 1️⃣ 'Scan' टैब पर जाएं। 2️⃣ 'Upload Label Photo' से गैलरी से फोटो चुनें, या 'Open Camera' से सीधे फोटो लें। 3️⃣ 'Verify Compliance' बटन दबाएं। 4️⃣ AI कुछ सेकंड में 9 क्षेत्रों की जाँच करके रिपोर्ट देगा। 5️⃣ रिपोर्ट PDF में डाउनलोड कर सकते हैं।"
+          : "How to use SatyaScan: 1️⃣ Go to the 'Scan' tab. 2️⃣ Click 'Upload Label Photo' to choose from gallery, or 'Open Camera' for live capture. 3️⃣ Press 'Verify Compliance'. 4️⃣ The AI will analyze all 9 mandatory fields in seconds. 5️⃣ Download the full compliance report as PDF. For best results, ensure the label is well-lit and fully visible!";
+      }
+
+      // ── BEST BEFORE / SHELF LIFE ─────────────────────────────────────────────
+      if (qLower.includes('shelf life') || qLower.includes('best before') || qLower.includes('use by') || qLower.includes('शेल्फ लाइफ') || qLower.includes('खराब')) {
+        return isHindi
+          ? "'Best Before' तिथि का अर्थ है कि उस तिथि तक उत्पाद की गुणवत्ता और स्वाद सर्वोत्तम रहेगा। 'Use By' तिथि का अर्थ है कि उस तिथि के बाद उत्पाद उपभोग के लिए सुरक्षित नहीं। एक्सपायर्ड उत्पाद बेचना दंडनीय है।"
+          : "'Best Before' means the product is at its best quality before that date but may still be safe after. 'Use By' is a safety date — consuming after this date is not recommended. Selling expired products is a punishable offence under both Legal Metrology and food safety laws.";
+      }
+
+      // ── GENERIC NAME / COMMODITY NAME ────────────────────────────────────────
+      if (qLower.includes('generic name') || qLower.includes('commodity name') || qLower.includes('product name') || qLower.includes('वस्तु का नाम') || qLower.includes('generic')) {
+        return isHindi
+          ? "नियम 6(1)(b) के अनुसार हर पैकेज पर वस्तु का सामान्य या जेनेरिक नाम (Generic Name) मुख्य डिस्प्ले पैनल पर स्पष्ट रूप से लिखना अनिवार्य है। उदाहरण: 'बिस्कुट', 'दूध', 'नमक' आदि। ब्रांड नाम से जेनेरिक नाम बड़ा या समान आकार का होना चाहिए।"
+          : "Rule 6(1)(b) requires the Generic/Common Name of the commodity to be prominently displayed on the principal display panel. Examples: 'Biscuits', 'Milk', 'Salt'. The generic name must be at least as prominent as the brand name and clearly legible from the front of the package.";
+      }
+
+      // ── STICKER / OVERPRINTING ───────────────────────────────────────────────
+      if (qLower.includes('sticker') || qLower.includes('overprint') || qLower.includes('repacking') || qLower.includes('repack') || qLower.includes('स्टीकर') || qLower.includes('दाम बदल')) {
+        return isHindi
+          ? "किसी भी प्री-पैकेज्ड वस्तु पर ऊंची कीमत का स्टीकर लगाना या मूल MRP छिपाना सख्त मना है। यह Legal Metrology Act 2009 की धारा 36 के तहत दंडनीय है। यदि कोई ऐसा करे, तो Legal Metrology विभाग को शिकायत करें।"
+          : "Affixing price stickers with higher MRP over the original, or obscuring the printed MRP, is strictly prohibited under Rule 18 and punishable under Section 36 of the Legal Metrology Act, 2009. Report such violations to the State Legal Metrology Controller's office.";
+      }
+
+      // ── WEIGHT MISMATCH / SHORT WEIGHT ───────────────────────────────────────
+      if (qLower.includes('short weight') || qLower.includes('less weight') || qLower.includes('कम वजन') || qLower.includes('मात्रा कम') || qLower.includes('cheating') || qLower.includes('धोखा')) {
+        return isHindi
+          ? "यदि किसी पैकेज में घोषित मात्रा से कम वजन हो, तो यह Legal Metrology Act का उल्लंघन है। Legal Metrology (Packaged Commodities) Rules 2011 में निर्धारित सीमा से अधिक विचलन (tolerance) की अनुमति नहीं है। ऐसी शिकायत राज्य के Legal Metrology अधिकारी को करें।"
+          : "If a package contains less than the declared net quantity beyond the permitted tolerance limit (as specified in the Second Schedule of LM(PC) Rules, 2011), it's a violation. File a complaint with the State Legal Metrology Controller or the National Consumer Helpline (1800-11-4000).";
+      }
+
+      // ── WHAT IS LEGAL METROLOGY ACT ──────────────────────────────────────────
+      if (qLower.includes('legal metrology') || qLower.includes('lm act') || qLower.includes('act 2009') || qLower.includes('विधिक मापविज्ञान') || qLower.includes('metrology')) {
+        return isHindi
+          ? "Legal Metrology Act, 2009 भारत में माप और तराजू की शुद्धता तथा पैकेज्ड वस्तुओं की उचित लेबलिंग सुनिश्चित करने वाला केंद्रीय कानून है। इसे Department of Consumer Affairs, Government of India द्वारा लागू किया जाता है। यह Standards of Weights and Measures Act 1976 की जगह आया।"
+          : "The Legal Metrology Act, 2009 is India's central law governing weights, measures, and labeling of pre-packaged commodities. Administered by the Department of Consumer Affairs, GoI, it replaced the Standards of Weights and Measures Act, 1976. It ensures consumers get accurate quantities and transparent pricing.";
+      }
+
+      // ── HOW TO COMPLAIN / WHERE TO COMPLAIN ──────────────────────────────────
+      if (qLower.includes('complain') || qLower.includes('report') || qLower.includes('where to') || qLower.includes('शिकायत कहां') || qLower.includes('कहाँ करें') || qLower.includes('authority') || qLower.includes('department')) {
+        return isHindi
+          ? "शिकायत करने के तरीके: 1️⃣ राज्य Legal Metrology विभाग में जाएं, 2️⃣ National Consumer Helpline: 1800-11-4000 (मुफ्त), 3️⃣ INGRAM पोर्टल: consumerhelpline.gov.in पर ऑनलाइन शिकायत दर्ज करें, 4️⃣ जिला उपभोक्ता फोरम में वाद दायर करें।"
+          : "Where to complain: 1️⃣ State Legal Metrology Controller's Office, 2️⃣ National Consumer Helpline: 1800-11-4000 (toll-free), 3️⃣ Online via INGRAM portal: consumerhelpline.gov.in, 4️⃣ District Consumer Forum (for disputes up to ₹1 crore), 5️⃣ State Consumer Commission (for higher amounts).";
+      }
+
+      // ── BARCODE / QR CODE ────────────────────────────────────────────────────
+      if (qLower.includes('barcode') || qLower.includes('qr code') || qLower.includes('qr') || qLower.includes('बारकोड') || qLower.includes('क्यूआर')) {
+        return isHindi
+          ? "Legal Metrology नियम 6 में Barcode या QR Code अनिवार्य नहीं है, लेकिन कई उत्पादों पर स्वेच्छा से लगाया जाता है। FSSAI ने खाद्य उत्पादों के लिए QR Code से Nutritional Info प्रदान करने की सिफारिश की है। GS1 India बारकोड मानकों का पालन करते हैं।"
+          : "Barcode or QR Code is not mandatory under Legal Metrology Rule 6, but is widely used for inventory and traceability. FSSAI recommends QR codes on food products for detailed nutritional info. GS1 India standards govern barcodes in the Indian market.";
+      }
+
+      // ── ISI / CERTIFICATION MARKS ────────────────────────────────────────────
+      if (qLower.includes('isi') || qLower.includes('bis') || qLower.includes('certification') || qLower.includes('hallmark') || qLower.includes('आईएसआई') || qLower.includes('प्रमाणन')) {
+        return isHindi
+          ? "ISI मार्क Bureau of Indian Standards (BIS) द्वारा जारी किया जाता है। कुछ उत्पादों (जैसे LPG cylinder, बिजली के उपकरण, हेलमेट) पर ISI मार्क अनिवार्य है। यह Legal Metrology से अलग है — BIS गुणवत्ता मानकों की जाँच करता है, जबकि Legal Metrology लेबलिंग और माप की जाँच करता है।"
+          : "ISI mark is issued by Bureau of Indian Standards (BIS) for products meeting quality standards. It is mandatory for certain products (LPG cylinders, electrical appliances, helmets, etc.). BIS (quality) and Legal Metrology (labeling/weight accuracy) are complementary but separate regulatory frameworks.";
+      }
+
+      // ── THANK YOU ────────────────────────────────────────────────────────────
+      if (qLower.includes('thank') || qLower.includes('thanks') || qLower.includes('धन्यवाद') || qLower.includes('शुक्रिया') || qLower.includes('okay') || qLower.includes('ok') || qLower.includes('great')) {
+        return isHindi
+          ? "आपका स्वागत है! 🙏 यदि आपके पास और कोई सवाल हो, तो बेझिझक पूछें। सत्य एआई सदा आपकी सेवा में तैयार है!"
+          : "You're welcome! 😊 Feel free to ask anything else about Legal Metrology compliance, packaging rules, or how to use SatyaScan. Happy to help!";
+      }
+
+      // ── GENERIC FALLBACK (smart, varied) ─────────────────────────────────────
+      const fallbacks = isHindi ? [
+        "मुझे खेद है, मैं इस प्रश्न को पूरी तरह नहीं समझ पाया। कृपया अधिक स्पष्ट रूप से पूछें — जैसे MRP, शुद्ध मात्रा, निर्माण तिथि, USP, या उल्लंघन दंड के बारे में।",
+        "यह विषय मेरी वर्तमान जानकारी से थोड़ा परे है। आप Legal Metrology नियम 6, MRP, Country of Origin, या शिकायत प्रक्रिया के बारे में पूछ सकते हैं।",
+        "मुझे इस पर निश्चित उत्तर देने के लिए और जानकारी चाहिए। क्या आप MRP, शुद्ध मात्रा, निर्माता विवरण, या किसी विशिष्ट नियम के बारे में पूछना चाहते हैं?"
+      ] : [
+        "I'm not quite sure about that specific question. Try asking about MRP rules, Net Quantity requirements, Manufacturing Date format, USP calculation, Country of Origin, or penalties for packaging violations!",
+        "That's a bit outside my current knowledge. I'm best at answering questions about Legal Metrology (Packaged Commodities) Rules 2011 — MRP, USP, Net Quantity, Dates, Consumer Care, and penalties.",
+        "I couldn't find a precise answer for that. You can ask me about Rule 6 declarations, how to file consumer complaints, what MRP must include, or how SatyaScan works!"
+      ];
+      return fallbacks[Math.floor(Math.random() * fallbacks.length)];
     }
 
     // =========================================================================
