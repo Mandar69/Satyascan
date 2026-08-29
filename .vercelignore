@@ -1,0 +1,10 @@
+# Ignore python backend and virtual environment files for static Vercel deployment
+requirements.txt
+*.py
+venv/
+.venv/
+__pycache__/
+Dockerfile
+.dockerignore
+railway.toml
+Procfile
