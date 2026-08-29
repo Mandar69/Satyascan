@@ -1081,7 +1081,13 @@
           <span id="langBtnText">हिन्दी</span>
         </button>
 
-        <!-- User Profile Pill -->
+        <!-- Sign In Button (when logged out) -->
+        <button type="button" class="btn-ghost" id="btnLoginNav" onclick="switchNav('auth')">
+          <i data-lucide="log-in" style="width: 14px; height: 14px;"></i>
+          <span>Sign In</span>
+        </button>
+
+        <!-- User Profile Pill (when logged in) -->
         <div class="user-pill-minimal" id="userPill">
           <div class="user-avatar-circle" id="userInitial">A</div>
           <span id="userNameDisplay">Inspector</span>
@@ -1455,13 +1461,17 @@
     const scannerStatusHint = document.getElementById('scannerStatusHint');
     const statusHintText = document.getElementById('statusHintText');
 
+    const btnLoginNav = document.getElementById('btnLoginNav');
+
     document.addEventListener('DOMContentLoaded', () => {
       applyLanguage(currentLang);
       if (currentUser && currentUser.name) {
         showUserLoggedIn(currentUser);
         switchNav('scan');
       } else {
-        switchNav('scan');
+        // Show Sign In / Register Page first when not logged in
+        if (btnLoginNav) btnLoginNav.style.display = 'inline-flex';
+        switchNav('auth');
       }
       populateRulesReference();
       loadHistory();
@@ -1496,6 +1506,7 @@
 
     function showUserLoggedIn(user) {
       userPill.style.display = 'inline-flex';
+      if (btnLoginNav) btnLoginNav.style.display = 'none';
       userNameDisplay.textContent = user.name;
       userInitial.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'A';
     }
@@ -1601,7 +1612,9 @@
       localStorage.removeItem('satyascan_user');
       currentUser = null;
       userPill.style.display = 'none';
+      if (btnLoginNav) btnLoginNav.style.display = 'inline-flex';
       showToast('Signed out.');
+      switchNav('auth');
     }
 
     // =========================================================================
