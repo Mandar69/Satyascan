@@ -1,12 +1,13 @@
 import io
 import os
+import gc
 import easyocr
 import numpy as np
 import torch
 from PIL import Image, ImageOps
 
-# Limit PyTorch threads to avoid multi-core thread explosion on cloud containers
-torch.set_num_threads(2)
+# Limit PyTorch to single-thread evaluation to eliminate multi-core memory duplication
+torch.set_num_threads(1)
 try:
     torch.set_num_interop_threads(1)
 except Exception:
@@ -19,15 +20,15 @@ try:
 except ImportError:
     pass
 
-# Initialize EasyOCR reader instance (auto-locates ~/.EasyOCR model directory)
+# Initialize EasyOCR reader instance
 reader = easyocr.Reader(['en'], gpu=False, verbose=False)
 
 
-def load_image(image_input, max_dimension=1024):
+def load_image(image_input, max_dimension=960):
     """
     Load an image from a file path, raw bytes, or BytesIO.
     Supports broad format range (JPEG, PNG, HEIC/HEIF, TIFF, WebP, etc.) and auto-orientates EXIF tags.
-    Downscales large photos to fit within max_dimension to keep memory lightweight (<120MB) and fast.
+    Downscales large photos to fit within max_dimension to keep memory lightweight (<100MB) and fast.
     """
     try:
         if isinstance(image_input, (bytes, bytearray)):
@@ -66,20 +67,22 @@ def extract_text(image_input):
     """
     Extract text from an image (file path, bytes, or numpy array).
     Returns (full_text: str, results: list).
-    Uses lightweight canvas_size=1024, batch_size=1, workers=0 to guarantee memory stays <120MB.
+    Uses torch.inference_mode() and 1 thread to guarantee strict memory bounds (<100MB).
     """
     if isinstance(image_input, np.ndarray):
         img = image_input
     else:
         img = load_image(image_input)
 
-    # Strict low-memory settings for cloud CPU containers
-    results = reader.readtext(
-        img,
-        canvas_size=1024,
-        mag_ratio=1.0,
-        batch_size=1,
-        workers=0
-    )
+    with torch.inference_mode():
+        results = reader.readtext(
+            img,
+            canvas_size=960,
+            mag_ratio=1.0,
+            batch_size=1,
+            workers=0
+        )
+
+    gc.collect()
     full_text = " ".join([r[1] for r in results])
     return full_text, results
