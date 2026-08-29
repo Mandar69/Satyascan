@@ -3,73 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SatyaScan 2.0 - Futuristic Legal Metrology Compliance Engine</title>
+  <title>SatyaScan — Truth behind every package</title>
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#070B14">
-  
-  <!-- Custom Cyber Shield Favicon (SVG) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 3L5 8.5V17.5C5 25.5 10.5 32.5 18 34.5C25.5 32.5 31 25.5 31 17.5V8.5L18 3Z' fill='%23070B14' stroke='%23F59E0B' stroke-width='2' stroke-linejoin='round'/%3E%3Cline x1='8' y1='18' x2='28' y2='18' stroke='%2306B6D4' stroke-width='1.5' stroke-dasharray='2 2' opacity='0.8'/%3E%3Cpath d='M12 18.5L16 22.5L24 14.5' stroke='%23F59E0B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#F7F6F2">
 
-  <!-- Futuristic Typography: Orbitron / Space Grotesk / Inter / Noto Sans Devanagari -->
+  <!-- Minimal Monogram Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='32' rx='8' fill='%23171717'/%3E%3Cpath d='M9 16.5L14 21.5L23 10.5' stroke='%23D97706' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Typography: Inter + Noto Sans Devanagari -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Tesseract.js for In-Browser WebAssembly OCR (100% Free • Zero Server Dependency) -->
+
+  <!-- Tesseract.js for 100% In-Browser WASM OCR -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
-  <!-- jsPDF & AutoTable for Official Legal Notice PDFs -->
+  <!-- jsPDF & AutoTable for Clean Compliance PDF Reports -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-  
-  <!-- Canvas Confetti for Celebration State -->
+
+  <!-- Confetti for Perfect Compliance State -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      /* Futuristic Cyber Palette */
-      --bg-dark: #070B14;
-      --bg-darker: #04060C;
-      --bg-surface: #0D1527;
-      --bg-card: rgba(13, 21, 39, 0.88);
-      --bg-card-hover: rgba(22, 34, 61, 0.95);
+      /* Minimalist Warm Palette */
+      --bg: #F7F6F2;
+      --bg-surface: #FFFFFF;
+      --bg-surface-subtle: #F1EFEA;
+      --bg-card: #FFFFFF;
       
-      --neon-amber: #F59E0B;
-      --neon-gold: #D4A017;
-      --neon-gold-glow: rgba(245, 158, 11, 0.35);
-      --neon-cyan: #06B6D4;
-      --neon-cyan-glow: rgba(6, 182, 212, 0.35);
-      --neon-blue: #3B82F6;
+      --text-primary: #171717;
+      --text-secondary: #6B6B6B;
+      --text-tertiary: #9E9E9E;
       
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
+      /* Sophisticated Saffron / Amber Accent */
+      --accent: #D97706;
+      --accent-hover: #B45309;
+      --accent-subtle: #FEF3C7;
+      --accent-border: #FDE68A;
       
-      --border-cyber: rgba(245, 158, 11, 0.3);
-      --border-cyan: rgba(6, 182, 212, 0.3);
-      --border-subtle: rgba(255, 255, 255, 0.1);
+      /* Refined Status Tones */
+      --status-pass: #059669;
+      --status-pass-bg: #ECFDF5;
+      --status-pass-border: #A7F3D0;
       
-      /* Reserved PASS/FAIL Indicators */
-      --status-pass: #10B981;
-      --status-pass-glow: rgba(16, 185, 129, 0.35);
-      --status-pass-bg: rgba(16, 185, 129, 0.12);
-      --status-pass-border: rgba(16, 185, 129, 0.4);
+      --status-warn: #D97706;
+      --status-warn-bg: #FFFBEB;
+      --status-warn-border: #FDE68A;
       
-      --status-fail: #EF4444;
-      --status-fail-glow: rgba(239, 68, 68, 0.35);
-      --status-fail-bg: rgba(239, 68, 68, 0.12);
-      --status-fail-border: rgba(239, 68, 68, 0.4);
+      --status-fail: #DC2626;
+      --status-fail-bg: #FEF2F2;
+      --status-fail-border: #FECACA;
+
+      --border: rgba(0, 0, 0, 0.08);
+      --border-strong: rgba(0, 0, 0, 0.16);
 
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
       --radius-full: 9999px;
-      
+
+      --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
+      --shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.08);
+
       --tr-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
-      --tr-normal: 260ms cubic-bezier(0.16, 1, 0.3, 1);
+      --tr-smooth: 280ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * {
@@ -79,203 +82,133 @@
     }
 
     body {
-      font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, sans-serif;
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 100% 50%, rgba(6, 182, 212, 0.06) 0%, transparent 45%),
-        linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
-      color: var(--text-main);
+      font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
       line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* Sci-Fi HUD Typography */
-    h1, h2, h3, h4, .brand-title, .cyber-title, .score-number {
-      font-family: 'Space Grotesk', 'Orbitron', 'Noto Sans Devanagari', sans-serif;
-      letter-spacing: -0.02em;
-    }
-
-    .font-orbitron {
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 0.06em;
     }
 
     /* Screen Transitions */
     .view-screen {
-      animation: cyberFade 0.3s ease-out;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes cyberFade {
-      from { opacity: 0; transform: translateY(14px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Offline Alert Banner */
-    .offline-banner {
-      display: none;
-      background: linear-gradient(90deg, #78350F, #92400E);
-      color: #FEF3C7;
-      padding: 8px 16px;
-      text-align: center;
-      font-size: 0.82rem;
-      font-weight: 700;
-      border-bottom: 1px solid var(--neon-amber);
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      z-index: 100;
-    }
-
-    .offline-banner.active {
-      display: flex;
-    }
-
-    /* Header Bar */
+    /* Minimal Navigation Header */
     header {
-      background: rgba(7, 11, 20, 0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+      background: rgba(247, 246, 242, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 50;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
-    .header-content {
-      max-width: 1200px;
+    .header-inner {
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 14px 24px;
+      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .brand-area {
+    .brand-logo {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
       cursor: pointer;
+      text-decoration: none;
     }
 
-    .brand-icon-wrapper {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--radius-sm);
-      background: linear-gradient(135deg, #1E293B, #0F172A);
-      border: 1.5px solid var(--neon-amber);
-      box-shadow: 0 0 14px var(--neon-gold-glow);
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--text-primary);
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .brand-icon-wrapper::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--neon-amber);
-      box-shadow: 0 0 10px var(--neon-amber);
-      animation: scanLight 2.5s infinite linear;
-    }
-
-    @keyframes scanLight {
-      0% { top: -10%; }
-      100% { top: 110%; }
-    }
-
-    .brand-title {
-      font-size: 1.45rem;
-      font-weight: 800;
       color: #FFFFFF;
+    }
+
+    .brand-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    .brand-title span {
-      background: linear-gradient(135deg, #F59E0B, #FBBF24);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hud-badge {
-      font-size: 0.65rem;
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
-      background: rgba(6, 182, 212, 0.15);
-      border: 1px solid var(--border-cyan);
-      color: var(--neon-cyan);
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.06em;
+    .brand-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
       text-transform: uppercase;
+      background: var(--bg-surface-subtle);
+      color: var(--text-secondary);
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
     }
 
-    .nav-actions {
+    /* Top Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.04);
+      padding: 4px;
+      border-radius: var(--radius-full);
+    }
+
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--tr-fast);
+    }
+
+    .nav-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-tab.active {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .header-right {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .user-pill {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      padding: 5px 14px;
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 6px 12px;
       border-radius: var(--radius-full);
-      font-size: 0.85rem;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
-    }
-
-    .user-avatar-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--neon-cyan);
-      box-shadow: 0 0 8px var(--neon-cyan);
-    }
-
-    .role-badge {
-      font-size: 0.68rem;
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .role-inspector {
-      background: rgba(245, 158, 11, 0.2);
-      border: 1px solid var(--neon-amber);
-      color: var(--neon-amber);
-    }
-
-    .role-consumer {
-      background: rgba(6, 182, 212, 0.2);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-    }
-
-    .btn-cyber-nav {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      padding: 6px 14px;
-      border-radius: var(--radius-sm);
       font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
@@ -285,1283 +218,877 @@
       transition: all var(--tr-fast);
     }
 
-    .btn-cyber-nav:hover {
-      background: rgba(245, 158, 11, 0.15);
-      border-color: var(--neon-amber);
+    .btn-ghost:hover {
+      background: #FFFFFF;
+      border-color: var(--border-strong);
+    }
+
+    .user-pill-minimal {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      padding: 4px 10px 4px 4px;
+      background: #FFFFFF;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+    }
+
+    .user-avatar-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--text-primary);
       color: #FFFFFF;
-      box-shadow: 0 0 10px var(--neon-gold-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
     }
 
     /* Main Container */
     main {
       flex: 1;
-      max-width: 1160px;
+      max-width: 920px;
       width: 100%;
       margin: 0 auto;
-      padding: 30px 20px 60px;
+      padding: 40px 20px 80px;
     }
 
-    /* =========================================================================
-       FUTURISTIC AUTH & REGISTRATION TERMINAL (PASSWORD PROTECTED)
-       ========================================================================= */
-    .auth-terminal-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid var(--border-cyber);
-      border-radius: var(--radius-lg);
-      padding: 36px 32px;
-      max-width: 480px;
-      margin: 30px auto;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.12);
-      position: relative;
-    }
-
-    /* HUD Corner Brackets */
-    .hud-corner-tl, .hud-corner-tr, .hud-corner-bl, .hud-corner-br {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border-color: var(--neon-amber);
-      pointer-events: none;
-    }
-    .hud-corner-tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
-    .hud-corner-tr { top: 8px; right: 8px; border-top: 2px solid; border-right: 2px solid; }
-    .hud-corner-bl { bottom: 8px; left: 8px; border-bottom: 2px solid; border-left: 2px solid; }
-    .hud-corner-br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-right: 2px solid; }
-
-    .terminal-header {
+    /* Hero Headline */
+    .hero-heading-area {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 36px;
     }
 
-    .terminal-shield-img {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 16px;
-      border-radius: var(--radius-md);
-      box-shadow: 0 0 24px var(--neon-gold-glow);
-      border: 1px solid var(--neon-amber);
-      object-fit: cover;
-    }
-
-    .terminal-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #FFFFFF;
-      margin-bottom: 4px;
-    }
-
-    .terminal-sub {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-    }
-
-    .auth-tab-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      background: rgba(10, 16, 30, 0.85);
-      padding: 4px;
-      border-radius: var(--radius-sm);
-      margin-bottom: 24px;
-      border: 1px solid var(--border-subtle);
-    }
-
-    .auth-tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      font-family: 'Orbitron', sans-serif;
-      cursor: pointer;
-      transition: all var(--tr-fast);
-    }
-
-    .auth-tab-btn.active {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.1));
-      color: #FBBF24;
-      border: 1px solid var(--neon-amber);
-      box-shadow: 0 0 12px var(--neon-gold-glow);
-    }
-
-    .cyber-form-group {
-      margin-bottom: 16px;
-      position: relative;
-    }
-
-    .cyber-label {
-      display: block;
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--neon-amber);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .cyber-input-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .cyber-input {
-      width: 100%;
-      background: rgba(10, 16, 30, 0.9);
-      border: 1.5px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px 10px 38px;
-      color: #FFFFFF;
-      font-size: 0.92rem;
-      font-family: inherit;
-      transition: all var(--tr-fast);
-    }
-
-    .cyber-input:focus {
-      outline: none;
-      border-color: var(--neon-amber);
-      box-shadow: 0 0 14px var(--neon-gold-glow);
-      background: rgba(15, 23, 42, 0.95);
-    }
-
-    .cyber-input-icon {
-      position: absolute;
-      left: 12px;
-      color: var(--text-dim);
-      pointer-events: none;
-      width: 18px;
-      height: 18px;
-    }
-
-    .pwd-toggle-btn {
-      position: absolute;
-      right: 12px;
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color var(--tr-fast);
-    }
-
-    .pwd-toggle-btn:hover {
-      color: var(--neon-amber);
-    }
-
-    .role-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .role-card {
-      background: rgba(10, 16, 30, 0.7);
-      border: 1.5px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 12px 10px;
-      cursor: pointer;
-      text-align: center;
-      transition: all var(--tr-fast);
-    }
-
-    .role-card:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 10px var(--neon-cyan-glow);
-    }
-
-    .role-card.selected {
-      border-color: var(--neon-amber);
-      background: rgba(245, 158, 11, 0.12);
-      box-shadow: 0 0 14px var(--neon-gold-glow);
-    }
-
-    .role-title {
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 2px;
-    }
-
-    .role-desc {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-
-    .btn-cyber-submit {
-      width: 100%;
-      background: linear-gradient(135deg, #F59E0B, #D4A017);
-      color: #070B14;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 12px 20px;
-      font-size: 0.94rem;
-      font-weight: 800;
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      box-shadow: 0 0 20px var(--neon-gold-glow);
-      transition: all var(--tr-fast);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-cyber-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
-      background: linear-gradient(135deg, #FBBF24, #F59E0B);
-    }
-
-    /* =========================================================================
-       HERO SHOWCASE SECTION
-       ========================================================================= */
-    .hero-matrix-box {
-      background: var(--bg-card);
-      backdrop-filter: blur(20px);
-      border: 1.5px solid var(--border-cyber);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      margin-bottom: 28px;
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
-      align-items: center;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-    }
-
-    @media (max-width: 860px) {
-      .hero-matrix-box {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .hero-badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .hero-h1 {
+    .hero-title {
       font-size: 2.2rem;
-      font-weight: 900;
-      color: #FFFFFF;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .hero-h1 span {
-      background: linear-gradient(135deg, #F59E0B, #38BDF8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-desc {
-      font-size: 0.94rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .hero-stats-row {
-      display: flex;
-      gap: 20px;
-    }
-
-    .hero-stat-card {
-      background: rgba(10, 16, 30, 0.8);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-    }
-
-    .hero-stat-num {
-      font-size: 1.2rem;
       font-weight: 800;
-      color: var(--neon-amber);
-      font-family: 'Orbitron', sans-serif;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
     }
 
-    .hero-stat-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .hero-visual-frame {
-      position: relative;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1.5px solid var(--border-cyber);
-      box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
-    }
-
-    .hero-visual-img {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-
-    .hero-visual-frame:hover .hero-visual-img {
-      transform: scale(1.03);
-    }
-
-    .hero-laser-scan {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #F59E0B, #38BDF8, transparent);
-      box-shadow: 0 0 12px var(--neon-amber);
-      animation: laserSweep 3s ease-in-out infinite alternate;
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      font-weight: 400;
     }
 
     /* =========================================================================
-       FUTURISTIC SCANNER HUB CARD
+       HERO SCANNING CANVAS (Single Intelligent Canvas)
        ========================================================================= */
-    .scanner-hub-card {
+    .scanner-canvas-card {
       background: var(--bg-card);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid var(--border-cyber);
+      border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 32px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-      margin-bottom: 30px;
+      box-shadow: var(--shadow-card);
       position: relative;
     }
 
-    .cyber-dropzone {
-      border: 2px dashed rgba(245, 158, 11, 0.4);
-      background: rgba(10, 16, 30, 0.75);
+    .scanner-stage {
+      position: relative;
+      background: #FDFDFD;
+      border: 1.5px dashed var(--border-strong);
       border-radius: var(--radius-md);
-      padding: 36px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all var(--tr-normal);
-      position: relative;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      transition: all var(--tr-smooth);
       overflow: hidden;
+      cursor: pointer;
     }
 
-    .cyber-dropzone:hover, .cyber-dropzone.dragover {
-      border-color: var(--neon-amber);
-      background: rgba(245, 158, 11, 0.08);
-      box-shadow: 0 0 24px var(--neon-gold-glow);
+    .scanner-stage.dragover {
+      border-color: var(--accent);
+      background: rgba(217, 119, 6, 0.02);
     }
 
-    .dropzone-icon-circle {
-      width: 68px;
-      height: 68px;
+    /* Minimalist Corner Markers */
+    .corner-marker {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--text-primary);
+      pointer-events: none;
+      opacity: 0.8;
+      transition: all var(--tr-fast);
+    }
+    .corner-tl { top: 16px; left: 16px; border-top: 2px solid; border-left: 2px solid; }
+    .corner-tr { top: 16px; right: 16px; border-top: 2px solid; border-right: 2px solid; }
+    .corner-bl { bottom: 16px; left: 16px; border-bottom: 2px solid; border-left: 2px solid; }
+    .corner-br { bottom: 16px; right: 16px; border-bottom: 2px solid; border-right: 2px solid; }
+
+    .scanner-stage:hover .corner-marker {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+
+    /* Empty Canvas Placeholder */
+    .scanner-empty-state {
+      text-align: center;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .scanner-icon-circle {
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1.5px solid var(--neon-amber);
-      box-shadow: 0 0 16px var(--neon-gold-glow);
+      background: var(--bg-surface-subtle);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
-      color: var(--neon-amber);
-    }
-
-    .dropzone-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #FFFFFF;
-      margin-bottom: 6px;
-    }
-
-    .dropzone-sub {
-      font-size: 0.88rem;
-      color: var(--text-muted);
+      color: var(--text-primary);
       margin-bottom: 20px;
+      border: 1px solid var(--border);
     }
 
-    .dropzone-btn-row {
+    .scanner-prompt-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .scanner-prompt-sub {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .scanner-btn-group {
       display: flex;
-      justify-content: center;
+      align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--text-primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 22px;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--tr-fast);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .btn-primary:hover {
+      background: #000000;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--tr-fast);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface-subtle);
+    }
+
+    /* Active Image Loaded Stage */
+    .scanner-active-stage {
+      display: none;
+      position: relative;
+      width: 100%;
+      max-height: 480px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scanner-image-preview {
+      max-width: 100%;
+      max-height: 440px;
+      border-radius: var(--radius-sm);
+      object-fit: contain;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    /* Subtle Ambient Laser Line */
+    .scanner-laser {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: sweepLaser 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+      z-index: 15;
+    }
+
+    @keyframes sweepLaser {
+      0% { top: 6%; opacity: 0.6; }
+      100% { top: 94%; opacity: 1; }
+    }
+
+    /* Smooth Floating Detected Tags */
+    .floating-tags-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .floating-tag {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      animation: floatTagIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .floating-tag.pass {
+      color: var(--status-pass);
+      border-color: var(--status-pass-border);
+    }
+
+    .floating-tag.fail {
+      color: var(--status-fail);
+      border-color: var(--status-fail-border);
+    }
+
+    @keyframes floatTagIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Bottom Action Controls */
+    .scanner-controls-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
-    .btn-cyber-primary {
-      background: linear-gradient(135deg, #F59E0B, #D4A017);
-      color: #070B14;
-      border: none;
-      padding: 10px 22px;
-      border-radius: var(--radius-sm);
-      font-size: 0.88rem;
-      font-weight: 800;
-      font-family: 'Orbitron', sans-serif;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 0 16px var(--neon-gold-glow);
-      transition: all var(--tr-fast);
-    }
-
-    .btn-cyber-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 24px rgba(245, 158, 11, 0.5);
-    }
-
-    .btn-cyber-secondary {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1.5px solid var(--border-cyan);
-      color: var(--neon-cyan);
-      padding: 10px 20px;
-      border-radius: var(--radius-sm);
-      font-size: 0.88rem;
-      font-weight: 700;
-      font-family: 'Orbitron', sans-serif;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all var(--tr-fast);
-    }
-
-    .btn-cyber-secondary:hover {
-      background: rgba(6, 182, 212, 0.15);
-      border-color: #38BDF8;
-      box-shadow: 0 0 16px var(--neon-cyan-glow);
-    }
-
-    /* Selected File Preview Box */
-    .preview-box {
-      display: none;
-      background: rgba(10, 16, 30, 0.9);
-      border: 1.5px solid var(--neon-amber);
-      border-radius: var(--radius-md);
-      padding: 16px 20px;
-      margin-top: 20px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      box-shadow: 0 0 18px var(--neon-gold-glow);
-    }
-
-    .preview-thumb-wrap {
+    .scanner-status-hint {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
       display: flex;
       align-items: center;
-      gap: 14px;
-      min-width: 0;
+      gap: 8px;
     }
 
-    .preview-thumb {
-      width: 56px;
-      height: 56px;
-      border-radius: var(--radius-sm);
-      object-fit: cover;
-      border: 1px solid var(--neon-amber);
-    }
-
-    .preview-meta-name {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .preview-meta-size {
-      font-size: 0.78rem;
-      color: var(--neon-cyan);
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .btn-remove-file {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid var(--status-fail-border);
-      color: var(--status-fail);
-      width: 34px;
-      height: 34px;
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all var(--tr-fast);
+      background: var(--accent);
+      display: inline-block;
     }
 
-    .btn-remove-file:hover {
-      background: var(--status-fail);
+    .btn-run-scan {
+      background: var(--accent);
       color: #FFFFFF;
-      box-shadow: 0 0 12px var(--status-fail-glow);
-    }
-
-    .scan-action-row {
-      margin-top: 24px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .btn-start-scan {
-      background: linear-gradient(135deg, #F59E0B, #FBBF24);
-      color: #070B14;
       border: none;
-      padding: 14px 44px;
-      border-radius: var(--radius-sm);
-      font-size: 1.05rem;
-      font-weight: 900;
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 0.05em;
+      padding: 12px 28px;
+      border-radius: var(--radius-full);
+      font-size: 0.94rem;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 0 28px rgba(245, 158, 11, 0.5);
+      gap: 8px;
       transition: all var(--tr-fast);
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.25);
     }
 
-    .btn-start-scan:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+    .btn-run-scan:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
     }
 
-    .btn-start-scan:disabled {
-      opacity: 0.45;
+    .btn-run-scan:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
       box-shadow: none;
     }
 
     /* =========================================================================
-       LOADING & SCANNING HUD STATE
+       COMPLIANCE REPORT SCREEN (Apple / Medical AI Clean Layout)
        ========================================================================= */
-    .loading-section {
-      display: none;
-      text-align: center;
-      padding: 50px 20px;
-    }
-
-    .scanner-hud-stage {
-      position: relative;
-      width: 240px;
-      height: 240px;
-      margin: 0 auto 28px;
-      border-radius: var(--radius-lg);
-      border: 2px solid var(--neon-amber);
-      box-shadow: 0 0 30px var(--neon-gold-glow);
-      overflow: hidden;
-      background: rgba(10, 16, 30, 0.95);
-    }
-
-    .scanner-thumb-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.75;
-      filter: brightness(0.9);
-    }
-
-    .scanner-laser-line {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #FDE68A, #F59E0B, #38BDF8, transparent);
-      box-shadow: 0 0 16px var(--neon-amber), 0 0 24px var(--neon-cyan);
-      animation: laserSweep 2s ease-in-out infinite alternate;
-      z-index: 10;
-    }
-
-    .scanner-grid-overlay {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(245, 158, 11, 0.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px);
-      background-size: 20px 20px;
-      pointer-events: none;
-    }
-
-    @keyframes laserSweep {
-      0% { top: 4%; opacity: 0.8; }
-      100% { top: 94%; opacity: 1; }
-    }
-
-    .loading-title {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #FFFFFF;
-      margin-bottom: 8px;
-    }
-
-    .scan-steps-ticker {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(15, 23, 42, 0.9);
-      padding: 8px 20px;
-      border-radius: var(--radius-full);
-      border: 1px solid var(--neon-amber);
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: #FBBF24;
-      box-shadow: 0 0 16px var(--neon-gold-glow);
-    }
-
-    /* =========================================================================
-       RESULTS DASHBOARD & 9-FIELD COMPLIANCE AUDIT
-       ========================================================================= */
-    .results-section {
-      display: none;
-    }
-
-    .celebration-banner {
-      display: none;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.95));
-      color: #FFFFFF;
-      padding: 16px 24px;
-      border-radius: var(--radius-md);
-      margin-bottom: 24px;
-      align-items: center;
-      gap: 14px;
-      border: 1.5px solid var(--status-pass);
-      box-shadow: 0 0 25px var(--status-pass-glow);
-    }
-
-    .score-summary-bar {
+    .report-card {
       background: var(--bg-card);
-      backdrop-filter: blur(20px);
-      border: 1.5px solid var(--border-cyber);
-      border-radius: var(--radius-md);
-      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-card);
       margin-bottom: 24px;
+    }
+
+    /* Top Gauge & Score Header */
+    .report-header-gauge {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
       flex-wrap: wrap;
-      gap: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      gap: 24px;
     }
 
-    .score-info-wrap {
+    .gauge-left-wrap {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 24px;
     }
 
-    .score-circle {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: rgba(10, 16, 30, 0.9);
-      border: 2px solid var(--neon-amber);
-      color: var(--neon-amber);
+    /* Minimalist Circular SVG Gauge */
+    .gauge-svg-wrap {
+      position: relative;
+      width: 96px;
+      height: 96px;
+    }
+
+    .gauge-svg {
+      transform: rotate(-90deg);
+      width: 96px;
+      height: 96px;
+    }
+
+    .gauge-bg-circle {
+      fill: none;
+      stroke: var(--bg-surface-subtle);
+      stroke-width: 8;
+    }
+
+    .gauge-val-circle {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 251.2;
+      stroke-dashoffset: 25.12;
+      transition: stroke-dashoffset 0.8s ease;
+    }
+
+    .gauge-center-text {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
-      font-weight: 900;
-      font-family: 'Orbitron', sans-serif;
-      box-shadow: 0 0 16px var(--neon-gold-glow);
-    }
-
-    .score-title {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
     }
 
-    .score-sub {
-      font-size: 0.82rem;
-      color: var(--text-muted);
+    .report-score-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 4px;
     }
 
-    .badge-status {
+    .report-score-sub {
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+    }
+
+    .status-badge-minimal {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: var(--radius-full);
       font-size: 0.82rem;
-      font-weight: 800;
-      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .badge-pass {
-      background: var(--status-pass-bg);
-      color: var(--status-pass);
-      border: 1.5px solid var(--status-pass-border);
-      box-shadow: 0 0 14px var(--status-pass-glow);
-    }
-
-    .badge-fail {
-      background: var(--status-fail-bg);
-      color: var(--status-fail);
-      border: 1.5px solid var(--status-fail-border);
-      box-shadow: 0 0 14px var(--status-fail-glow);
-    }
-
-    /* Results Layout */
-    .results-grid-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 880px) {
-      .results-grid-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* AR Scanner Panel */
-    .ar-panel {
-      background: var(--bg-card);
-      border: 1.5px solid var(--border-cyber);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      position: sticky;
-      top: 90px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .ar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .ar-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .ar-viewport {
-      position: relative;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      background: #000000;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      width: 100%;
-      min-height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .ar-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-      max-height: 480px;
-    }
-
-    .ar-boxes-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .ar-box {
-      position: absolute;
-      pointer-events: auto;
-      cursor: pointer;
-      transition: all var(--tr-fast);
-      border-radius: 4px;
-    }
-
-    .ar-box-pass {
-      border: 2px solid var(--status-pass);
-      background: rgba(16, 185, 129, 0.2);
-      box-shadow: 0 0 10px var(--status-pass-glow);
-    }
-
-    .ar-box-pass:hover, .ar-box-pass.highlighted {
-      background: rgba(16, 185, 129, 0.4);
-      border-width: 3px;
-      z-index: 30;
-    }
-
-    .ar-box-fail {
-      border: 2px dashed var(--status-fail);
-      background: rgba(239, 68, 68, 0.2);
-      box-shadow: 0 0 10px var(--status-fail-glow);
-    }
-
-    .ar-box-fail:hover, .ar-box-fail.highlighted {
-      background: rgba(239, 68, 68, 0.4);
-      border-width: 3px;
-      z-index: 30;
-    }
-
-    .ar-box-tag {
-      position: absolute;
-      top: -22px;
-      left: -2px;
-      background: var(--status-pass);
-      color: #070B14;
-      font-size: 0.65rem;
-      font-weight: 800;
-      font-family: 'Orbitron', sans-serif;
-      padding: 1px 6px;
-      border-radius: 4px;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-
-    .ar-box-fail .ar-box-tag {
-      background: var(--status-fail);
-      color: #FFFFFF;
-    }
-
-    /* 9-Field Cards */
-    .fields-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .field-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 16px 18px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      transition: all var(--tr-fast);
-      position: relative;
-    }
-
-    .field-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-      border-color: var(--neon-amber);
-    }
-
-    .field-card.card-pass {
-      border-left: 4px solid var(--status-pass);
-      background: rgba(13, 21, 39, 0.92);
-    }
-
-    .field-card.card-fail {
-      border-left: 4px solid var(--status-fail);
-      background: rgba(239, 68, 68, 0.05);
-    }
-
-    .field-card.highlighted {
-      box-shadow: 0 0 0 2px var(--neon-amber), 0 0 20px var(--neon-gold-glow);
-    }
-
-    .field-icon-box {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--neon-amber);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .field-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .field-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      gap: 8px;
-    }
-
-    .field-name {
-      font-size: 0.94rem;
-      font-weight: 700;
-      color: #FFFFFF;
-    }
-
-    .field-pill {
-      font-size: 0.7rem;
-      font-weight: 800;
-      font-family: 'Orbitron', sans-serif;
-      padding: 2px 10px;
-      border-radius: var(--radius-full);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
-    }
-
-    .field-pill-pass {
+    .status-badge-pass {
       background: var(--status-pass-bg);
       color: var(--status-pass);
       border: 1px solid var(--status-pass-border);
     }
 
-    .field-pill-fail {
+    .status-badge-fail {
       background: var(--status-fail-bg);
       color: var(--status-fail);
       border: 1px solid var(--status-fail-border);
     }
 
-    .field-value {
-      font-size: 0.85rem;
-      color: #E2E8F0;
-      background: rgba(10, 16, 30, 0.85);
-      padding: 8px 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      word-break: break-word;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    /* Clean Vertical Declarations List */
+    .declarations-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .field-fix {
-      margin-top: 6px;
-      font-size: 0.82rem;
-      color: #FCA5A5;
-      background: rgba(239, 68, 68, 0.1);
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--status-fail-border);
+    .declaration-item {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
       display: flex;
-      gap: 8px;
       align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all var(--tr-fast);
+    }
+
+    .declaration-item:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .declaration-item.item-fail {
+      background: #FFFDFD;
+      border-color: var(--status-fail-border);
+    }
+
+    .dec-left {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dec-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .dec-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .dec-rule-tag {
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+
+    .dec-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .dec-value strong {
+      color: var(--text-primary);
+    }
+
+    .dec-warning-box {
+      margin-top: 8px;
+      background: var(--status-fail-bg);
+      border: 1px solid var(--status-fail-border);
+      color: var(--status-fail);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
       line-height: 1.45;
     }
 
-    .field-actions-bar {
-      margin-top: 8px;
+    .dec-right {
       display: flex;
-      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
     }
 
-    .btn-field-edit {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-subtle);
-      color: var(--neon-amber);
-      font-size: 0.74rem;
-      font-weight: 700;
-      font-family: 'Orbitron', sans-serif;
-      padding: 4px 10px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
+    .dec-check-pill {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+
+    .dec-check-pass {
+      background: var(--status-pass-bg);
+      color: var(--status-pass);
+    }
+
+    .dec-check-fail {
+      background: var(--status-fail-bg);
+      color: var(--status-fail);
+    }
+
+    .btn-edit-inline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
       transition: all var(--tr-fast);
     }
 
-    .btn-field-edit:hover {
-      background: rgba(245, 158, 11, 0.2);
-      border-color: var(--neon-amber);
-      box-shadow: 0 0 10px var(--neon-gold-glow);
+    .btn-edit-inline:hover {
+      background: var(--bg-surface-subtle);
+      color: var(--text-primary);
     }
 
-    .field-edit-drawer {
+    /* Edit Drawer */
+    .dec-edit-drawer {
       display: none;
-      margin-top: 8px;
-      padding: 10px 12px;
-      background: rgba(10, 16, 30, 0.95);
+      margin-top: 10px;
+      padding: 12px;
+      background: var(--bg-surface-subtle);
       border-radius: var(--radius-sm);
-      border: 1px solid var(--neon-amber);
     }
 
-    .field-edit-input {
+    .dec-edit-input {
       width: 100%;
-      padding: 7px 10px;
-      font-size: 0.84rem;
-      border: 1px solid var(--border-subtle);
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      border: 1px solid var(--border);
       border-radius: var(--radius-sm);
+      background: #FFFFFF;
+      color: var(--text-primary);
       margin-bottom: 8px;
-      font-family: inherit;
-      background: rgba(15, 23, 42, 0.9);
-      color: #FFFFFF;
     }
 
-    .field-edit-buttons {
+    .dec-edit-actions {
       display: flex;
       justify-content: flex-end;
       gap: 6px;
     }
 
-    .btn-edit-save {
-      background: var(--neon-amber);
-      color: #070B14;
-      border: none;
-      padding: 4px 12px;
-      font-size: 0.74rem;
-      font-weight: 800;
-      font-family: 'Orbitron', sans-serif;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-    }
-
-    .btn-edit-cancel {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border-subtle);
-      padding: 4px 10px;
-      font-size: 0.74rem;
-      font-weight: 600;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-    }
-
-    /* Actions Bottom Bar */
-    .results-bottom-actions {
+    /* Report Bottom Bar */
+    .report-bottom-bar {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+    }
+
+    /* =========================================================================
+       SATYA AI EXPLAINER ASSISTANT
+       ========================================================================= */
+    .satya-ai-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
       margin-top: 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
     }
 
-    /* Floating Chatbot */
-    .chat-fab {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 58px;
-      height: 58px;
+    .satya-ai-icon {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #F59E0B, #D4A017);
-      color: #070B14;
-      border: none;
-      box-shadow: 0 0 25px var(--neon-gold-glow);
-      cursor: pointer;
+      background: var(--accent-subtle);
+      color: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 90;
-      transition: all var(--tr-fast);
+      flex-shrink: 0;
     }
 
-    .chat-fab:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.8);
+    .satya-ai-body {
+      flex: 1;
     }
 
-    .chat-window {
-      position: fixed;
-      bottom: 92px;
-      right: 24px;
-      width: 360px;
-      max-width: calc(100vw - 32px);
-      height: 480px;
-      max-height: calc(100vh - 120px);
-      background: var(--bg-card);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid var(--border-cyber);
-      border-radius: var(--radius-md);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-      display: none;
-      flex-direction: column;
-      z-index: 95;
-      overflow: hidden;
-    }
-
-    .chat-header {
-      background: rgba(10, 16, 30, 0.95);
-      border-bottom: 1px solid var(--border-cyber);
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .chat-header-title {
-      font-size: 0.88rem;
+    .satya-ai-title {
+      font-size: 0.95rem;
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--text-primary);
+      margin-bottom: 4px;
       display: flex;
       align-items: center;
-      gap: 8px;
-    }
-
-    .chat-status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--neon-cyan);
-      box-shadow: 0 0 6px var(--neon-cyan);
-    }
-
-    .chat-body {
-      flex: 1;
-      padding: 14px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .chat-bubble {
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 0.84rem;
-      line-height: 1.45;
-      max-width: 85%;
-      word-break: break-word;
-    }
-
-    .chat-bubble-bot {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-cyber);
-      color: #E2E8F0;
-      align-self: flex-start;
-    }
-
-    .chat-bubble-user {
-      background: var(--neon-amber);
-      color: #070B14;
-      font-weight: 600;
-      align-self: flex-end;
-    }
-
-    .chat-chips {
-      display: flex;
-      flex-wrap: wrap;
       gap: 6px;
-      margin-top: 4px;
     }
 
-    .chat-chip {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-cyan);
-      color: var(--neon-cyan);
-      font-size: 0.72rem;
-      padding: 4px 10px;
+    .satya-ai-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .satya-ai-chips {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .satya-ai-chip {
+      background: var(--bg-surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 5px 12px;
       border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all var(--tr-fast);
     }
 
-    .chat-chip:hover {
-      background: rgba(6, 182, 212, 0.2);
-      border-color: #38BDF8;
+    .satya-ai-chip:hover {
+      background: #FFFFFF;
+      border-color: var(--text-primary);
     }
 
-    .chat-footer {
-      padding: 10px 14px;
-      background: rgba(10, 16, 30, 0.95);
-      border-top: 1px solid var(--border-subtle);
-      display: flex;
-      gap: 8px;
+    /* =========================================================================
+       MINIMAL AUTH & PASSWORD MODAL / VIEW
+       ========================================================================= */
+    .auth-card-clean {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      max-width: 440px;
+      margin: 40px auto;
+      box-shadow: var(--shadow-elevated);
     }
 
-    .chat-input {
-      flex: 1;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 8px 12px;
-      color: #FFFFFF;
-      font-size: 0.84rem;
-      outline: none;
+    .auth-header-clean {
+      text-align: center;
+      margin-bottom: 28px;
     }
 
-    .chat-send-btn {
-      background: var(--neon-amber);
+    .auth-header-clean h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+
+    .auth-header-clean p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .auth-tabs-clean {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-surface-subtle);
+      padding: 4px;
+      border-radius: var(--radius-full);
+      margin-bottom: 24px;
+    }
+
+    .auth-tab-clean {
+      background: transparent;
       border: none;
-      color: #070B14;
-      border-radius: var(--radius-sm);
-      width: 36px;
-      height: 36px;
+      padding: 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--tr-fast);
+    }
+
+    .auth-tab-clean.active {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .form-group-clean {
+      margin-bottom: 16px;
+    }
+
+    .label-clean {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .input-clean-wrap {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
+    }
+
+    .input-clean {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      font-family: inherit;
+      transition: all var(--tr-fast);
+    }
+
+    .input-clean:focus {
+      outline: none;
+      border-color: var(--text-primary);
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .pwd-toggle-clean {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-tertiary);
       cursor: pointer;
+    }
+
+    .pwd-toggle-clean:hover {
+      color: var(--text-primary);
+    }
+
+    .btn-submit-clean {
+      width: 100%;
+      background: var(--text-primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all var(--tr-fast);
+    }
+
+    .btn-submit-clean:hover {
+      background: #000000;
+    }
+
+    /* History Screen */
+    .history-card-clean {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-card);
     }
 
     /* Toast Notification */
-    .toast {
+    .toast-clean {
       position: fixed;
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(10, 16, 30, 0.95);
+      background: var(--text-primary);
       color: #FFFFFF;
-      border: 1.5px solid var(--neon-amber);
-      box-shadow: 0 0 25px var(--neon-gold-glow);
-      padding: 10px 24px;
+      padding: 10px 20px;
       border-radius: var(--radius-full);
-      font-size: 0.88rem;
-      font-weight: 700;
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-elevated);
       display: none;
-      z-index: 120;
+      z-index: 100;
     }
 
     footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 20px;
+      border-top: 1px solid var(--border);
+      padding: 24px 20px;
       text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      background: var(--bg-darker);
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
     }
   </style>
 </head>
 <body>
 
-  <!-- Offline Alert Banner -->
-  <div class="offline-banner" id="offlineBanner">
-    <i data-lucide="wifi-off" style="width: 16px; height: 16px;"></i>
-    <span id="offlineBannerText">OFFLINE MODE ACTIVE • Client-Side Neural OCR Ready</span>
-  </div>
-
-  <!-- Header Bar -->
+  <!-- Top Minimalist Navigation Header -->
   <header>
-    <div class="header-content">
-      <div class="brand-area" onclick="navigateToApp()">
-        <div class="brand-icon-wrapper">
-          <i data-lucide="shield-check" style="width: 24px; height: 24px; color: var(--neon-amber);"></i>
+    <div class="header-inner">
+      <div class="brand-logo" onclick="switchNav('scan')">
+        <div class="brand-mark">
+          <i data-lucide="check" style="width: 18px; height: 18px; stroke-width: 3;"></i>
         </div>
-        <div>
-          <div class="brand-title">
-            SATYA<span>SCAN</span>
-            <span class="hud-badge">v2.4 AI</span>
-          </div>
+        <div class="brand-name">
+          SATYASCAN
+          <span class="brand-tag">AI INSPECTOR</span>
         </div>
       </div>
 
-      <div class="nav-actions">
+      <!-- Simple Nav Tabs -->
+      <nav class="nav-tabs" id="navTabs">
+        <button type="button" class="nav-tab active" id="tabNavScan" onclick="switchNav('scan')">
+          <i data-lucide="scan" style="width: 15px; height: 15px;"></i>
+          <span>Scan</span>
+        </button>
+        <button type="button" class="nav-tab" id="tabNavHistory" onclick="switchNav('history')">
+          <i data-lucide="clock" style="width: 15px; height: 15px;"></i>
+          <span>History</span>
+        </button>
+        <button type="button" class="nav-tab" id="tabNavReports" onclick="switchNav('reports')">
+          <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
+          <span>Rules</span>
+        </button>
+      </nav>
+
+      <div class="header-right">
+        <!-- Language Switcher -->
+        <button type="button" class="btn-ghost" onclick="toggleLanguage()" id="btnLangToggle">
+          <span id="langBtnText">हिन्दी</span>
+        </button>
+
         <!-- User Profile Pill -->
-        <div class="user-pill" id="userPill">
-          <div class="user-avatar-dot"></div>
-          <span id="userNameDisplay" style="font-weight: 700;">Officer</span>
-          <span class="role-badge role-inspector" id="userRoleBadge">INSPECTOR</span>
-          <button type="button" class="btn-cyber-nav" onclick="handleLogout()" title="Logout" style="padding: 3px 8px; margin-left: 4px;">
+        <div class="user-pill-minimal" id="userPill">
+          <div class="user-avatar-circle" id="userInitial">A</div>
+          <span id="userNameDisplay">Inspector</span>
+          <button type="button" onclick="handleLogout()" style="background: transparent; border: none; cursor: pointer; color: var(--text-tertiary); display: flex; align-items: center; margin-left: 2px;">
             <i data-lucide="log-out" style="width: 14px; height: 14px;"></i>
           </button>
         </div>
-
-        <!-- Language Switcher -->
-        <button type="button" class="btn-cyber-nav" onclick="toggleLanguage()" id="btnLangToggle">
-          <i data-lucide="languages" style="width: 15px; height: 15px; color: var(--neon-cyan);"></i>
-          <span id="langBtnText">हिन्दी</span>
-        </button>
       </div>
     </div>
   </header>
@@ -1569,447 +1096,328 @@
   <main>
 
     <!-- =========================================================================
-         SCREEN 1: LANGUAGE SELECTION ONBOARDING
-         ========================================================================= -->
-    <div class="view-screen" id="screenLang" style="display: none;">
-      <div class="auth-terminal-card">
-        <div class="hud-corner-tl"></div>
-        <div class="hud-corner-tr"></div>
-        <div class="hud-corner-bl"></div>
-        <div class="hud-corner-br"></div>
-
-        <div class="terminal-header">
-          <img src="/assets/shield_badge.jpg" alt="SatyaScan Shield" class="terminal-shield-img">
-          <h2 class="terminal-title">SATYASCAN 2.0</h2>
-          <p class="terminal-sub">Select preferred operating system interface</p>
-        </div>
-
-        <div class="role-grid" style="margin-bottom: 24px;">
-          <div class="role-card selected" id="langCardEn" onclick="selectLanguage('en')">
-            <div class="role-title">English</div>
-            <div class="role-desc">Statutory English</div>
-          </div>
-          <div class="role-card" id="langCardHi" onclick="selectLanguage('hi')">
-            <div class="role-title">हिन्दी (Hindi)</div>
-            <div class="role-desc">विधिक माप विज्ञान</div>
-          </div>
-        </div>
-
-        <button type="button" class="btn-cyber-submit" onclick="proceedToAuth()">
-          <span>CONTINUE TO TERMINAL</span>
-          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- =========================================================================
-         SCREEN 2: PASSWORD-PROTECTED AUTH TERMINAL (LOGIN & REGISTRATION)
+         SCREEN 1: AUTHENTICATION (PASSWORD-PROTECTED MINIMAL MODAL)
          ========================================================================= -->
     <div class="view-screen" id="screenAuth" style="display: none;">
-      <div class="auth-terminal-card">
-        <div class="hud-corner-tl"></div>
-        <div class="hud-corner-tr"></div>
-        <div class="hud-corner-bl"></div>
-        <div class="hud-corner-br"></div>
-
-        <div class="terminal-header">
-          <img src="/assets/shield_badge.jpg" alt="SatyaScan Security Badge" class="terminal-shield-img">
-          <h2 class="terminal-title" id="authTitle">SECURE ACCESS</h2>
-          <p class="terminal-sub" id="authSubtitle">Government Legal Metrology Verification Portal</p>
+      <div class="auth-card-clean">
+        <div class="auth-header-clean">
+          <h2 id="authTitle">Sign In</h2>
+          <p id="authSubtitle">Verify packaged commodity compliance</p>
         </div>
 
-        <div class="auth-tab-group">
-          <button type="button" class="auth-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">LOGIN</button>
-          <button type="button" class="auth-tab-btn" id="tabRegister" onclick="switchAuthTab('register')">REGISTER</button>
+        <div class="auth-tabs-clean">
+          <button type="button" class="auth-tab-clean active" id="authTabLogin" onclick="switchAuthTab('login')">Sign In</button>
+          <button type="button" class="auth-tab-clean" id="authTabRegister" onclick="switchAuthTab('register')">Register</button>
         </div>
 
-        <!-- 1. Login Form (Email + Password) -->
+        <!-- Login Form -->
         <form id="loginForm" onsubmit="handleLogin(event)">
-          <div class="cyber-form-group">
-            <label class="cyber-label" id="lblLoginEmail">Officer / User Email</label>
-            <div class="cyber-input-wrap">
-              <i data-lucide="mail" class="cyber-input-icon"></i>
-              <input type="email" id="loginEmail" class="cyber-input" placeholder="officer@metrology.gov.in" required>
+          <div class="form-group-clean">
+            <label class="label-clean">Email Address</label>
+            <div class="input-clean-wrap">
+              <input type="email" id="loginEmail" class="input-clean" placeholder="officer@metrology.gov.in" required>
             </div>
           </div>
 
-          <div class="cyber-form-group">
-            <label class="cyber-label" id="lblLoginPwd">Access Password</label>
-            <div class="cyber-input-wrap">
-              <i data-lucide="lock" class="cyber-input-icon"></i>
-              <input type="password" id="loginPassword" class="cyber-input" placeholder="••••••••" required>
-              <button type="button" class="pwd-toggle-btn" onclick="togglePwdVisibility('loginPassword')">
+          <div class="form-group-clean">
+            <label class="label-clean">Password</label>
+            <div class="input-clean-wrap">
+              <input type="password" id="loginPassword" class="input-clean" placeholder="••••••••" required>
+              <button type="button" class="pwd-toggle-clean" onclick="togglePwdVisibility('loginPassword')">
                 <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
               </button>
             </div>
           </div>
 
-          <button type="submit" class="btn-cyber-submit">
-            <span id="btnLoginSubmit">AUTHENTICATE & ACCESS</span>
-            <i data-lucide="key" style="width: 18px; height: 18px;"></i>
-          </button>
+          <button type="submit" class="btn-submit-clean">Sign In to Inspector</button>
         </form>
 
-        <!-- 2. Registration Form (Name, Email, Password, Role) -->
+        <!-- Register Form -->
         <form id="registerForm" style="display: none;" onsubmit="handleRegister(event)">
-          <div class="cyber-form-group">
-            <label class="cyber-label">Full Operator Name</label>
-            <div class="cyber-input-wrap">
-              <i data-lucide="user" class="cyber-input-icon"></i>
-              <input type="text" id="regName" class="cyber-input" placeholder="Inspector A. Sharma" required>
-            </div>
+          <div class="form-group-clean">
+            <label class="label-clean">Full Name</label>
+            <input type="text" id="regName" class="input-clean" placeholder="Inspector A. Sharma" required>
           </div>
 
-          <div class="cyber-form-group">
-            <label class="cyber-label">Official Email Address</label>
-            <div class="cyber-input-wrap">
-              <i data-lucide="mail" class="cyber-input-icon"></i>
-              <input type="email" id="regEmail" class="cyber-input" placeholder="sharma@metrology.gov.in" required>
-            </div>
+          <div class="form-group-clean">
+            <label class="label-clean">Email Address</label>
+            <input type="email" id="regEmail" class="input-clean" placeholder="sharma@metrology.gov.in" required>
           </div>
 
-          <div class="cyber-form-group">
-            <label class="cyber-label">Create Password</label>
-            <div class="cyber-input-wrap">
-              <i data-lucide="lock" class="cyber-input-icon"></i>
-              <input type="password" id="regPassword" class="cyber-input" placeholder="Min 6 characters" required minlength="6">
-              <button type="button" class="pwd-toggle-btn" onclick="togglePwdVisibility('regPassword')">
+          <div class="form-group-clean">
+            <label class="label-clean">Password</label>
+            <div class="input-clean-wrap">
+              <input type="password" id="regPassword" class="input-clean" placeholder="Minimum 6 characters" required minlength="6">
+              <button type="button" class="pwd-toggle-clean" onclick="togglePwdVisibility('regPassword')">
                 <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
               </button>
             </div>
           </div>
 
-          <div class="cyber-form-group">
-            <label class="cyber-label">Confirm Password</label>
-            <div class="cyber-input-wrap">
-              <i data-lucide="shield-check" class="cyber-input-icon"></i>
-              <input type="password" id="regConfirmPassword" class="cyber-input" placeholder="Re-enter password" required minlength="6">
-            </div>
+          <div class="form-group-clean">
+            <label class="label-clean">Confirm Password</label>
+            <input type="password" id="regConfirmPassword" class="input-clean" placeholder="Re-enter password" required minlength="6">
           </div>
 
-          <label class="cyber-label">Operator Classification</label>
-          <div class="role-grid">
-            <div class="role-card selected" id="roleInspectorCard" onclick="selectRole('Inspector')">
-              <div class="role-title">LEGAL INSPECTOR</div>
-              <div class="role-desc">Official Rule 6 Audits</div>
-            </div>
-            <div class="role-card" id="roleConsumerCard" onclick="selectRole('Consumer')">
-              <div class="role-title">CITIZEN ADVOCATE</div>
-              <div class="role-desc">Packaging Verification</div>
-            </div>
-          </div>
-          <input type="hidden" id="selectedRole" value="Inspector">
-
-          <button type="submit" class="btn-cyber-submit">
-            <span>REGISTER OPERATOR</span>
-            <i data-lucide="user-plus" style="width: 18px; height: 18px;"></i>
-          </button>
+          <button type="submit" class="btn-submit-clean">Create Inspector Account</button>
         </form>
 
       </div>
     </div>
 
     <!-- =========================================================================
-         SCREEN 3: MAIN APPLICATION DASHBOARD
+         SCREEN 2: MAIN HERO SCANNER VIEW
          ========================================================================= -->
-    <div class="view-screen" id="screenApp" style="display: none;">
+    <div class="view-screen" id="screenScan">
 
-      <!-- Hero Cyber Banner -->
-      <div class="hero-matrix-box">
-        <div class="hud-corner-tl"></div>
-        <div class="hud-corner-tr"></div>
-        <div class="hud-corner-bl"></div>
-        <div class="hud-corner-br"></div>
-
-        <div>
-          <div class="hero-badge-row">
-            <span class="hud-badge">⚡ NEURAL OCR v5.2</span>
-            <span class="hud-badge" style="color: #FBBF24; border-color: rgba(245, 158, 11, 0.4);">⚖️ LEGAL METROLOGY ACT 2009</span>
-          </div>
-          <h1 class="hero-h1" id="heroTitle">
-            Autonomous <span>Packaging Compliance</span> Scanner
-          </h1>
-          <p class="hero-desc" id="heroDesc">
-            Instant statutory audit for Indian packaged commodities. Detects MRP, Net Weight, Manufacturer Details, Mfg Date, Country of Origin & USP with zero server latency.
-          </p>
-
-          <div class="hero-stats-row">
-            <div class="hero-stat-card">
-              <div class="hero-stat-num">9/9</div>
-              <div class="hero-stat-label">Mandatory Rules</div>
-            </div>
-            <div class="hero-stat-card">
-              <div class="hero-stat-num">&lt; 1.2s</div>
-              <div class="hero-stat-label">WASM Speed</div>
-            </div>
-            <div class="hero-stat-card">
-              <div class="hero-stat-num">100%</div>
-              <div class="hero-stat-label">Private & Offline</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-visual-frame">
-          <img src="/assets/hero_scanner.jpg" alt="Cybernetic Holographic Scanner" class="hero-visual-img">
-          <div class="hero-laser-scan"></div>
-        </div>
+      <!-- Hero Headline -->
+      <div class="hero-heading-area">
+        <h1 class="hero-title">SATYASCAN</h1>
+        <p class="hero-sub" id="heroSub">Truth behind every package.</p>
       </div>
 
-      <!-- Upload / Scanner Hub View -->
-      <div id="landingView">
-        <div class="scanner-hub-card">
-          <div class="hud-corner-tl"></div>
-          <div class="hud-corner-tr"></div>
-          <div class="hud-corner-bl"></div>
-          <div class="hud-corner-br"></div>
+      <!-- Single Intelligent Scanning Canvas -->
+      <div class="scanner-canvas-card">
+        
+        <!-- Canvas Stage -->
+        <div class="scanner-stage" id="dropzone">
+          <!-- Subtle Corner Markers -->
+          <div class="corner-marker corner-tl"></div>
+          <div class="corner-marker corner-tr"></div>
+          <div class="corner-marker corner-bl"></div>
+          <div class="corner-marker corner-br"></div>
 
-          <div class="cyber-dropzone" id="dropzone">
-            <div class="dropzone-icon-circle">
-              <i data-lucide="scan-line" style="width: 34px; height: 34px;"></i>
+          <!-- Empty Canvas Prompt -->
+          <div class="scanner-empty-state" id="scannerEmptyState">
+            <div class="scanner-icon-circle">
+              <i data-lucide="scan" style="width: 28px; height: 28px; stroke-width: 1.75;"></i>
             </div>
-            <h3 class="dropzone-title" id="dropzoneTitle">UPLOAD PRODUCT PACKAGING LABEL</h3>
-            <p class="dropzone-sub" id="dropzoneSub">Drag & drop high-resolution photograph or capture directly with device camera</p>
+            <h3 class="scanner-prompt-title" id="canvasTitle">Position packaging label to inspect</h3>
+            <p class="scanner-prompt-sub" id="canvasSub">
+              Drag and drop high-resolution photo or activate live camera stream for instantaneous Rule 6 audit.
+            </p>
 
-            <div class="dropzone-btn-row">
-              <button type="button" class="btn-cyber-primary" onclick="triggerFileUpload()">
-                <i data-lucide="upload" style="width: 18px; height: 18px;"></i>
-                <span id="btnUploadText">Select Label Photo</span>
+            <div class="scanner-btn-group">
+              <button type="button" class="btn-primary" onclick="triggerFileUpload()">
+                <i data-lucide="upload" style="width: 16px; height: 16px;"></i>
+                <span id="btnUploadLabel">Upload Photo</span>
               </button>
-              <button type="button" class="btn-cyber-secondary" onclick="triggerCameraCapture()">
-                <i data-lucide="camera" style="width: 18px; height: 18px;"></i>
-                <span id="btnCameraText">Live Camera Capture</span>
+              <button type="button" class="btn-secondary" onclick="triggerCameraCapture()">
+                <i data-lucide="camera" style="width: 16px; height: 16px;"></i>
+                <span id="btnCameraLabel">Open Camera</span>
               </button>
             </div>
 
-            <!-- Hidden File Inputs -->
+            <!-- Hidden Inputs -->
             <input type="file" id="fileInput" accept="image/*" style="display: none;">
             <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
           </div>
 
-          <!-- File Selected Preview -->
-          <div class="preview-box" id="previewBox">
-            <div class="preview-thumb-wrap">
-              <img id="previewImg" class="preview-thumb" src="" alt="Selected Preview">
-              <div>
-                <div class="preview-meta-name" id="previewName">camera_capture.jpg</div>
-                <div class="preview-meta-size" id="previewSize">2.4 MB • READY FOR AUDIT</div>
-              </div>
-            </div>
-            <button type="button" class="btn-remove-file" onclick="removeFile()" title="Remove file">
-              <i data-lucide="x" style="width: 18px; height: 18px;"></i>
-            </button>
-          </div>
-
-          <!-- Scan Action Trigger -->
-          <div class="scan-action-row">
-            <button type="button" class="btn-start-scan" id="scanBtn" onclick="startScan()" disabled>
-              <i data-lucide="zap" style="width: 20px; height: 20px;"></i>
-              <span id="scanBtnText">INITIATE COMPLIANCE SCAN</span>
-            </button>
+          <!-- Loaded Image Stage -->
+          <div class="scanner-active-stage" id="scannerActiveStage">
+            <img id="previewImage" class="scanner-image-preview" src="" alt="Packaging Inspection Target">
+            <div class="scanner-laser" id="scannerLaser"></div>
+            <div class="floating-tags-layer" id="floatingTagsLayer"></div>
           </div>
         </div>
+
+        <!-- Scanner Bottom Bar -->
+        <div class="scanner-controls-bottom">
+          <div class="scanner-status-hint" id="scannerStatusHint">
+            <span class="pulse-dot"></span>
+            <span id="statusHintText">Ready for Legal Metrology inspection</span>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn-secondary" id="btnResetCanvas" onclick="resetCanvas()" style="display: none;">
+              <span>Clear</span>
+            </button>
+            <button type="button" class="btn-run-scan" id="btnRunScan" onclick="startScan()" disabled>
+              <span>Scan & Verify</span>
+              <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+            </button>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Scanning HUD Loading State -->
-      <div id="loadingView" class="loading-section">
-        <div class="scanner-hud-stage">
-          <img id="loadingThumbImg" class="scanner-thumb-img" src="" alt="Scanning Target">
-          <div class="scanner-laser-line"></div>
-          <div class="scanner-grid-overlay"></div>
-        </div>
-        <h3 class="loading-title font-orbitron" id="loadingTitle">EXECUTING NEURAL OCR AUDIT</h3>
-        <div class="scan-steps-ticker">
-          <i data-lucide="loader-2" class="spin-icon" style="width: 18px; height: 18px; color: var(--neon-cyan); animation: spin 1s linear infinite;"></i>
-          <span id="scanStepText">Step 1: Enhancing image contrast & resolution...</span>
-        </div>
-      </div>
+    </div>
 
-      <!-- Compliance Results View -->
-      <div id="resultsView" class="results-section">
+    <!-- =========================================================================
+         SCREEN 3: COMPLIANCE REPORT VIEW
+         ========================================================================= -->
+    <div class="view-screen" id="screenReport" style="display: none;">
+
+      <div class="report-card">
         
-        <!-- Celebration Banner for 9/9 Full Compliance -->
-        <div class="celebration-banner" id="celebrationBanner">
-          <i data-lucide="award" style="width: 32px; height: 32px; flex-shrink: 0; color: #FFFFFF;"></i>
-          <div>
-            <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 2px;">PERFECT STATUTORY COMPLIANCE (9/9)</h4>
-            <p style="font-size: 0.84rem; opacity: 0.95;">All mandatory Legal Metrology declarations are fully compliant with Rule 6 regulations.</p>
-          </div>
-        </div>
+        <!-- Top Gauge & Score Header -->
+        <div class="report-header-gauge">
+          <div class="gauge-left-wrap">
+            
+            <!-- Minimal Circular Progress Gauge -->
+            <div class="gauge-svg-wrap">
+              <svg class="gauge-svg" viewBox="0 0 96 96">
+                <circle class="gauge-bg-circle" cx="48" cy="48" r="40"></circle>
+                <circle class="gauge-val-circle" id="gaugeValCircle" cx="48" cy="48" r="40"></circle>
+              </svg>
+              <div class="gauge-center-text" id="gaugeCenterText">89%</div>
+            </div>
 
-        <!-- Score Summary Bar -->
-        <div class="score-summary-bar">
-          <div class="score-info-wrap">
-            <div class="score-circle" id="scoreCircle">9/9</div>
             <div>
-              <div class="score-title" id="scoreTitle">9/9 Declarations Verified</div>
-              <div class="score-sub">Legal Metrology (Packaged Commodities) Rules, 2011</div>
+              <h2 class="report-score-title" id="reportScoreTitle">8 of 9 Verified</h2>
+              <p class="report-score-sub">Legal Metrology (Packaged Commodities) Rules, 2011</p>
             </div>
+
           </div>
+
           <div>
-            <div class="badge-status badge-pass" id="badgeStatus">
-              <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
-              <span id="badgeText">COMPLIANT</span>
+            <div class="status-badge-minimal status-badge-pass" id="reportStatusBadge">
+              <i data-lucide="check" style="width: 15px; height: 15px; stroke-width: 2.5;"></i>
+              <span id="reportStatusText">COMPLIANT</span>
             </div>
           </div>
         </div>
 
-        <!-- Layout: Left AR HUD & Right 9-Field Cards -->
-        <div class="results-grid-layout">
-          
-          <!-- Left: Live AR Overlay Viewport -->
-          <div class="ar-panel">
-            <div class="ar-header">
-              <div class="ar-title">
-                <i data-lucide="scan" style="width: 18px; height: 18px; color: var(--neon-cyan);"></i>
-                <span>Live AR Target HUD</span>
-              </div>
-              <button type="button" class="btn-cyber-nav" onclick="toggleARBoxes()" id="btnToggleAR" style="font-size: 0.74rem;">
-                AR Boxes: ON
-              </button>
-            </div>
+        <!-- Clean Vertical Declarations List -->
+        <div class="declarations-list" id="declarationsList">
+          <!-- Dynamically populated clean items -->
+        </div>
 
-            <div class="ar-viewport">
-              <img id="arImg" class="ar-img" src="" alt="Live AR Inspection">
-              <div class="ar-boxes-layer" id="arBoxesLayer"></div>
+        <!-- Satya AI Contextual Assistant -->
+        <div class="satya-ai-card">
+          <div class="satya-ai-icon">
+            <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
+          </div>
+          <div class="satya-ai-body">
+            <div class="satya-ai-title">
+              <span>Satya AI</span>
+              <span style="font-size: 0.72rem; color: var(--text-tertiary); font-weight: 500;">• Legal Explainer</span>
+            </div>
+            <p class="satya-ai-text" id="satyaAiExplanation">
+              All mandatory packaging declarations have been audited. You can ask Satya AI why specific rules passed or failed.
+            </p>
+            <div class="satya-ai-chips">
+              <button type="button" class="satya-ai-chip" onclick="askSatyaAi('mrp')">Why is MRP format important?</button>
+              <button type="button" class="satya-ai-chip" onclick="askSatyaAi('usp')">Explain Unit Sale Price Rule</button>
+              <button type="button" class="satya-ai-chip" onclick="askSatyaAi('origin')">Country of Origin rules</button>
             </div>
           </div>
-
-          <!-- Right: 9 Statutory Declaration Cards -->
-          <div class="fields-grid" id="fieldsGrid">
-            <!-- Dynamically populated field cards -->
-          </div>
-
         </div>
 
         <!-- Bottom Action Bar -->
-        <div class="results-bottom-actions">
-          <button type="button" class="btn-cyber-secondary" onclick="resetToUpload()" id="btnScanAnother">
-            <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
-            <span>Scan Another Product</span>
+        <div class="report-bottom-bar">
+          <button type="button" class="btn-secondary" onclick="switchNav('scan')">
+            <i data-lucide="rotate-ccw" style="width: 15px; height: 15px;"></i>
+            <span>Scan Another Package</span>
           </button>
 
-          <button type="button" class="btn-cyber-primary" onclick="generateOfficialPDF()" id="btnDownloadPDF">
-            <i data-lucide="file-down" style="width: 18px; height: 18px;"></i>
-            <span>Generate Official Violation Notice (PDF)</span>
+          <button type="button" class="btn-primary" onclick="generateOfficialPDF()">
+            <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+            <span>Download Compliance Report (PDF)</span>
           </button>
         </div>
 
       </div>
 
+    </div>
+
+    <!-- =========================================================================
+         SCREEN 4: STATUTORY RULES REFERENCE VIEW
+         ========================================================================= -->
+    <div class="view-screen" id="screenRules" style="display: none;">
+      <div class="report-card">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Legal Metrology Rule 6 Reference</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">Mandatory declarations required on every pre-packaged commodity in India.</p>
+
+        <div class="declarations-list" id="rulesReferenceList">
+          <!-- Populated from metadata -->
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         SCREEN 5: SCAN HISTORY VIEW
+         ========================================================================= -->
+    <div class="view-screen" id="screenHistory" style="display: none;">
+      <div class="history-card-clean">
+        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">Audit History</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">Previous packaging compliance verifications conducted on this device.</p>
+        <div id="historyListContainer">
+          <p style="color: var(--text-tertiary); font-size: 0.9rem;">No previous scans recorded yet.</p>
+        </div>
+      </div>
     </div>
 
   </main>
 
-  <!-- Floating Chatbot FAB & Panel -->
-  <button type="button" class="chat-fab" id="chatFab" onclick="toggleChatWindow()" title="SatyaScan AI Assistant">
-    <i data-lucide="bot" style="width: 28px; height: 28px;"></i>
-  </button>
-
-  <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-      <div class="chat-header-title">
-        <span class="chat-status-dot"></span>
-        <span>SatyaScan AI Assistant</span>
-      </div>
-      <button type="button" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;" onclick="toggleChatWindow()">✕</button>
-    </div>
-    <div class="chat-body" id="chatMessages"></div>
-    <div class="chat-footer">
-      <input type="text" id="chatInput" class="chat-input" placeholder="Ask about Legal Metrology Rule 6..." onkeydown="handleChatKeyDown(event)">
-      <button type="button" class="chat-send-btn" onclick="sendChatMessage()">
-        <i data-lucide="send" style="width: 16px; height: 16px;"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- Toast Notification -->
-  <div class="toast" id="toastMsg">Notification message</div>
+  <!-- Clean Toast -->
+  <div class="toast-clean" id="toastMsg">Notification message</div>
 
   <footer>
-    SatyaScan 2.0 • Autonomous Legal Metrology Compliance Engine • Zero Server Dependency
+    SatyaScan • Pre-Packaged Commodity Legal Metrology Compliance Engine • 100% In-Browser AI
   </footer>
 
   <script>
     /**
      * =========================================================================
-     * SATYASCAN 2.0 - JAVASCRIPT LOGIC & PASSWORD-PROTECTED AUTHENTICATION
+     * SATYASCAN MINIMAL AI INSPECTION ENGINE & STATE
      * =========================================================================
      */
 
-    // 9 Mandatory Legal Metrology Rule 6 Fields
     const FIELD_METADATA = {
       "Maximum Retail Price (MRP)": {
-        rule: "Rule 6(1)(e)", icon: "tag",
+        rule: "Rule 6(1)(e)",
         enName: "Maximum Retail Price (MRP)", hiName: "अधिकतम खुदरा मूल्य (MRP)",
         enFix: "MRP must be declared as 'MRP Rs. XX.XX (incl. of all taxes)'.",
-        hiFix: "अधिकतम खुदरा मूल्य 'MRP Rs. XX.XX (सभी करों सहित)' के रूप में स्पष्ट घोषित होना अनिवार्य है।"
+        hiFix: "अधिकतम खुदरा मूल्य 'MRP Rs. XX.XX (सभी करों सहित)' होना अनिवार्य है।"
       },
       "Net Quantity": {
-        rule: "Rule 6(1)(c)", icon: "scale",
-        enName: "Net Quantity (Weight / Volume)", hiName: "शुद्ध मात्रा (वजन / आयतन)",
-        enFix: "Declare net weight/volume in standard SI metric units (g, kg, ml, l, N).",
-        hiFix: "शुद्ध मात्रा को मानक मीट्रिक इकाइयों (ग्राम, किग्रा, मिली, लीटर, N) में स्पष्ट रूप से लिखें।"
-      },
-      "Month and Year of Manufacture": {
-        rule: "Rule 6(1)(d)", icon: "calendar",
-        enName: "Month & Year of Manufacture / Packing", hiName: "निर्माण / पैकिंग का महीना और वर्ष",
-        enFix: "Declare manufacturing date clearly as 'MFD: MM/YYYY' or 'PKD: MM/YYYY'.",
-        hiFix: "निर्माण की तिथि 'MFD: MM/YYYY' या 'PKD: MM/YYYY' प्रारूप में दर्शाना अनिवार्य है।"
+        rule: "Rule 6(1)(c)",
+        enName: "Net Quantity", hiName: "शुद्ध मात्रा (वजन / आयतन)",
+        enFix: "Declare net weight or volume in metric units (g, kg, ml, l, N).",
+        hiFix: "शुद्ध मात्रा को मानक मीट्रिक इकाइयों (ग्राम, किग्रा, मिली, N) में लिखें।"
       },
       "Manufacturer Name and Address": {
-        rule: "Rule 6(1)(a)", icon: "building",
-        enName: "Manufacturer Name & Complete Address", hiName: "निर्माता का नाम एवं पूरा पता",
-        enFix: "Name and complete registered manufacturing premises address must be provided.",
-        hiFix: "निर्माता/पैकर का पूरा नाम एवं पंजीकृत पता लेबल पर अंकित होना अनिवार्य है।"
+        rule: "Rule 6(1)(a)",
+        enName: "Manufacturer Name & Address", hiName: "निर्माता का नाम एवं पूरा पता",
+        enFix: "Complete name and registered address of manufacturer/packer must be stated.",
+        hiFix: "निर्माता या पैकर का पूरा नाम एवं पंजीकृत पता अंकित होना अनिवार्य है।"
       },
-      "Common / Generic Name of Commodity": {
-        rule: "Rule 6(1)(b)", icon: "package",
-        enName: "Generic Name of Commodity", hiName: "वस्तु का सामान्य/जेनेरिक नाम",
-        enFix: "The common or generic name of commodity must be prominently stated.",
-        hiFix: "पैकेट के अंदर मौजूद वस्तु का सामान्य या जेनेरिक नाम मुख्य डिस्प्ले पर लिखा होना चाहिए।"
-      },
-      "Consumer Care Details": {
-        rule: "Rule 6(1)(f)", icon: "phone-call",
-        enName: "Consumer Care & Grievance Helpline", hiName: "उपभोक्ता सहायता एवं हेल्पलाइन विवरण",
-        enFix: "Mandatory name, address, telephone/toll-free number and email of grievance officer.",
-        hiFix: "उपभोक्ता शिकायत निवारण अधिकारी का पता, हेल्पलाइन नंबर और ईमेल आईडी देना अनिवार्य है।"
+      "Month and Year of Manufacture": {
+        rule: "Rule 6(1)(d)",
+        enName: "Manufacturing / Packing Date", hiName: "निर्माण / पैकिंग की तिथि",
+        enFix: "Declare date clearly as 'MFD: MM/YYYY' or 'PKD: MM/YYYY'.",
+        hiFix: "निर्माण की तिथि 'MFD: MM/YYYY' या 'PKD: MM/YYYY' प्रारूप में लिखें।"
       },
       "Country of Origin": {
-        rule: "Rule 6(1)(g)", icon: "globe",
+        rule: "Rule 6(1)(g)",
         enName: "Country of Origin", hiName: "उत्पत्ति का देश (Country of Origin)",
-        enFix: "Country of origin must be prominently stated as 'Country of Origin: India' or similar.",
-        hiFix: "उत्पाद किस देश में निर्मित हुआ है ('Country of Origin: India') स्पष्ट रूप से अंकित होना अनिवार्य है।"
+        enFix: "Country of origin must be prominently declared (e.g. 'Country of Origin: India').",
+        hiFix: "उत्पाद निर्माण देश ('Country of Origin: India') घोषित करना आवश्यक है।"
+      },
+      "Consumer Care Details": {
+        rule: "Rule 6(1)(f)",
+        enName: "Consumer Care Details", hiName: "उपभोक्ता सहायता एवं हेल्पलाइन",
+        enFix: "Provide name, address, telephone/toll-free number, and email of grievance officer.",
+        hiFix: "उपभोक्ता शिकायत निवारण अधिकारी का पता, हेल्पलाइन और ईमेल देना आवश्यक है।"
       },
       "Unit Sale Price": {
-        rule: "Rule 6(11)", icon: "calculator",
+        rule: "Rule 6(11)",
         enName: "Unit Sale Price (USP)", hiName: "इकाई विक्रय मूल्य (USP)",
-        enFix: "Unit sale price per g/ml/piece must be declared on packages > 100g/100ml.",
-        hiFix: "100 ग्राम/मिली से अधिक के पैकेट पर प्रति ग्राम/मिली इकाई विक्रय मूल्य (उदा. Rs. 0.50/g) अनिवार्य है।"
+        enFix: "Unit sale price per g/ml must be declared on packages exceeding 100g/100ml.",
+        hiFix: "100 ग्राम/मिली से अधिक पैकेज पर प्रति ग्राम/मिली इकाई मूल्य लिखना अनिवार्य है।"
+      },
+      "Common / Generic Name of Commodity": {
+        rule: "Rule 6(1)(b)",
+        enName: "Generic Name of Commodity", hiName: "वस्तु का सामान्य नाम",
+        enFix: "The common or generic name of commodity must be prominently stated.",
+        hiFix: "वस्तु का सामान्य या जेनेरिक नाम मुख्य डिस्प्ले पर लिखना अनिवार्य है।"
       },
       "Commodity Count / Dimensions": {
-        rule: "Rule 6(1)(c)", icon: "layers",
+        rule: "Rule 6(1)(c)",
         enName: "Commodity Count / Dimensions", hiName: "वस्तु संख्या / माप आयाम",
-        enFix: "Dimensions or number of items contained must be declared if multi-piece.",
-        hiFix: "यदि पैकेज में कई टुकड़े हैं तो कुल संख्या या आयाम (आकार) स्पष्ट रूप से लिखें।"
-      }
-    };
-
-    const I18N = {
-      en: {
-        selectFileToast: "Please select or capture a label image first.",
-        fieldsCompliant: "Declarations Verified",
-        fullCompliance: "COMPLIANT",
-        actionRequired: "ACTION REQUIRED",
-        detectedLabel: "Detected Value",
-        fixInstructionLabel: "Remediation Directive"
-      },
-      hi: {
-        selectFileToast: "कृपया पहले लेबल की तस्वीर चुनें या कैमरे से खींचें।",
-        fieldsCompliant: "अनिवार्य घोषणाएं सत्यापित",
-        fullCompliance: "पूर्णतः अनुपालित",
-        actionRequired: "सुधार अनिवार्य",
-        detectedLabel: "पहचाना गया मान",
-        fixInstructionLabel: "सुधार निर्देश"
+        enFix: "Dimensions or item count must be declared for multi-piece commodities.",
+        hiFix: "पैकेज में मौजूद टुकड़ों की कुल संख्या या माप आयाम लिखना अनिवार्य है।"
       }
     };
 
@@ -2019,105 +1427,95 @@
     let selectedFile = null;
     let selectedImageDataUrl = "";
     let currentScanData = null;
-    let arBoxesVisible = true;
 
     try {
       const stored = localStorage.getItem('satyascan_user');
       if (stored) currentUser = JSON.parse(stored);
     } catch (e) {}
 
-    // DOM Elements
-    const screenLang = document.getElementById('screenLang');
+    // Elements
     const screenAuth = document.getElementById('screenAuth');
-    const screenApp = document.getElementById('screenApp');
+    const screenScan = document.getElementById('screenScan');
+    const screenReport = document.getElementById('screenReport');
+    const screenRules = document.getElementById('screenRules');
+    const screenHistory = document.getElementById('screenHistory');
     const userPill = document.getElementById('userPill');
     const userNameDisplay = document.getElementById('userNameDisplay');
-    const userRoleBadge = document.getElementById('userRoleBadge');
+    const userInitial = document.getElementById('userInitial');
     const dropzone = document.getElementById('dropzone');
     const fileInput = document.getElementById('fileInput');
     const cameraInput = document.getElementById('cameraInput');
-    const previewBox = document.getElementById('previewBox');
-    const previewImg = document.getElementById('previewImg');
-    const previewName = document.getElementById('previewName');
-    const previewSize = document.getElementById('previewSize');
-    const scanBtn = document.getElementById('scanBtn');
-    const landingView = document.getElementById('landingView');
-    const loadingView = document.getElementById('loadingView');
-    const resultsView = document.getElementById('resultsView');
-    const loadingThumbImg = document.getElementById('loadingThumbImg');
-    const celebrationBanner = document.getElementById('celebrationBanner');
-    const arImg = document.getElementById('arImg');
-    const arBoxesLayer = document.getElementById('arBoxesLayer');
-    const chatFab = document.getElementById('chatFab');
-    const chatWindow = document.getElementById('chatWindow');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
+    const scannerEmptyState = document.getElementById('scannerEmptyState');
+    const scannerActiveStage = document.getElementById('scannerActiveStage');
+    const previewImage = document.getElementById('previewImage');
+    const scannerLaser = document.getElementById('scannerLaser');
+    const floatingTagsLayer = document.getElementById('floatingTagsLayer');
+    const btnRunScan = document.getElementById('btnRunScan');
+    const btnResetCanvas = document.getElementById('btnResetCanvas');
+    const scannerStatusHint = document.getElementById('scannerStatusHint');
+    const statusHintText = document.getElementById('statusHintText');
 
-    // Lifecycle Init
     document.addEventListener('DOMContentLoaded', () => {
+      applyLanguage(currentLang);
       if (currentUser && currentUser.name) {
-        showScreen('app');
-      } else if (localStorage.getItem('satyascan_lang')) {
-        showScreen('auth');
+        showUserLoggedIn(currentUser);
+        switchNav('scan');
       } else {
-        showScreen('lang');
+        switchNav('scan');
       }
-      initChatbot();
+      populateRulesReference();
+      loadHistory();
       lucide.createIcons();
     });
 
-    function showScreen(screen) {
-      screenLang.style.display = 'none';
+    // Navigation Switcher
+    function switchNav(tab) {
+      screenScan.style.display = 'none';
+      screenReport.style.display = 'none';
+      screenRules.style.display = 'none';
+      screenHistory.style.display = 'none';
       screenAuth.style.display = 'none';
-      screenApp.style.display = 'none';
-      userPill.style.display = 'none';
-      if (chatFab) chatFab.style.display = 'none';
 
-      if (screen === 'lang') {
-        screenLang.style.display = 'block';
-      } else if (screen === 'auth') {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+
+      if (tab === 'scan') {
+        screenScan.style.display = 'block';
+        document.getElementById('tabNavScan').classList.add('active');
+      } else if (tab === 'history') {
+        screenHistory.style.display = 'block';
+        document.getElementById('tabNavHistory').classList.add('active');
+        loadHistory();
+      } else if (tab === 'reports') {
+        screenRules.style.display = 'block';
+        document.getElementById('tabNavReports').classList.add('active');
+      } else if (tab === 'auth') {
         screenAuth.style.display = 'block';
-      } else if (screen === 'app') {
-        screenApp.style.display = 'block';
-        if (chatFab) chatFab.style.display = 'flex';
-        if (currentUser) {
-          userPill.style.display = 'inline-flex';
-          userNameDisplay.textContent = currentUser.name;
-          userRoleBadge.textContent = (currentUser.role || 'Inspector').toUpperCase();
-          userRoleBadge.className = `role-badge ${currentUser.role === 'Consumer' ? 'role-consumer' : 'role-inspector'}`;
-        }
       }
       lucide.createIcons();
     }
 
-    function navigateToApp() {
-      if (currentUser && currentUser.name) showScreen('app');
-      else showScreen('auth');
+    function showUserLoggedIn(user) {
+      userPill.style.display = 'inline-flex';
+      userNameDisplay.textContent = user.name;
+      userInitial.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'A';
     }
 
     // Language Toggle
-    function selectLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem('satyascan_lang', lang);
-      document.getElementById('langCardEn').classList.toggle('selected', lang === 'en');
-      document.getElementById('langCardHi').classList.toggle('selected', lang === 'hi');
-      document.getElementById('langBtnText').textContent = (lang === 'en' ? 'हिन्दी' : 'English');
-      if (currentScanData && resultsView.style.display === 'block') {
-        renderResults(currentScanData);
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'hi' : 'en';
+      localStorage.setItem('satyascan_lang', currentLang);
+      applyLanguage(currentLang);
+    }
+
+    function applyLanguage(lang) {
+      document.getElementById('langBtnText').textContent = lang === 'en' ? 'हिन्दी' : 'English';
+      if (currentScanData && screenReport.style.display === 'block') {
+        renderComplianceReport(currentScanData);
       }
     }
 
-    function toggleLanguage() {
-      selectLanguage(currentLang === 'en' ? 'hi' : 'en');
-    }
-
-    function proceedToAuth() {
-      localStorage.setItem('satyascan_lang', currentLang);
-      showScreen('auth');
-    }
-
     // =========================================================================
-    // PASSWORD-PROTECTED AUTHENTICATION SYSTEM
+    // AUTHENTICATION & PASSWORD MANAGEMENT
     // =========================================================================
     function getRegisteredUsers() {
       try {
@@ -2128,33 +1526,19 @@
       }
     }
 
-    function saveRegisteredUsers(users) {
-      try {
-        localStorage.setItem('satyascan_registered_users', JSON.stringify(users));
-      } catch (e) {}
-    }
-
     function switchAuthTab(tab) {
       const isReg = tab === 'register';
-      document.getElementById('tabRegister').classList.toggle('active', isReg);
-      document.getElementById('tabLogin').classList.toggle('active', !isReg);
+      document.getElementById('authTabRegister').classList.toggle('active', isReg);
+      document.getElementById('authTabLogin').classList.toggle('active', !isReg);
       document.getElementById('registerForm').style.display = isReg ? 'block' : 'none';
       document.getElementById('loginForm').style.display = isReg ? 'none' : 'block';
-      document.getElementById('authTitle').textContent = isReg ? 'REGISTER OPERATOR' : 'SECURE ACCESS';
+      document.getElementById('authTitle').textContent = isReg ? 'Register Inspector' : 'Sign In';
       lucide.createIcons();
     }
 
-    function togglePwdVisibility(inputId) {
-      const input = document.getElementById(inputId);
-      if (input) {
-        input.type = input.type === 'password' ? 'text' : 'password';
-      }
-    }
-
-    function selectRole(role) {
-      document.getElementById('selectedRole').value = role;
-      document.getElementById('roleInspectorCard').classList.toggle('selected', role === 'Inspector');
-      document.getElementById('roleConsumerCard').classList.toggle('selected', role === 'Consumer');
+    function togglePwdVisibility(id) {
+      const input = document.getElementById(id);
+      if (input) input.type = input.type === 'password' ? 'text' : 'password';
     }
 
     function handleRegister(e) {
@@ -2163,40 +1547,28 @@
       const email = document.getElementById('regEmail').value.trim().toLowerCase();
       const pwd = document.getElementById('regPassword').value;
       const confirmPwd = document.getElementById('regConfirmPassword').value;
-      const role = document.getElementById('selectedRole').value || 'Inspector';
-
-      if (!name || !email || !pwd) {
-        showToast('Please fill all required registration fields.');
-        return;
-      }
 
       if (pwd !== confirmPwd) {
-        showToast('Passwords do not match. Please verify.');
-        return;
-      }
-
-      if (pwd.length < 6) {
-        showToast('Password must be at least 6 characters.');
+        showToast('Passwords do not match.');
         return;
       }
 
       const users = getRegisteredUsers();
-      const existing = users.find(u => u.email === email);
-      if (existing) {
-        showToast('An account with this email already exists. Please login.');
+      if (users.some(u => u.email === email)) {
+        showToast('Account already exists. Please sign in.');
         switchAuthTab('login');
-        document.getElementById('loginEmail').value = email;
         return;
       }
 
-      const newUser = { name, email, password: pwd, role };
+      const newUser = { name, email, password: pwd };
       users.push(newUser);
-      saveRegisteredUsers(users);
+      localStorage.setItem('satyascan_registered_users', JSON.stringify(users));
 
-      currentUser = { name, email, role };
+      currentUser = { name, email };
       localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
-      showToast(`Welcome Officer ${name}! Registration successful.`);
-      showScreen('app');
+      showUserLoggedIn(currentUser);
+      showToast(`Welcome, ${name}!`);
+      switchNav('scan');
     }
 
     function handleLogin(e) {
@@ -2204,55 +1576,46 @@
       const email = document.getElementById('loginEmail').value.trim().toLowerCase();
       const pwd = document.getElementById('loginPassword').value;
 
-      if (!email || !pwd) {
-        showToast('Please enter both email and password.');
-        return;
-      }
-
       const users = getRegisteredUsers();
       const matched = users.find(u => u.email === email && u.password === pwd);
 
       if (matched) {
-        currentUser = { name: matched.name, email: matched.email, role: matched.role };
+        currentUser = { name: matched.name, email: matched.email };
         localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
-        showToast(`Authenticated: Welcome back ${currentUser.name}`);
-        showScreen('app');
+        showUserLoggedIn(currentUser);
+        showToast(`Welcome back, ${currentUser.name}!`);
+        switchNav('scan');
       } else if (users.length === 0) {
-        // First-time automatic bootstrap
-        currentUser = {
-          name: email.split('@')[0],
-          email: email,
-          role: 'Inspector'
-        };
-        users.push({ name: currentUser.name, email, password: pwd, role: 'Inspector' });
-        saveRegisteredUsers(users);
+        currentUser = { name: email.split('@')[0], email };
+        users.push({ name: currentUser.name, email, password: pwd });
+        localStorage.setItem('satyascan_registered_users', JSON.stringify(users));
         localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
-        showToast(`Account registered & authenticated.`);
-        showScreen('app');
+        showUserLoggedIn(currentUser);
+        switchNav('scan');
       } else {
-        showToast('Invalid email or password. Please verify credentials.');
+        showToast('Invalid credentials. Please verify password.');
       }
     }
 
     function handleLogout() {
       localStorage.removeItem('satyascan_user');
       currentUser = null;
-      showToast('Logged out successfully.');
-      showScreen('auth');
+      userPill.style.display = 'none';
+      showToast('Signed out.');
     }
 
     // =========================================================================
-    // FILE SELECTION & UPLOAD HANDLERS
+    // CANVAS FILE DROP & CAMERA SELECTION
     // =========================================================================
     function triggerFileUpload() { fileInput.click(); }
     function triggerCameraCapture() { cameraInput.click(); }
 
     fileInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files.length > 0) handleFileSelection(e.target.files[0]);
+      if (e.target.files && e.target.files.length > 0) handleFile(e.target.files[0]);
     });
 
     cameraInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files.length > 0) handleFileSelection(e.target.files[0]);
+      if (e.target.files && e.target.files.length > 0) handleFile(e.target.files[0]);
     });
 
     dropzone.addEventListener('dragover', (e) => {
@@ -2266,48 +1629,55 @@
       e.preventDefault();
       dropzone.classList.remove('dragover');
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        handleFileSelection(e.dataTransfer.files[0]);
+        handleFile(e.dataTransfer.files[0]);
       }
     });
 
-    function handleFileSelection(file) {
+    function handleFile(file) {
       if (!file) return;
       selectedFile = file;
-      previewName.textContent = file.name || 'label_capture.jpg';
-      previewSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB • READY FOR AUDIT';
-
       const reader = new FileReader();
       reader.onload = (e) => {
         selectedImageDataUrl = e.target.result;
-        previewImg.src = selectedImageDataUrl;
-        loadingThumbImg.src = selectedImageDataUrl;
-        arImg.src = selectedImageDataUrl;
+        previewImage.src = selectedImageDataUrl;
+        
+        scannerEmptyState.style.display = 'none';
+        scannerActiveStage.style.display = 'flex';
+        btnResetCanvas.style.display = 'inline-flex';
+        btnRunScan.disabled = false;
+        statusHintText.textContent = `${file.name || 'image.jpg'} ready for audit`;
+        floatingTagsLayer.innerHTML = '';
       };
       reader.readAsDataURL(file);
-
-      previewBox.style.display = 'flex';
-      scanBtn.disabled = false;
       lucide.createIcons();
     }
 
-    function removeFile() {
+    function resetCanvas() {
       selectedFile = null;
       selectedImageDataUrl = "";
       fileInput.value = '';
       cameraInput.value = '';
-      previewBox.style.display = 'none';
-      scanBtn.disabled = true;
+      previewImage.src = '';
+      scannerActiveStage.style.display = 'none';
+      scannerEmptyState.style.display = 'flex';
+      btnResetCanvas.style.display = 'none';
+      btnRunScan.disabled = true;
+      scannerLaser.style.display = 'none';
+      floatingTagsLayer.innerHTML = '';
+      statusHintText.textContent = 'Ready for Legal Metrology inspection';
+      currentScanData = null;
+      lucide.createIcons();
     }
 
     function showToast(msg) {
       const toast = document.getElementById('toastMsg');
       toast.textContent = msg;
       toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 4000);
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
     }
 
     // =========================================================================
-    // CANVAS IMAGE PREPROCESSING (Contrast & Optimal Scaling)
+    // IMAGE PREPROCESSING & 9-FIELD EXTRACTION ENGINE
     // =========================================================================
     function preprocessImageForOCR(imgDataUrl) {
       return new Promise((resolve) => {
@@ -2337,8 +1707,7 @@
             const imgData = ctx.getImageData(0, 0, w, h);
             const d = imgData.data;
 
-            let minLum = 255;
-            let maxLum = 0;
+            let minLum = 255, maxLum = 0;
             for (let i = 0; i < d.length; i += 4) {
               const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
               if (lum < minLum) minLum = lum;
@@ -2350,13 +1719,11 @@
               const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
               const stretched = Math.min(255, Math.max(0, ((lum - minLum) / range) * 255));
               const val = stretched > 128 ? Math.min(255, stretched * 1.04) : Math.max(0, stretched * 0.96);
-              d[i] = val;
-              d[i+1] = val;
-              d[i+2] = val;
+              d[i] = val; d[i+1] = val; d[i+2] = val;
             }
             ctx.putImageData(imgData, 0, 0);
             resolve(canvas.toDataURL('image/jpeg', 0.92));
-          } catch (err) {
+          } catch (e) {
             resolve(imgDataUrl);
           }
         };
@@ -2365,9 +1732,6 @@
       });
     }
 
-    // =========================================================================
-    // FIELD EXTRACTION LOGIC (All 9 Legal Metrology Declarations)
-    // =========================================================================
     function cleanMrpValue(rawMrp) {
       if (!rawMrp) return null;
       let cleaned = rawMrp.replace(/[₹RsINR\/\-:\s]/gi, '').trim();
@@ -2376,14 +1740,11 @@
 
       const m = cleaned.match(/(\d+(?:\.\d{1,2})?)/);
       if (!m) return null;
-
       let num = parseFloat(m[1]);
       if (isNaN(num) || num <= 0) return null;
 
       let numStr = m[1];
-      if (numStr.length >= 6 && numStr.startsWith('7')) {
-        numStr = numStr.slice(1);
-      }
+      if (numStr.length >= 6 && numStr.startsWith('7')) numStr = numStr.slice(1);
       return numStr;
     }
 
@@ -2490,9 +1851,7 @@
           let block = [l];
           for (let j = i + 1; j < Math.min(lines.length, i + 4); j++) {
             const nextL = lines[j].trim();
-            if (!nextL || /(?:For Consumer|Customer Care|Net Quantity|MRP|USE BY|Batch No|Date of Mfg|Country of Origin)/i.test(nextL)) {
-              break;
-            }
+            if (!nextL || /(?:For Consumer|Customer Care|Net Quantity|MRP|USE BY|Batch No|Date of Mfg|Country of Origin)/i.test(nextL)) break;
             block.push(nextL);
           }
           const combined = block.join(', ').replace(/\s+/g, ' ').trim();
@@ -2501,10 +1860,7 @@
         }
       }
 
-      const fallbackKeywords = [
-        "Manufactured By", "Marketed By", "Packed By", "Private Limited", "Pvt Ltd", "Pvt. Ltd.", 
-        "Limited", "Plot No", "Industrial Area", "MIDC", "GIDC", "Sector", "Lic No.", "FSSAI"
-      ];
+      const fallbackKeywords = ["Manufactured By", "Marketed By", "Packed By", "Private Limited", "Pvt Ltd", "Limited", "Plot No", "Industrial Area", "MIDC", "GIDC", "Sector", "Lic No.", "FSSAI"];
       for (const kw of fallbackKeywords) {
         const idx = rawText.toLowerCase().indexOf(kw.toLowerCase());
         if (idx !== -1) {
@@ -2663,360 +2019,344 @@
       const countDims = extractCommodityCountOrDimensions(rawText, netQty);
 
       return {
-        "manufacturer_name_and_address": mfgAddress,
-        "commodity_name": commodityName,
-        "net_quantity": netQty,
-        "mfg_date": mfgDate,
-        "mrp": mrp,
-        "consumer_care_details": consumerCare,
-        "country_of_origin": countryOrigin,
-        "unit_sale_price": usp,
-        "commodity_count_or_dimensions": countDims
+        "Maximum Retail Price (MRP)": mrp,
+        "Net Quantity": netQty,
+        "Manufacturer Name and Address": mfgAddress,
+        "Month and Year of Manufacture": mfgDate,
+        "Country of Origin": countryOrigin,
+        "Consumer Care Details": consumerCare,
+        "Unit Sale Price": usp,
+        "Common / Generic Name of Commodity": commodityName,
+        "Commodity Count / Dimensions": countDims
       };
-    }
-
-    function evaluateCompliance(extracted) {
-      const fieldsList = [
-        { key: "manufacturer_name_and_address", name: "Manufacturer Name and Address" },
-        { key: "commodity_name", name: "Common / Generic Name of Commodity" },
-        { key: "net_quantity", name: "Net Quantity" },
-        { key: "mfg_date", name: "Month and Year of Manufacture" },
-        { key: "mrp", name: "Maximum Retail Price (MRP)" },
-        { key: "consumer_care_details", name: "Consumer Care Details" },
-        { key: "country_of_origin", name: "Country of Origin" },
-        { key: "unit_sale_price", name: "Unit Sale Price" },
-        { key: "commodity_count_or_dimensions", name: "Commodity Count / Dimensions" }
-      ];
-
-      return fieldsList.map(f => {
-        const val = extracted[f.key];
-        const isPass = Boolean(val && String(val).trim());
-        const meta = FIELD_METADATA[f.name] || {};
-        return {
-          field: f.name,
-          key: f.key,
-          value: isPass ? val : null,
-          status: isPass ? "PASS" : "FAIL",
-          fix_instruction: isPass ? null : (meta.enFix || "Mandatory declaration missing. Please declare clearly on label.")
-        };
-      });
-    }
-
-    function mapFieldLocations(report, words, imgW, imgH) {
-      const defaultZones = {
-        "Maximum Retail Price (MRP)": { left: 0.08, top: 0.70, width: 0.25, height: 0.05 },
-        "Net Quantity": { left: 0.08, top: 0.58, width: 0.22, height: 0.04 },
-        "Month and Year of Manufacture": { left: 0.12, top: 0.64, width: 0.20, height: 0.04 },
-        "Manufacturer Name and Address": { left: 0.08, top: 0.45, width: 0.40, height: 0.08 },
-        "Consumer Care Details": { left: 0.28, top: 0.16, width: 0.35, height: 0.06 },
-        "Country of Origin": { left: 0.08, top: 0.47, width: 0.30, height: 0.04 },
-        "Unit Sale Price": { left: 0.18, top: 0.70, width: 0.20, height: 0.04 },
-        "Commodity Count / Dimensions": { left: 0.25, top: 0.58, width: 0.22, height: 0.04 },
-        "Common / Generic Name of Commodity": { left: 0.08, top: 0.08, width: 0.45, height: 0.06 }
-      };
-
-      const locations = {};
-      report.forEach(item => {
-        const fieldName = item.field;
-        const isPass = item.status === 'PASS';
-        let matchedBox = null;
-
-        if (isPass && words && words.length > 0) {
-          const valClean = String(item.value || '').toLowerCase().replace(/\s+/g, '');
-          for (const w of words) {
-            const wText = String(w.text || '').toLowerCase().replace(/\s+/g, '');
-            if (wText.length >= 3 && (valClean.includes(wText) || wText.includes(valClean))) {
-              const bbox = w.bbox;
-              if (bbox) {
-                matchedBox = {
-                  norm: {
-                    left: Math.round((bbox.x0 / imgW) * 1000) / 1000,
-                    top: Math.round((bbox.y0 / imgH) * 1000) / 1000,
-                    width: Math.round(((bbox.x1 - bbox.x0) / imgW) * 1000) / 1000,
-                    height: Math.round(((bbox.y1 - bbox.y0) / imgH) * 1000) / 1000
-                  }
-                };
-                break;
-              }
-            }
-          }
-        }
-
-        locations[fieldName] = {
-          status: item.status,
-          box: matchedBox,
-          estimated_zone: defaultZones[fieldName] || { left: 0.1, top: 0.1, width: 0.3, height: 0.05 }
-        };
-      });
-      return locations;
     }
 
     // =========================================================================
-    // SCAN EXECUTION PIPELINE
+    // INITIATE SCAN & RENDER REPORT
     // =========================================================================
     async function startScan() {
-      const t = I18N[currentLang] || I18N.en;
       if (!selectedFile && !selectedImageDataUrl) {
-        showToast(t.selectFileToast);
+        showToast('Please select a photo or open camera first.');
         return;
       }
 
-      currentScanData = null;
-      landingView.style.display = 'none';
-      resultsView.style.display = 'none';
-      celebrationBanner.style.display = 'none';
-      loadingView.style.display = 'block';
-
-      const ticker = document.getElementById('scanStepText');
-      ticker.textContent = "Step 1: Enhancing image contrast & resolution...";
+      btnRunScan.disabled = true;
+      scannerLaser.style.display = 'block';
+      statusHintText.textContent = 'Inspecting packaging declarations...';
 
       try {
-        const enhancedImageUrl = await preprocessImageForOCR(selectedImageDataUrl);
-        ticker.textContent = "Step 2: Neural OCR extracting label declarations...";
+        const enhancedImg = await preprocessImageForOCR(selectedImageDataUrl);
         
         const worker = await Tesseract.createWorker('eng');
-        const ret = await worker.recognize(enhancedImageUrl);
+        const ret = await worker.recognize(enhancedImg);
         await worker.terminate();
 
         const rawText = ret.data.text || "";
-        const words = ret.data.words || [];
+        const extracted = extractAllFields(rawText);
 
-        ticker.textContent = "Step 3: Auditing Legal Metrology Rule 6 declarations...";
-
-        const extractedFields = extractAllFields(rawText);
-        const report = evaluateCompliance(extractedFields);
-
-        const img = new Image();
-        img.onload = () => {
-          const imgW = img.naturalWidth || 1000;
-          const imgH = img.naturalHeight || 1000;
-          const fieldLocations = mapFieldLocations(report, words, imgW, imgH);
-
-          const resultData = {
-            raw_text: rawText,
-            report: report,
-            image_meta: { width: imgW, height: imgH },
-            field_locations: fieldLocations,
-            filename: selectedFile ? selectedFile.name : 'scanned_label.jpg',
-            imageDataUrl: selectedImageDataUrl
+        const report = Object.keys(FIELD_METADATA).map(fieldName => {
+          const val = extracted[fieldName];
+          const isPass = Boolean(val && String(val).trim());
+          const meta = FIELD_METADATA[fieldName];
+          return {
+            field: fieldName,
+            value: isPass ? val : null,
+            status: isPass ? "PASS" : "FAIL",
+            fix_instruction: isPass ? null : meta.enFix
           };
+        });
 
-          currentScanData = resultData;
-          renderResults(resultData);
+        currentScanData = {
+          raw_text: rawText,
+          report: report,
+          filename: selectedFile ? selectedFile.name : 'scanned_label.jpg',
+          imageDataUrl: selectedImageDataUrl,
+          timestamp: new Date().toISOString()
         };
-        img.src = selectedImageDataUrl;
+
+        // Render floating tags over the package canvas
+        showFloatingTags(report);
+
+        // Save to History
+        saveToHistory(currentScanData);
+
+        // Transition to Clean Report Screen after 1s
+        setTimeout(() => {
+          scannerLaser.style.display = 'none';
+          screenScan.style.display = 'none';
+          screenReport.style.display = 'block';
+          renderComplianceReport(currentScanData);
+        }, 1100);
 
       } catch (err) {
         console.error('Scan error:', err);
-        showToast('Scan error: ' + (err.message || 'Could not process label image.'));
-        loadingView.style.display = 'none';
-        landingView.style.display = 'block';
+        showToast('Scan error: Could not process label.');
+        scannerLaser.style.display = 'none';
+        btnRunScan.disabled = false;
       }
     }
 
-    function renderResults(data) {
+    function showFloatingTags(report) {
+      floatingTagsLayer.innerHTML = '';
+      const samplePositions = [
+        { top: '15%', left: '10%' },
+        { top: '15%', right: '10%' },
+        { top: '48%', left: '8%' },
+        { top: '48%', right: '8%' },
+        { top: '78%', left: '12%' },
+        { top: '78%', right: '12%' }
+      ];
+
+      report.slice(0, 6).forEach((item, idx) => {
+        const pos = samplePositions[idx] || { top: '50%', left: '50%' };
+        const isPass = item.status === 'PASS';
+        const tag = document.createElement('div');
+        tag.className = `floating-tag ${isPass ? 'pass' : 'fail'}`;
+        
+        Object.keys(pos).forEach(k => tag.style[k] = pos[k]);
+        tag.style.animationDelay = `${idx * 120}ms`;
+
+        const shortName = item.field.split(' ')[0];
+        tag.innerHTML = `<span>${shortName}</span> <span>${isPass ? '✓' : '⚠️'}</span>`;
+        floatingTagsLayer.appendChild(tag);
+      });
+    }
+
+    // Render Compliance Report (Clean Apple / Medical AI layout)
+    function renderComplianceReport(data) {
       const isHindi = (currentLang === 'hi');
-      const t = I18N[currentLang] || I18N.en;
-      loadingView.style.display = 'none';
-      resultsView.style.display = 'block';
-
       const report = data.report || [];
-      const totalFields = report.length;
-      const passedFields = report.filter(item => item.status === 'PASS').length;
+      const total = report.length;
+      const passed = report.filter(r => r.status === 'PASS').length;
+      const pct = Math.round((passed / total) * 100);
 
-      const scoreCircle = document.getElementById('scoreCircle');
-      const scoreTitle = document.getElementById('scoreTitle');
-      const badgeStatus = document.getElementById('badgeStatus');
-      const badgeText = document.getElementById('badgeText');
+      // 1. Update Gauge & Top Metrics
+      const gaugeValCircle = document.getElementById('gaugeValCircle');
+      const gaugeCenterText = document.getElementById('gaugeCenterText');
+      const reportScoreTitle = document.getElementById('reportScoreTitle');
+      const reportStatusBadge = document.getElementById('reportStatusBadge');
+      const reportStatusText = document.getElementById('reportStatusText');
 
-      scoreCircle.textContent = `${passedFields}/${totalFields}`;
-      scoreTitle.textContent = `${passedFields}/${totalFields} ${t.fieldsCompliant}`;
+      gaugeCenterText.textContent = `${pct}%`;
+      reportScoreTitle.textContent = `${passed} of ${total} ${isHindi ? 'सत्यापित' : 'Declarations Verified'}`;
 
-      if (passedFields === totalFields && totalFields > 0) {
-        badgeStatus.className = 'badge-status badge-pass';
-        badgeText.textContent = t.fullCompliance;
-        celebrationBanner.style.display = 'flex';
+      // Update Gauge SVG Arc (circumference = 251.2)
+      const offset = 251.2 - (251.2 * (pct / 100));
+      gaugeValCircle.style.strokeDashoffset = offset;
+      gaugeValCircle.style.stroke = pct === 100 ? 'var(--status-pass)' : 'var(--accent)';
 
+      if (pct === 100) {
+        reportStatusBadge.className = 'status-badge-minimal status-badge-pass';
+        reportStatusText.textContent = isHindi ? 'पूर्णतः अनुपालित' : 'COMPLIANT';
         if (typeof confetti === 'function') {
           try {
-            confetti({
-              particleCount: 90,
-              spread: 70,
-              origin: { y: 0.65 },
-              colors: ['#F59E0B', '#38BDF8', '#10B981', '#FBBF24']
-            });
+            confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 }, colors: ['#171717', '#D97706', '#059669'] });
           } catch (e) {}
         }
       } else {
-        badgeStatus.className = 'badge-status badge-fail';
-        badgeText.textContent = t.actionRequired;
-        celebrationBanner.style.display = 'none';
+        reportStatusBadge.className = 'status-badge-minimal status-badge-fail';
+        reportStatusText.textContent = isHindi ? 'सुधार आवश्यक' : 'ACTION REQUIRED';
       }
 
-      const fieldsGrid = document.getElementById('fieldsGrid');
-      fieldsGrid.innerHTML = '';
+      // 2. Render Vertical List of Declarations
+      const listContainer = document.getElementById('declarationsList');
+      listContainer.innerHTML = '';
 
       report.forEach((item, index) => {
         const isPass = (item.status === 'PASS');
-        const meta = FIELD_METADATA[item.field] || { icon: 'file-text', rule: 'Rule 6' };
-        
-        const fieldDisplayName = isHindi ? (meta.hiName || item.field) : (meta.enName || item.field);
-        const fixInstructionText = isHindi ? (meta.hiFix || item.fix_instruction) : (meta.enFix || item.fix_instruction);
+        const meta = FIELD_METADATA[item.field] || { rule: 'Rule 6' };
+        const displayName = isHindi ? meta.hiName : meta.enName;
+        const fixText = isHindi ? meta.hiFix : meta.enFix;
 
-        const card = document.createElement('div');
-        card.className = `field-card ${isPass ? 'card-pass' : 'card-fail'}`;
-        card.id = `fieldCard_${index}`;
-        
-        card.onmouseenter = () => highlightARBox(item.field, true);
-        card.onmouseleave = () => highlightARBox(item.field, false);
+        const row = document.createElement('div');
+        row.className = `declaration-item ${isPass ? '' : 'item-fail'}`;
+        row.id = `decItem_${index}`;
 
-        const statusPillClass = isPass ? 'field-pill field-pill-pass' : 'field-pill field-pill-fail';
-        const statusLabel = isPass ? (isHindi ? '✓ अनुपालित' : '✓ PASS') : (isHindi ? '✕ अनुपलब्ध' : '✕ MISSING');
-
-        let bodyHtml = '';
+        let valHtml = '';
         if (isPass) {
-          bodyHtml = `
-            <div class="field-value">
-              <strong>${t.detectedLabel}:</strong> ${escapeHtml(item.value || (isHindi ? 'उपलब्ध' : 'Present'))}
+          valHtml = `
+            <div class="dec-value">
+              ${escapeHtml(item.value || 'Present on packaging')}
             </div>
           `;
         } else {
-          bodyHtml = `
-            <div class="field-fix">
-              <i data-lucide="alert-triangle" style="width: 16px; height: 16px; flex-shrink: 0; color: #EF4444;"></i>
+          valHtml = `
+            <div class="dec-value" style="color: var(--text-tertiary);">
+              ${isHindi ? 'लेबल पर नहीं मिला' : 'Missing from scanned label'}
+            </div>
+            <div class="dec-warning-box">
+              <i data-lucide="alert-circle" style="width: 15px; height: 15px; flex-shrink: 0;"></i>
               <div>
-                <strong>${t.fixInstructionLabel}:</strong> ${escapeHtml(fixInstructionText || 'Mandatory declaration missing.')}
+                <strong>${isHindi ? 'सुधार निर्देश' : 'Requirement'}:</strong> ${escapeHtml(fixText || item.fix_instruction)}
               </div>
             </div>
           `;
         }
 
-        const editBtnLabel = isHindi ? '✏️ सत्यापित करें / बदलें' : '✏️ Verify / Override';
-
-        card.innerHTML = `
-          <div class="field-icon-box">
-            <i data-lucide="${meta.icon}" style="width: 20px; height: 20px;"></i>
+        row.innerHTML = `
+          <div class="dec-left">
+            <div class="dec-name-row">
+              <span class="dec-name">${escapeHtml(displayName)}</span>
+              <span class="dec-rule-tag">${meta.rule}</span>
+            </div>
+            ${valHtml}
+            <div class="dec-edit-drawer" id="decEditDrawer_${index}">
+              <input type="text" class="dec-edit-input" id="decEditInput_${index}" value="${escapeHtml(item.value || '')}" placeholder="Enter verified text...">
+              <div class="dec-edit-actions">
+                <button type="button" class="btn-ghost" style="padding: 4px 10px; font-size: 0.75rem;" onclick="toggleEditDrawer(${index})">Cancel</button>
+                <button type="button" class="btn-primary" style="padding: 4px 12px; font-size: 0.75rem;" onclick="saveEdit(${index})">Save & Verify</button>
+              </div>
+            </div>
           </div>
-          <div class="field-content">
-            <div class="field-header">
-              <div>
-                <span class="field-name">${escapeHtml(fieldDisplayName)}</span>
-                <span style="font-size: 0.72rem; color: var(--neon-cyan); margin-left: 6px; font-family: 'Orbitron', sans-serif;">${meta.rule}</span>
-              </div>
-              <span class="${statusPillClass}">${escapeHtml(statusLabel)}</span>
-            </div>
-            ${bodyHtml}
-            <div class="field-actions-bar">
-              <button type="button" class="btn-field-edit" onclick="toggleFieldEdit(${index})">
-                ${editBtnLabel}
-              </button>
-            </div>
-            <div class="field-edit-drawer" id="fieldEditDrawer_${index}">
-              <input type="text" class="field-edit-input" id="fieldEditInput_${index}" value="${escapeHtml(item.value || '')}" placeholder="Enter verified label declaration...">
-              <div class="field-edit-buttons">
-                <button type="button" class="btn-edit-cancel" onclick="toggleFieldEdit(${index})">${isHindi ? 'रद्द करें' : 'Cancel'}</button>
-                <button type="button" class="btn-edit-save" onclick="saveFieldEdit(${index})">${isHindi ? 'सहेजें' : 'Save & Verify'}</button>
-              </div>
+          <div class="dec-right">
+            <button type="button" class="btn-edit-inline" onclick="toggleEditDrawer(${index})">
+              ${isPass ? 'Edit' : 'Override'}
+            </button>
+            <div class="dec-check-pill ${isPass ? 'dec-check-pass' : 'dec-check-fail'}">
+              <i data-lucide="${isPass ? 'check' : 'alert-triangle'}" style="width: 15px; height: 15px; stroke-width: 2.5;"></i>
             </div>
           </div>
         `;
 
-        fieldsGrid.appendChild(card);
+        listContainer.appendChild(row);
       });
 
-      renderAROverlay(data.field_locations);
+      // 3. Update Satya AI explanation
+      updateSatyaAiExplainer(report);
       lucide.createIcons();
     }
 
-    function toggleFieldEdit(index) {
-      const drawer = document.getElementById(`fieldEditDrawer_${index}`);
+    function toggleEditDrawer(idx) {
+      const drawer = document.getElementById(`decEditDrawer_${idx}`);
       if (!drawer) return;
-      const isShowing = (drawer.style.display === 'block');
-      drawer.style.display = isShowing ? 'none' : 'block';
-      if (!isShowing) {
-        const input = document.getElementById(`fieldEditInput_${index}`);
-        if (input) input.focus();
+      const isOpen = drawer.style.display === 'block';
+      drawer.style.display = isOpen ? 'none' : 'block';
+      if (!isOpen) {
+        const inp = document.getElementById(`decEditInput_${idx}`);
+        if (inp) inp.focus();
       }
     }
 
-    function saveFieldEdit(index) {
-      if (!currentScanData || !currentScanData.report || !currentScanData.report[index]) return;
-      const input = document.getElementById(`fieldEditInput_${index}`);
-      if (!input) return;
+    function saveEdit(idx) {
+      if (!currentScanData || !currentScanData.report || !currentScanData.report[idx]) return;
+      const inp = document.getElementById(`decEditInput_${idx}`);
+      if (!inp) return;
 
-      const newVal = input.value.trim();
-      const item = currentScanData.report[index];
+      const val = inp.value.trim();
+      const item = currentScanData.report[idx];
 
-      if (newVal) {
-        item.value = newVal;
+      if (val) {
+        item.value = val;
         item.status = 'PASS';
         item.fix_instruction = null;
       } else {
         item.value = null;
         item.status = 'FAIL';
-        const meta = FIELD_METADATA[item.field] || {};
-        item.fix_instruction = meta.enFix || "Mandatory declaration missing.";
       }
 
-      renderResults(currentScanData);
-      showToast(`Field updated.`);
+      saveToHistory(currentScanData);
+      renderComplianceReport(currentScanData);
+      showToast('Declaration updated.');
     }
 
-    function renderAROverlay(fieldLocations) {
-      arBoxesLayer.innerHTML = '';
-      if (!fieldLocations) return;
-
-      Object.keys(fieldLocations).forEach((fieldName, idx) => {
-        const item = fieldLocations[fieldName];
-        const isPass = (item.status === 'PASS');
-        const box = item.box;
-        const norm = box ? box.norm : (item.estimated_zone || null);
-
-        if (!norm) return;
-
-        const boxEl = document.createElement('div');
-        boxEl.className = `ar-box ${isPass ? 'ar-box-pass' : 'ar-box-fail'}`;
-        boxEl.id = `arBox_${idx}`;
-        boxEl.dataset.field = fieldName;
-
-        boxEl.style.left = `${norm.left * 100}%`;
-        boxEl.style.top = `${norm.top * 100}%`;
-        boxEl.style.width = `${norm.width * 100}%`;
-        boxEl.style.height = `${norm.height * 100}%`;
-
-        const tag = document.createElement('div');
-        tag.className = 'ar-box-tag';
-        tag.textContent = isPass ? `✓ ${fieldName.split(' ')[0]}` : `⚠️ ${fieldName.split(' ')[0]}`;
-        boxEl.appendChild(tag);
-
-        arBoxesLayer.appendChild(boxEl);
-      });
+    function updateSatyaAiExplainer(report) {
+      const failed = report.filter(r => r.status === 'FAIL');
+      const el = document.getElementById('satyaAiExplanation');
+      if (failed.length === 0) {
+        el.textContent = "All mandatory declarations comply with Legal Metrology Rule 6. The packaging display panel conforms to statutory standards.";
+      } else {
+        const failedNames = failed.map(f => f.field.split(' ')[0]).join(', ');
+        el.textContent = `Audit detected ${failed.length} missing declaration(s): [${failedNames}]. Under Rule 6, missing declarations may incur penal notices under Section 36 of the Act.`;
+      }
     }
 
-    function highlightARBox(fieldName, isHighlight) {
-      const boxes = arBoxesLayer.querySelectorAll('.ar-box');
-      boxes.forEach(b => {
-        if (b.dataset.field === fieldName) {
-          if (isHighlight) b.classList.add('highlighted');
-          else b.classList.remove('highlighted');
+    function askSatyaAi(topic) {
+      const el = document.getElementById('satyaAiExplanation');
+      if (topic === 'mrp') {
+        el.textContent = "Rule 6(1)(e) mandates that the Maximum Retail Price (MRP) must be clearly stated inclusive of all taxes. Ambiguous or split pricing without tax declaration violates consumer transparency provisions.";
+      } else if (topic === 'usp') {
+        el.textContent = "Rule 6(11) requires a Unit Sale Price (USP) declared in Rs. per g or per ml on all packages containing more than 100g/100ml to allow direct consumer price comparison across brands.";
+      } else if (topic === 'origin') {
+        el.textContent = "Rule 6(1)(g) makes it mandatory for every domestic or imported pre-packaged commodity to declare 'Country of Origin: [Country]' on the principal display panel.";
+      }
+    }
+
+    // =========================================================================
+    // HISTORY & RULES REFERENCE
+    // =========================================================================
+    function saveToHistory(scan) {
+      try {
+        const hist = JSON.parse(localStorage.getItem('satyascan_history') || '[]');
+        hist.unshift({
+          filename: scan.filename,
+          timestamp: scan.timestamp,
+          report: scan.report,
+          imageDataUrl: scan.imageDataUrl
+        });
+        if (hist.length > 10) hist.pop();
+        localStorage.setItem('satyascan_history', JSON.stringify(hist));
+      } catch (e) {}
+    }
+
+    function loadHistory() {
+      const container = document.getElementById('historyListContainer');
+      try {
+        const hist = JSON.parse(localStorage.getItem('satyascan_history') || '[]');
+        if (hist.length === 0) {
+          container.innerHTML = `<p style="color: var(--text-tertiary); font-size: 0.9rem;">No previous scans recorded yet.</p>`;
+          return;
         }
+
+        container.innerHTML = '';
+        hist.forEach(item => {
+          const total = item.report ? item.report.length : 9;
+          const passed = item.report ? item.report.filter(r => r.status === 'PASS').length : 0;
+          const dateStr = new Date(item.timestamp).toLocaleString();
+
+          const card = document.createElement('div');
+          card.className = 'declaration-item';
+          card.style.cursor = 'pointer';
+          card.innerHTML = `
+            <div class="dec-left">
+              <div class="dec-name">${escapeHtml(item.filename)}</div>
+              <div style="font-size: 0.8rem; color: var(--text-tertiary);">${dateStr}</div>
+            </div>
+            <div class="dec-right">
+              <span class="status-badge-minimal ${passed === total ? 'status-badge-pass' : 'status-badge-fail'}">
+                ${passed}/${total} Verified
+              </span>
+            </div>
+          `;
+          card.onclick = () => {
+            currentScanData = item;
+            screenHistory.style.display = 'none';
+            screenReport.style.display = 'block';
+            renderComplianceReport(item);
+          };
+          container.appendChild(card);
+        });
+      } catch (e) {}
+    }
+
+    function populateRulesReference() {
+      const container = document.getElementById('rulesReferenceList');
+      container.innerHTML = '';
+
+      Object.keys(FIELD_METADATA).forEach(name => {
+        const meta = FIELD_METADATA[name];
+        const row = document.createElement('div');
+        row.className = 'declaration-item';
+        row.innerHTML = `
+          <div class="dec-left">
+            <div class="dec-name-row">
+              <span class="dec-name">${name}</span>
+              <span class="dec-rule-tag">${meta.rule}</span>
+            </div>
+            <div class="dec-value">${meta.enFix}</div>
+          </div>
+        `;
+        container.appendChild(row);
       });
-    }
-
-    function toggleARBoxes() {
-      arBoxesVisible = !arBoxesVisible;
-      arBoxesLayer.style.display = arBoxesVisible ? 'block' : 'none';
-      const btn = document.getElementById('btnToggleAR');
-      btn.textContent = arBoxesVisible ? 'AR Boxes: ON' : 'AR Boxes: OFF';
-    }
-
-    function resetToUpload() {
-      removeFile();
-      currentScanData = null;
-      resultsView.style.display = 'none';
-      loadingView.style.display = 'none';
-      landingView.style.display = 'block';
-      lucide.createIcons();
     }
 
     function escapeHtml(str) {
@@ -3027,11 +2367,11 @@
     }
 
     // =========================================================================
-    // OFFICIAL LEGAL METROLOGY PDF NOTICE GENERATOR
+    // CLEAN OFFICIAL PDF VIOLATION NOTICE GENERATOR
     // =========================================================================
     function generateOfficialPDF() {
       if (!currentScanData || !currentScanData.report) {
-        showToast('No active scan report to generate PDF.');
+        showToast('No scan data available.');
         return;
       }
 
@@ -3043,156 +2383,65 @@
       const dateStr = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
       const noticeNo = `SATYA-LM-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-      doc.setFillColor(7, 11, 20);
-      doc.rect(0, 0, pageWidth, 28, 'F');
+      // Clean Header
+      doc.setFillColor(23, 23, 23);
+      doc.rect(0, 0, pageWidth, 24, 'F');
 
-      doc.setTextColor(245, 158, 11);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(12);
-      doc.text('GOVERNMENT OF INDIA • LEGAL METROLOGY DEPARTMENT', pageWidth / 2, 11, { align: 'center' });
-      
       doc.setTextColor(255, 255, 255);
-      doc.setFontSize(10);
-      doc.text('PACKAGED COMMODITIES COMPLIANCE AUDIT NOTICE', pageWidth / 2, 18, { align: 'center' });
-      
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text('LEGAL METROLOGY PACKAGED COMMODITIES COMPLIANCE AUDIT', pageWidth / 2, 11, { align: 'center' });
+
       doc.setFontSize(7.5);
       doc.setFont('helvetica', 'normal');
-      doc.setTextColor(226, 232, 240);
-      doc.text('[Issued under Rule 6 of Legal Metrology (Packaged Commodities) Rules, 2011]', pageWidth / 2, 23, { align: 'center' });
+      doc.setTextColor(217, 119, 6);
+      doc.text('Issued pursuant to Rule 6 of Legal Metrology (Packaged Commodities) Rules, 2011', pageWidth / 2, 17, { align: 'center' });
 
-      doc.setTextColor(15, 23, 42);
+      // Metadata
+      doc.setTextColor(23, 23, 23);
       doc.setFontSize(8.5);
       doc.setFont('helvetica', 'bold');
-      doc.text(`Notice Reference: ${noticeNo}`, 14, 36);
-      doc.text(`Date of Audit: ${dateStr}`, pageWidth - 14, 36, { align: 'right' });
+      doc.text(`Notice Ref: ${noticeNo}`, 14, 32);
+      doc.text(`Date: ${dateStr}`, pageWidth - 14, 32, { align: 'right' });
 
-      const inspectorName = currentUser ? currentUser.name : 'Authorized Inspector';
-      const inspectorRole = currentUser ? currentUser.role : 'Legal Metrology Officer';
-      
       doc.setFont('helvetica', 'normal');
-      doc.text(`Auditing Officer: ${inspectorName} (${inspectorRole})`, 14, 42);
-      doc.text(`Sample Item File: ${selectedFile ? selectedFile.name : 'Scanned_Commodity_Label.jpg'}`, 14, 47);
+      doc.text(`Audited Item: ${currentScanData.filename || 'Packaging_Sample.jpg'}`, 14, 38);
 
       const tableRows = report.map(item => {
         const meta = FIELD_METADATA[item.field] || { rule: 'Rule 6' };
-        const isPass = (item.status === 'PASS');
+        const isPass = item.status === 'PASS';
         return [
           item.field,
           meta.rule,
-          isPass ? 'COMPLIANT' : 'VIOLATION / MISSING',
-          isPass ? `Declared: ${item.value || 'Present'}` : `REQUIRED ACTION:\n${item.fix_instruction || meta.enFix}`
+          isPass ? 'COMPLIANT' : 'MISSING / VIOLATION',
+          isPass ? `Declared: ${item.value || 'Present'}` : `Remediation Directive:\n${meta.enFix}`
         ];
       });
 
       doc.autoTable({
-        startY: 54,
-        head: [['Mandatory Declaration', 'Rule Ref', 'Audit Status', 'Finding & Remediation Order']],
+        startY: 44,
+        head: [['Mandatory Declaration', 'Rule Ref', 'Status', 'Audit Finding & Remediation']],
         body: tableRows,
-        theme: 'grid',
-        headStyles: { fillColor: [7, 11, 20], textColor: [245, 158, 11], fontStyle: 'bold', fontSize: 8.5 },
+        theme: 'plain',
+        headStyles: { fillColor: [247, 246, 242], textColor: [23, 23, 23], fontStyle: 'bold', fontSize: 8.5 },
         styles: { fontSize: 7.5, cellPadding: 3, valign: 'middle' },
         didParseCell: function (data) {
           if (data.column.index === 2) {
-            if (data.cell.raw === 'COMPLIANT') {
-              data.cell.styles.textColor = [16, 185, 129];
-              data.cell.styles.fillColor = [240, 253, 244];
-            } else {
-              data.cell.styles.textColor = [239, 68, 68];
-              data.cell.styles.fillColor = [254, 242, 242];
-            }
+            data.cell.styles.textColor = data.cell.raw === 'COMPLIANT' ? [5, 150, 105] : [220, 38, 38];
+            data.cell.styles.fontStyle = 'bold';
           }
         }
       });
 
       const finalY = doc.lastAutoTable.finalY || 220;
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8.5);
-      doc.setTextColor(185, 28, 28);
-      doc.text('STATUTORY DIRECTIVE & PENAL PROVISIONS:', 14, finalY + 8);
-
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7.5);
-      doc.setTextColor(71, 85, 105);
-      const legalNote = "Non-compliance with mandatory packaging declarations violates Rule 6 of Legal Metrology (Packaged Commodities) Rules, 2011 and Section 36 of Legal Metrology Act, 2009, punishable with statutory penalties. Packagers/Manufacturers are directed to rectify non-compliant declarations immediately on the principal display panel.";
-      doc.text(doc.splitTextToSize(legalNote, pageWidth - 28), 14, finalY + 13);
+      doc.setTextColor(107, 107, 107);
+      doc.text('Generated autonomously via SatyaScan AI Legal Metrology Engine • Legal Metrology Act, 2009', pageWidth / 2, 285, { align: 'center' });
 
-      const pdfFilename = `Legal_Metrology_Notice_${selectedFile ? selectedFile.name.replace(/\.[^/.]+$/, "") : "audit"}.pdf`;
-      doc.save(pdfFilename);
-      showToast(`Notice downloaded: ${pdfFilename}`);
-    }
-
-    // =========================================================================
-    // CHATBOT ASSISTANT
-    // =========================================================================
-    const CHAT_FAQ = [
-      { keywords: ["mrp", "price", "taxes"], en: "Under Rule 6(1)(e), Maximum Retail Price (MRP) must be inclusive of all taxes and declared clearly as 'MRP Rs. XX.XX (incl. of all taxes)'.", hi: "नियम 6(1)(e) के अनुसार, अधिकतम खुदरा मूल्य (MRP) सभी करों सहित 'MRP Rs. XX.XX (सभी करों सहित)' के रूप में दर्शाना अनिवार्य है।" },
-      { keywords: ["usp", "unit sale price", "per g", "per ml"], en: "Under Rule 6(11), Unit Sale Price (USP) must be declared in Rs. per g/ml on packages > 100g/100ml to enable fair price comparison.", hi: "नियम 6(11) के अनुसार 100 ग्राम/मिली से अधिक पैकेज पर प्रति ग्राम या प्रति मिली इकाई विक्रय मूल्य (उदा. Rs. 0.50/g) अनिवार्य है।" },
-      { keywords: ["manufacturer", "address", "packer"], en: "Rule 6(1)(a) mandates declaring the complete name and registered address of the manufacturer/packer/importer.", hi: "नियम 6(1)(a) के अनुसार निर्माता, पैकर या आयातक का पूरा नाम और पंजीकृत पता होना अनिवार्य है।" },
-      { keywords: ["origin", "country", "made in"], en: "Rule 6(1)(g) mandates explicit declaration of Country of Origin (e.g., 'Country of Origin: India').", hi: "नियम 6(1)(g) के तहत देश का नाम ('Country of Origin: India') घोषित करना आवश्यक है।" }
-    ];
-
-    function toggleChatWindow() {
-      const isVisible = (chatWindow.style.display === 'flex');
-      chatWindow.style.display = isVisible ? 'none' : 'flex';
-      if (!isVisible) setTimeout(() => chatInput.focus(), 100);
-      lucide.createIcons();
-    }
-
-    function initChatbot() {
-      chatMessages.innerHTML = '';
-      const botGreeting = document.createElement('div');
-      botGreeting.className = 'chat-bubble chat-bubble-bot';
-      botGreeting.textContent = currentLang === 'hi'
-        ? "नमस्ते! मैं सत्यस्कैन AI सहायक हूँ। आप विधिक माप विज्ञान, नियम 6, MRP या सुधारात्मक निर्देशों के बारे में पूछ सकते हैं।"
-        : "Greetings Operator! I am SatyaScan AI Assistant. Ask me about Legal Metrology Rule 6, MRP rules, or statutory directives.";
-      chatMessages.appendChild(botGreeting);
-
-      const chips = document.createElement('div');
-      chips.className = 'chat-chips';
-      const quicks = currentLang === 'hi' ? ["MRP नियम", "USP नियम", "निर्माता पता नियम"] : ["MRP Rules", "USP Guidelines", "Manufacturer Address"];
-      quicks.forEach(q => {
-        const btn = document.createElement('button');
-        btn.className = 'chat-chip';
-        btn.textContent = q;
-        btn.onclick = () => { chatInput.value = q; sendChatMessage(); };
-        chips.appendChild(btn);
-      });
-      chatMessages.appendChild(chips);
-    }
-
-    function handleChatKeyDown(e) {
-      if (e.key === 'Enter') sendChatMessage();
-    }
-
-    function sendChatMessage() {
-      const q = chatInput.value.trim();
-      if (!q) return;
-
-      const userBubble = document.createElement('div');
-      userBubble.className = 'chat-bubble chat-bubble-user';
-      userBubble.textContent = q;
-      chatMessages.appendChild(userBubble);
-      chatInput.value = '';
-
-      setTimeout(() => {
-        const qLower = q.toLowerCase();
-        let answer = currentLang === 'hi'
-          ? "विधिक माप विज्ञान नियम 6 के तहत 9 प्रमुख घोषणाएं अनिवार्य हैं: MRP, शुद्ध मात्रा, निर्माण तिथि, निर्माता पता, वस्तु नाम, उपभोक्ता हेल्पलाइन, देश का नाम, USP और संख्या।"
-          : "Under Rule 6 of Legal Metrology, 9 declarations are mandatory: MRP, Net Qty, Mfg Date, Manufacturer Address, Commodity Name, Customer Care, Origin, USP, and Count.";
-        
-        for (const item of CHAT_FAQ) {
-          if (item.keywords.some(kw => qLower.includes(kw))) {
-            answer = currentLang === 'hi' ? item.hi : item.en;
-            break;
-          }
-        }
-
-        const botBubble = document.createElement('div');
-        botBubble.className = 'chat-bubble chat-bubble-bot';
-        botBubble.textContent = answer;
-        chatMessages.appendChild(botBubble);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 250);
+      const filename = `SatyaScan_Compliance_Report_${noticeNo}.pdf`;
+      doc.save(filename);
+      showToast(`Report downloaded: ${filename}`);
     }
   </script>
 </body>
