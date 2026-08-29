@@ -15,10 +15,11 @@ except ImportError:
 reader = easyocr.Reader(['en'])
 
 
-def load_image(image_input):
+def load_image(image_input, max_dimension=1800):
     """
     Load an image from a file path, raw bytes, or BytesIO.
     Supports broad format range (JPEG, PNG, HEIC/HEIF, TIFF, WebP, etc.) and auto-orientates EXIF tags.
+    Downscales large photos (e.g. 12MP+ camera captures) to fit within max_dimension to optimize RAM & speed.
     """
     try:
         if isinstance(image_input, (bytes, bytearray)):
@@ -38,8 +39,15 @@ def load_image(image_input):
 
         # Correct orientation based on EXIF tags (e.g. iPhone photos)
         pil_img = ImageOps.exif_transpose(pil_img)
-        # Convert to RGB mode
+        # Convert to standard RGB mode
         pil_img = pil_img.convert('RGB')
+
+        # Optimize memory: downscale if image exceeds max_dimension
+        if max(pil_img.size) > max_dimension:
+            scale = max_dimension / max(pil_img.size)
+            new_size = (int(pil_img.width * scale), int(pil_img.height * scale))
+            pil_img = pil_img.resize(new_size, Image.Resampling.LANCZOS)
+
         # Convert to numpy array for EasyOCR
         return np.array(pil_img)
     except Exception as e:
