@@ -171,8 +171,8 @@ async def scan_label(file: UploadFile = File(...)):
         img_arr = load_image(image_bytes)
         img_h, img_w = img_arr.shape[:2]
 
-        # 3. Run OCR & join all detected text into one string
-        full_text, raw_boxes = extract_text(image_bytes)
+        # 3. Run OCR & join all detected text into one string (reusing img_arr)
+        full_text, raw_boxes = extract_text(img_arr)
         raw_text = " ".join([box[1] for box in raw_boxes]) if raw_boxes else full_text
 
         # 4. Extract all Legal Metrology fields

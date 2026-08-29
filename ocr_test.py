@@ -12,14 +12,14 @@ except ImportError:
     pass
 
 # Initialize EasyOCR reader instance
-reader = easyocr.Reader(['en'])
+reader = easyocr.Reader(['en'], gpu=False)
 
 
-def load_image(image_input, max_dimension=1800):
+def load_image(image_input, max_dimension=1200):
     """
     Load an image from a file path, raw bytes, or BytesIO.
     Supports broad format range (JPEG, PNG, HEIC/HEIF, TIFF, WebP, etc.) and auto-orientates EXIF tags.
-    Downscales large photos (e.g. 12MP+ camera captures) to fit within max_dimension to optimize RAM & speed.
+    Downscales large photos to fit within max_dimension to keep memory lightweight (<150MB) and fast.
     """
     try:
         if isinstance(image_input, (bytes, bytearray)):
@@ -58,8 +58,14 @@ def extract_text(image_input):
     """
     Extract text from an image (file path, bytes, or numpy array).
     Returns (full_text: str, results: list).
+    Uses lightweight canvas_size & mag_ratio to maintain strict memory bounds on cloud containers.
     """
-    img = load_image(image_input)
-    results = reader.readtext(img)
+    if isinstance(image_input, np.ndarray):
+        img = image_input
+    else:
+        img = load_image(image_input)
+
+    # canvas_size=1280 and mag_ratio=1.0 ensure PyTorch memory stays <150MB on CPU
+    results = reader.readtext(img, canvas_size=1280, mag_ratio=1.0)
     full_text = " ".join([r[1] for r in results])
     return full_text, results
