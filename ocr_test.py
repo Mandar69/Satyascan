@@ -19,18 +19,8 @@ try:
 except ImportError:
     pass
 
-# Model cache path for Docker and local
-model_dir = "/root/.EasyOCR" if os.path.exists("/root/.EasyOCR") else None
-
-# Initialize EasyOCR reader instance
-reader = easyocr.Reader(
-    ['en'],
-    gpu=False,
-    model_storage_directory=model_dir,
-    user_network_directory=model_dir,
-    download_enabled=False if model_dir else True,
-    verbose=False
-)
+# Initialize EasyOCR reader instance (auto-locates ~/.EasyOCR model directory)
+reader = easyocr.Reader(['en'], gpu=False, verbose=False)
 
 
 def load_image(image_input, max_dimension=1024):
