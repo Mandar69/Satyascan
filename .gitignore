@@ -1,0 +1,55 @@
+# SatyaScan .gitignore
+# Excludes venv, build artifacts, secrets, and large model cache files
+# from being committed to the repository (Railway builds these from scratch)
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Virtual Environment ───────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+.env/
+
+# ── EasyOCR / PyTorch Model Weights ──────────────────────────────────────────
+# (Downloaded during Docker build — not committed to git)
+.EasyOCR/
+*.pth
+*.onnx
+*.pt
+
+# ── Environment Secrets ───────────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+secrets.json
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ── IDE / Editor ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Sample / Test Images ──────────────────────────────────────────────────────
+# (Large binary files — keep out of git)
+sample_label.jpg
+*.heic
+*.HEIC
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
