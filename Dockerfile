@@ -1,6 +1,6 @@
 # ============================================================
 # SatyaScan — Legal Metrology Compliance Engine
-# Multi-stage Docker build for Railway.app deployment
+# Multi-stage Docker build for Hugging Face Spaces & Cloud
 # ============================================================
 
 # --- Stage 1: Builder ---
@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# Install modern PyTorch CPU wheel (supports NumPy 2.x natively)
+# Install PyTorch CPU-only wheel
 RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
 # Install EasyOCR and all application dependencies
@@ -41,25 +41,29 @@ RUN pip install --no-cache-dir \
     pyclipper \
     python-bidi
 
-# Pre-download and cache EasyOCR model weights + verify complete OCR pipeline
+# Pre-download and cache EasyOCR model weights during build
 RUN python -c "\
 import easyocr, numpy, torch; \
 print(f'NumPy version: {numpy.__version__}'); \
 print(f'PyTorch version: {torch.__version__}'); \
-t = torch.tensor([1, 2, 3]); \
-print(f'PyTorch tensor-to-numpy verification: {t.numpy()}'); \
-print('Downloading & validating EasyOCR model weights...'); \
 reader = easyocr.Reader(['en'], gpu=False, verbose=False); \
 test_img = numpy.ones((100, 300, 3), dtype=numpy.uint8) * 255; \
 res = reader.readtext(test_img); \
-print('EASYOCR PIPELINE VERIFIED SUCCESSFULLY!')"
+print('EASYOCR MODEL PRE-DOWNLOADED & VERIFIED!')"
 
 # --- Stage 2: Runtime ---
 FROM python:3.12-slim
 
-WORKDIR /app
+# Create user with UID 1000 for Hugging Face Spaces security
+RUN useradd -m -u 1000 user
+USER user
+ENV HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH
 
-# Runtime libraries only
+WORKDIR $HOME/app
+
+USER root
+# Install runtime libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libglib2.0-0 \
     libsm6 \
@@ -74,19 +78,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /usr/local/lib/python3.12 /usr/local/lib/python3.12
 COPY --from=builder /usr/local/bin /usr/local/bin
 
-# Copy pre-downloaded EasyOCR weights
+# Copy pre-downloaded EasyOCR weights to user home & root
+COPY --from=builder /root/.EasyOCR /home/user/.EasyOCR
 COPY --from=builder /root/.EasyOCR /root/.EasyOCR
+RUN chown -R user:user /home/user/.EasyOCR
 
 # Copy application source code
-COPY main.py .
-COPY ocr_test.py .
-COPY extract_fields.py .
-COPY compliance.py .
-COPY index.html .
-COPY sw.js .
-COPY manifest.json .
+COPY --chown=user:user main.py .
+COPY --chown=user:user ocr_test.py .
+COPY --chown=user:user extract_fields.py .
+COPY --chown=user:user compliance.py .
+COPY --chown=user:user index.html .
+COPY --chown=user:user sw.js .
+COPY --chown=user:user manifest.json .
 
-ENV PORT=8000
-EXPOSE 8000
+USER user
 
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
+# Hugging Face default port is 7860
+ENV PORT=7860
+EXPOSE 7860
+
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-7860} --workers 1"]
