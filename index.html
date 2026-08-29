@@ -1958,27 +1958,25 @@
     // HIGH-ACCURACY JAVASCRIPT REGEX EXTRACTION ENGINE (9 Legal Metrology Fields)
     // Supports multi-line scanning, Indian packaging conventions, and fuzzy token matching
     // =========================================================================
-    function cleanMrpValue(rawMrp, fullText = "") {
+    function cleanMrpValue(rawMrp) {
       if (!rawMrp) return null;
-      let cleaned = rawMrp.trim().replace(/\s*[\.,]\s*/g, '.');
-      const m = cleaned.match(/([0-9]+(?:\.[0-9]{1,2})?)/);
-      if (!m) return cleaned;
+      // Strip currency prefixes, slashes, spaces, trailing punctuation
+      let cleaned = rawMrp.replace(/[₹RsINR\/\-:\s]/gi, '').trim();
+      cleaned = cleaned.replace(/^[^\d]+|[^\d]+$/g, '');
+      cleaned = cleaned.replace(/,/g, '.');
 
+      const m = cleaned.match(/(\d+(?:\.\d{1,2})?)/);
+      if (!m) return null;
+
+      let num = parseFloat(m[1]);
+      if (isNaN(num) || num <= 0) return null;
+
+      // Fix rare OCR currency glyph confusion where leading ₹ was scanned as a 7 on multi-digit prices
       let numStr = m[1];
-      let parts = numStr.split('.');
-      let intPart = parts[0];
-      let decPart = parts.length > 1 ? '.' + parts[1] : '';
-
-      // Fix OCR currency misreadings where ₹ is read as '7'
-      if (intPart.length >= 5 && intPart.startsWith('7')) {
-        intPart = intPart.slice(1);
-      } else if (intPart.length >= 7) {
-        intPart = intPart.slice(1);
-      } else if (intPart.length === 4 && intPart.startsWith('7') && (fullText.includes('USP') || fullText.includes('16.36') || fullText.includes('10.') || fullText.includes('20.'))) {
-        intPart = intPart.slice(1);
+      if (numStr.length >= 6 && numStr.startsWith('7')) {
+        numStr = numStr.slice(1);
       }
-
-      return intPart ? (intPart + decPart) : null;
+      return numStr;
     }
 
     // 1. Maximum Retail Price (MRP)
@@ -1986,21 +1984,21 @@
       if (!rawText) return null;
       const lines = rawText.split('\n');
 
-      // Check line by line first (handles standard label line layouts)
+      // 1. Check line by line for explicit MRP keyword
       for (const line of lines) {
         const l = line.trim();
-        if (/(?:MRP|M\.R\.P|MAX(?:IMUM)?\s*RETAIL|MR\s*P|M\s*RP|M\.R\s*P|MAP|MBP)/i.test(l)) {
-          const numMatch = l.match(/(?:Rs\.?|INR|₹|[\s:;.,\/-])*\s*([₹\d][\d,\.\s]*\d|\d+)(?:\s*\/-)?/i);
-          if (numMatch && /\d/.test(numMatch[1])) {
-            const cleaned = cleanMrpValue(numMatch[1], rawText);
-            if (cleaned && parseFloat(cleaned) > 0) return `Rs. ${cleaned}`;
+        if (/(?:MRP|M\.R\.P|MAX(?:IMUM)?\s*RETAIL|MR\s*P|M\s*RP|M\.R\s*P|MAP|MBP)\b/i.test(l)) {
+          const m = l.match(/(?:MRP|M\.R\.P|MAX(?:IMUM)?\s*RETAIL|MR\s*P|M\s*RP|M\.R\s*P|MAP|MBP)[^\d₹]*([₹RsINR\s]*\d+[\d,\.\s]*\d*)/i);
+          if (m) {
+            const cleaned = cleanMrpValue(m[1]);
+            if (cleaned) return `Rs. ${cleaned}`;
           }
         }
       }
 
-      // Multi-line / Global patterns
+      // 2. Multi-line / Global patterns
       const patterns = [
-        /(?:MRP|M\.R\.P\.|Max(?:imum)?\s*Retail\s*Price|MR\s*P|M\.R\s*P)[\s:;.,-]*(?:USP:)?\s*(?:Rs\.?|INR|₹)?\s*([₹\d][\d,\.\s]*\d)/i,
+        /(?:MRP|M\.R\.P\.|Max(?:imum)?\s*Retail\s*Price|MR\s*P|M\.R\s*P)[\s:;.,-]*(?:USP:)?\s*(?:Rs\.?|INR|₹)?\s*([0-9]+(?:\.[0-9]{1,2})?)/i,
         /(?:MRP|M\.R\.P\.)[^\n;,\(]*?([0-9]+(?:[\.\s][0-9]{2})?)\s*(?=\(?(?:incl|tax|USP|€|\/|\n))/i,
         /(?:MRP|M\.R\.P\.)[\s:;.,-]*([^\n;,\(]+?)(?=(?:\s*(?:USP|incl|\/|Mfg|Date|Batch)|\s*$))/i,
         /(?:Rs\.?|INR|₹)\s*([0-9]+(?:\.[0-9]{1,2})?)(?:\s*\/-)?(?=\s*(?:incl|tax|\(|$))/i
@@ -2009,11 +2007,8 @@
       for (const p of patterns) {
         const match = rawText.match(p);
         if (match) {
-          let val = match[1].trim().replace(/^[^\w₹]+|[^\w]+$/g, '');
-          if (val && /\d/.test(val)) {
-            const cleaned = cleanMrpValue(val, rawText);
-            if (cleaned) return `Rs. ${cleaned}`;
-          }
+          const cleaned = cleanMrpValue(match[1]);
+          if (cleaned) return `Rs. ${cleaned}`;
         }
       }
       return null;
@@ -3356,6 +3351,8 @@
     }
 
     function resetToUpload() {
+      removeFile();
+      currentScanData = null;
       resultsView.style.display = 'none';
       loadingView.style.display = 'none';
       landingView.style.display = 'block';
