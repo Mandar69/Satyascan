@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SatyaScan - Legal Metrology Packaging Compliance Engine</title>
+  <title>SatyaScan 2.0 - Futuristic Legal Metrology Compliance Engine</title>
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1E2A4A">
+  <meta name="theme-color" content="#070B14">
   
-  <!-- Custom Shield Favicon (SVG) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 3L5 8.5V17.5C5 25.5 10.5 32.5 18 34.5C25.5 32.5 31 25.5 31 17.5V8.5L18 3Z' fill='%231E2A4A' stroke='%23D4A017' stroke-width='2' stroke-linejoin='round'/%3E%3Cline x1='8' y1='18' x2='28' y2='18' stroke='%23D4A017' stroke-width='1.5' stroke-dasharray='2 2' opacity='0.6'/%3E%3Cpath d='M12 18.5L16 22.5L24 14.5' stroke='%23D4A017' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <!-- Custom Cyber Shield Favicon (SVG) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 3L5 8.5V17.5C5 25.5 10.5 32.5 18 34.5C25.5 32.5 31 25.5 31 17.5V8.5L18 3Z' fill='%23070B14' stroke='%23F59E0B' stroke-width='2' stroke-linejoin='round'/%3E%3Cline x1='8' y1='18' x2='28' y2='18' stroke='%2306B6D4' stroke-width='1.5' stroke-dasharray='2 2' opacity='0.8'/%3E%3Cpath d='M12 18.5L16 22.5L24 14.5' stroke='%23F59E0B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
-  <!-- Typography: Space Grotesk (Headings/Logo) + Inter (Body/Controls) + Noto Sans Devanagari (Hindi) -->
+  <!-- Futuristic Typography: Orbitron / Space Grotesk / Inter / Noto Sans Devanagari -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- Tesseract.js for In-Browser WebAssembly OCR (100% Free • No Server Needed) -->
+  <!-- Tesseract.js for In-Browser WebAssembly OCR (100% Free • Zero Server Dependency) -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
-  <!-- jsPDF & AutoTable for Official PDF Violation Notices -->
+  <!-- jsPDF & AutoTable for Official Legal Notice PDFs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   
@@ -30,62 +30,46 @@
 
   <style>
     :root {
-      /* 8px Strict Spacing Scale */
-      --sp-1: 8px;
-      --sp-2: 16px;
-      --sp-3: 24px;
-      --sp-4: 32px;
-      --sp-5: 40px;
-      --sp-6: 48px;
-
-      /* Refined Executive Palette */
-      --primary: #1E2A4A;          /* Deep Indigo / Navy */
-      --primary-hover: #162038;
-      --primary-dark: #0F172A;
-      --primary-light: #F0F4FC;
-      --primary-border: #CBD5E1;
-
-      --accent: #D4A017;           /* Warm Amber / Gold */
-      --accent-hover: #B8860B;
-      --accent-light: #FEF9EB;
-      --accent-border: #FDE68A;
-      --accent-glow: rgba(212, 160, 23, 0.28);
-
-      --bg-cream: #FAF8F3;         /* Warm Off-White / Cream */
-      --bg-surface: #FFFFFF;
-      --card-bg: rgba(255, 255, 255, 0.92);
+      /* Futuristic Cyber Palette */
+      --bg-dark: #070B14;
+      --bg-darker: #04060C;
+      --bg-surface: #0D1527;
+      --bg-card: rgba(13, 21, 39, 0.88);
+      --bg-card-hover: rgba(22, 34, 61, 0.95);
       
-      --text-main: #0F172A;        /* Slate / Carbon */
-      --text-muted: #475569;
-      --text-subtle: #94A3B8;
-      --border: #E2E8F0;
-      --border-amber: rgba(212, 160, 23, 0.35);
-
-      /* Reserved Exclusively for PASS/FAIL Statuses */
-      --status-pass: #16A34A;      /* Statutory Green */
-      --status-pass-light: #F0FDF4;
-      --status-pass-border: #BBF7D0;
-      --status-pass-text: #15803D;
-
-      --status-fail: #DC2626;      /* Statutory Red */
-      --status-fail-light: #FEF2F2;
-      --status-fail-border: #FECACA;
-      --status-fail-text: #B91C1C;
-
-      /* Elevations & Shadows */
-      --shadow-sm: 0 1px 3px rgba(30, 42, 74, 0.05);
-      --shadow-md: 0 4px 10px -1px rgba(30, 42, 74, 0.08), 0 2px 4px -2px rgba(30, 42, 74, 0.04);
-      --shadow-lg: 0 12px 28px -4px rgba(30, 42, 74, 0.1), 0 4px 12px -2px rgba(30, 42, 74, 0.05);
-      --shadow-elevated: 0 20px 40px -8px rgba(30, 42, 74, 0.12), 0 0 25px rgba(212, 160, 23, 0.08);
-      --shadow-laser: 0 0 16px #D4A017, 0 0 32px rgba(212, 160, 23, 0.65);
+      --neon-amber: #F59E0B;
+      --neon-gold: #D4A017;
+      --neon-gold-glow: rgba(245, 158, 11, 0.35);
+      --neon-cyan: #06B6D4;
+      --neon-cyan-glow: rgba(6, 182, 212, 0.35);
+      --neon-blue: #3B82F6;
+      
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      
+      --border-cyber: rgba(245, 158, 11, 0.3);
+      --border-cyan: rgba(6, 182, 212, 0.3);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      
+      /* Reserved PASS/FAIL Indicators */
+      --status-pass: #10B981;
+      --status-pass-glow: rgba(16, 185, 129, 0.35);
+      --status-pass-bg: rgba(16, 185, 129, 0.12);
+      --status-pass-border: rgba(16, 185, 129, 0.4);
+      
+      --status-fail: #EF4444;
+      --status-fail-glow: rgba(239, 68, 68, 0.35);
+      --status-fail-bg: rgba(239, 68, 68, 0.12);
+      --status-fail-border: rgba(239, 68, 68, 0.4);
 
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
       --radius-full: 9999px;
-
-      --tr-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
-      --tr-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      
+      --tr-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+      --tr-normal: 260ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * {
@@ -96,45 +80,53 @@
 
     body {
       font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, sans-serif;
-      background-color: var(--bg-cream);
+      background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 50% 0%, #FFFFFF 0%, #FAF8F3 60%, #F5F1E6 100%),
-        radial-gradient(#1E2A4A 0.65px, transparent 0.65px);
-      background-size: 100% 100%, 24px 24px;
+        radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 100% 50%, rgba(6, 182, 212, 0.06) 0%, transparent 45%),
+        linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
       color: var(--text-main);
       line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    h1, h2, h3, h4, .brand-title, .score-title, .onboarding-title, .dropzone-title, .ar-title {
-      font-family: 'Space Grotesk', 'Noto Sans Devanagari', sans-serif;
-      letter-spacing: -0.03em;
-      font-weight: 700;
+    /* Sci-Fi HUD Typography */
+    h1, h2, h3, h4, .brand-title, .cyber-title, .score-number {
+      font-family: 'Space Grotesk', 'Orbitron', 'Noto Sans Devanagari', sans-serif;
+      letter-spacing: -0.02em;
     }
 
-    /* Screen Transition Animation */
+    .font-orbitron {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.06em;
+    }
+
+    /* Screen Transitions */
     .view-screen {
-      animation: fadeSlideUp var(--tr-normal);
+      animation: cyberFade 0.3s ease-out;
     }
 
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(12px); }
+    @keyframes cyberFade {
+      from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     /* Offline Alert Banner */
     .offline-banner {
       display: none;
-      background: #FEF3C7;
-      color: #92400E;
+      background: linear-gradient(90deg, #78350F, #92400E);
+      color: #FEF3C7;
       padding: 8px 16px;
       text-align: center;
-      font-size: 0.84rem;
-      font-weight: 600;
-      border-bottom: 1px solid #FDE68A;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--neon-amber);
       align-items: center;
       justify-content: center;
       gap: 8px;
@@ -147,66 +139,91 @@
 
     /* Header Bar */
     header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(30, 42, 74, 0.08);
-      padding: 12px 24px;
+      background: rgba(7, 11, 20, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
       position: sticky;
       top: 0;
       z-index: 50;
-      box-shadow: 0 4px 20px -4px rgba(30, 42, 74, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
-    .nav-container {
-      max-width: 1100px;
+    .header-content {
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 14px 24px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
     }
 
-    .brand {
+    .brand-area {
       display: flex;
       align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text-main);
+      gap: 14px;
+      cursor: pointer;
     }
 
-    .brand-shield-box {
-      width: 40px;
-      height: 40px;
+    .brand-icon-wrapper {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #1E293B, #0F172A);
+      border: 1.5px solid var(--neon-amber);
+      box-shadow: 0 0 14px var(--neon-gold-glow);
       display: flex;
       align-items: center;
       justify-content: center;
-      filter: drop-shadow(0 4px 8px rgba(30, 42, 74, 0.2));
-      transition: transform var(--tr-fast);
+      position: relative;
+      overflow: hidden;
     }
 
-    .brand:hover .brand-shield-box {
-      transform: scale(1.05);
+    .brand-icon-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--neon-amber);
+      box-shadow: 0 0 10px var(--neon-amber);
+      animation: scanLight 2.5s infinite linear;
+    }
+
+    @keyframes scanLight {
+      0% { top: -10%; }
+      100% { top: 110%; }
     }
 
     .brand-title {
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      color: var(--primary);
-      letter-spacing: -0.04em;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .brand-badge {
-      font-size: 0.72rem;
-      font-weight: 700;
-      background: var(--accent-light);
-      color: #92400E;
-      padding: 3px 10px;
+    .brand-title span {
+      background: linear-gradient(135deg, #F59E0B, #FBBF24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hud-badge {
+      font-size: 0.65rem;
+      padding: 2px 8px;
       border-radius: var(--radius-full);
-      border: 1px solid var(--accent-border);
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid var(--border-cyan);
+      color: var(--neon-cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
-    .nav-user-area {
+    .nav-actions {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -215,542 +232,640 @@
     .user-pill {
       display: none;
       align-items: center;
-      gap: 8px;
-      background: #FFFFFF;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(245, 158, 11, 0.3);
       padding: 5px 14px;
       border-radius: var(--radius-full);
-      font-size: 0.84rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
+      font-size: 0.85rem;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .user-avatar-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 8px var(--neon-cyan);
     }
 
     .role-badge {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       padding: 2px 8px;
       border-radius: var(--radius-full);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .role-inspector {
-      background: var(--primary);
-      color: #FFFFFF;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid var(--neon-amber);
+      color: var(--neon-amber);
     }
 
     .role-consumer {
-      background: #FEF3C7;
-      color: #92400E;
+      background: rgba(6, 182, 212, 0.2);
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
     }
 
-    .btn-nav-action {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      padding: 5px 12px;
-      border-radius: var(--radius-sm);
-      font-size: 0.8rem;
-      font-weight: 600;
+    .btn-cyber-nav {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
       color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: all var(--tr-fast);
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      transition: all var(--tr-fast);
     }
 
-    .btn-nav-action:hover {
-      background: var(--accent-light);
-      border-color: var(--accent-border);
-      color: var(--accent-hover);
+    .btn-cyber-nav:hover {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--neon-amber);
+      color: #FFFFFF;
+      box-shadow: 0 0 10px var(--neon-gold-glow);
     }
 
     /* Main Container */
     main {
       flex: 1;
-      max-width: 1060px;
+      max-width: 1160px;
       width: 100%;
       margin: 0 auto;
-      padding: var(--sp-4) 20px var(--sp-6);
+      padding: 30px 20px 60px;
     }
 
-    /* Onboarding Cards */
-    .onboarding-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(14px);
+    /* =========================================================================
+       FUTURISTIC AUTH & REGISTRATION TERMINAL (PASSWORD PROTECTED)
+       ========================================================================= */
+    .auth-terminal-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      border: 1.5px solid var(--border-cyber);
       border-radius: var(--radius-lg);
-      padding: var(--sp-5);
-      border: 1.5px solid var(--border-amber);
-      box-shadow: var(--shadow-elevated);
-      max-width: 520px;
-      margin: 20px auto;
+      padding: 36px 32px;
+      max-width: 480px;
+      margin: 30px auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.12);
+      position: relative;
+    }
+
+    /* HUD Corner Brackets */
+    .hud-corner-tl, .hud-corner-tr, .hud-corner-bl, .hud-corner-br {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-color: var(--neon-amber);
+      pointer-events: none;
+    }
+    .hud-corner-tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
+    .hud-corner-tr { top: 8px; right: 8px; border-top: 2px solid; border-right: 2px solid; }
+    .hud-corner-bl { bottom: 8px; left: 8px; border-bottom: 2px solid; border-left: 2px solid; }
+    .hud-corner-br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-right: 2px solid; }
+
+    .terminal-header {
       text-align: center;
+      margin-bottom: 24px;
     }
 
-    .step-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--accent-light);
-      color: #92400E;
-      padding: 5px 14px;
-      border-radius: var(--radius-full);
-      font-size: 0.78rem;
-      font-weight: 700;
-      margin-bottom: var(--sp-2);
-      border: 1px solid var(--accent-border);
-    }
-
-    .onboarding-title {
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: var(--sp-1);
-    }
-
-    .onboarding-sub {
-      font-size: 0.94rem;
-      color: var(--text-muted);
-      margin-bottom: var(--sp-4);
-    }
-
-    .lang-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-2);
-      margin-bottom: var(--sp-4);
-    }
-
-    .lang-card {
-      border: 2px solid var(--border);
+    .terminal-shield-img {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
       border-radius: var(--radius-md);
-      padding: var(--sp-3) var(--sp-2);
-      cursor: pointer;
-      text-align: center;
-      transition: all var(--tr-fast);
-      background: #FFFFFF;
+      box-shadow: 0 0 24px var(--neon-gold-glow);
+      border: 1px solid var(--neon-amber);
+      object-fit: cover;
     }
 
-    .lang-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .lang-card.selected {
-      border-color: var(--accent);
-      background: var(--accent-light);
-      box-shadow: 0 0 0 1px var(--accent);
-    }
-
-    .lang-name {
-      font-size: 1.2rem;
+    .terminal-title {
+      font-size: 1.6rem;
       font-weight: 800;
-      color: var(--primary);
+      color: #FFFFFF;
       margin-bottom: 4px;
     }
 
-    .lang-sub {
-      font-size: 0.82rem;
+    .terminal-sub {
+      font-size: 0.86rem;
       color: var(--text-muted);
     }
 
-    /* Auth Screen */
-    .auth-tabs {
-      display: flex;
-      background: #F1F5F9;
+    .auth-tab-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: rgba(10, 16, 30, 0.85);
       padding: 4px;
-      border-radius: var(--radius-md);
-      margin-bottom: var(--sp-3);
+      border-radius: var(--radius-sm);
+      margin-bottom: 24px;
+      border: 1px solid var(--border-subtle);
     }
 
-    .auth-tab {
-      flex: 1;
-      padding: 10px;
-      font-size: 0.88rem;
-      font-weight: 600;
+    .auth-tab-btn {
+      background: transparent;
       border: none;
-      background: none;
-      cursor: pointer;
-      border-radius: var(--radius-sm);
       color: var(--text-muted);
-      transition: all var(--tr-fast);
-    }
-
-    .auth-tab.active {
-      background: #FFFFFF;
-      color: var(--primary);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
       font-weight: 700;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .form-group {
-      text-align: left;
-      margin-bottom: var(--sp-2);
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 6px;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 0.94rem;
-      font-family: inherit;
-      color: var(--text-main);
-      background: #FFFFFF;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
       transition: all var(--tr-fast);
     }
 
-    .form-input:focus {
+    .auth-tab-btn.active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.1));
+      color: #FBBF24;
+      border: 1px solid var(--neon-amber);
+      box-shadow: 0 0 12px var(--neon-gold-glow);
+    }
+
+    .cyber-form-group {
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .cyber-label {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--neon-amber);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .cyber-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .cyber-input {
+      width: 100%;
+      background: rgba(10, 16, 30, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px 10px 38px;
+      color: #FFFFFF;
+      font-size: 0.92rem;
+      font-family: inherit;
+      transition: all var(--tr-fast);
+    }
+
+    .cyber-input:focus {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
+      border-color: var(--neon-amber);
+      box-shadow: 0 0 14px var(--neon-gold-glow);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .cyber-input-icon {
+      position: absolute;
+      left: 12px;
+      color: var(--text-dim);
+      pointer-events: none;
+      width: 18px;
+      height: 18px;
+    }
+
+    .pwd-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--tr-fast);
+    }
+
+    .pwd-toggle-btn:hover {
+      color: var(--neon-amber);
     }
 
     .role-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--sp-1);
-      margin-top: 4px;
+      gap: 10px;
+      margin-bottom: 20px;
     }
 
     .role-card {
-      border: 1.5px solid var(--border);
+      background: rgba(10, 16, 30, 0.7);
+      border: 1.5px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      padding: 12px;
+      padding: 12px 10px;
       cursor: pointer;
       text-align: center;
       transition: all var(--tr-fast);
-      background: #FFFFFF;
     }
 
     .role-card:hover {
-      border-color: var(--accent);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan-glow);
     }
 
     .role-card.selected {
-      border-color: var(--primary);
-      background: var(--primary-light);
-      font-weight: 700;
+      border-color: var(--neon-amber);
+      background: rgba(245, 158, 11, 0.12);
+      box-shadow: 0 0 14px var(--neon-gold-glow);
     }
 
-    .role-card-title {
-      font-size: 0.92rem;
+    .role-title {
+      font-size: 0.84rem;
       font-weight: 700;
-      color: var(--primary);
+      color: #FFFFFF;
+      margin-bottom: 2px;
     }
 
-    .role-card-desc {
-      font-size: 0.72rem;
+    .role-desc {
+      font-size: 0.7rem;
       color: var(--text-muted);
-      margin-top: 2px;
     }
 
-    /* Landing / Hero Section */
-    .hero {
-      text-align: center;
-      margin-bottom: var(--sp-4);
-    }
-
-    .hero h1 {
-      font-size: 2.35rem;
+    .btn-cyber-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #F59E0B, #D4A017);
+      color: #070B14;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+      font-size: 0.94rem;
       font-weight: 800;
-      color: var(--primary);
-      margin-bottom: var(--sp-1);
-    }
-
-    .hero p {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    /* Glassmorphic Upload Card */
-    .upload-card {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius-lg);
-      padding: var(--sp-4);
-      border: 1.5px solid var(--border-amber);
-      box-shadow: var(--shadow-elevated);
-      margin-bottom: var(--sp-4);
-    }
-
-    .dropzone {
-      border: 2px dashed rgba(212, 160, 23, 0.45);
-      background: rgba(254, 249, 235, 0.5);
-      border-radius: var(--radius-md);
-      padding: var(--sp-5) var(--sp-3);
-      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--neon-gold-glow);
       transition: all var(--tr-fast);
-      position: relative;
-    }
-
-    .dropzone.dragover {
-      border-color: var(--accent);
-      background: rgba(254, 249, 235, 0.9);
-      transform: scale(1.01);
-    }
-
-    .dropzone-icon-wrapper {
-      width: 58px;
-      height: 58px;
-      background: #FFFFFF;
-      border: 1px solid var(--accent-border);
-      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto var(--sp-2);
-      color: var(--accent-hover);
-      box-shadow: var(--shadow-sm);
+      gap: 8px;
+    }
+
+    .btn-cyber-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
+      background: linear-gradient(135deg, #FBBF24, #F59E0B);
+    }
+
+    /* =========================================================================
+       HERO SHOWCASE SECTION
+       ========================================================================= */
+    .hero-matrix-box {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--border-cyber);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    @media (max-width: 860px) {
+      .hero-matrix-box {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .hero-h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero-h1 span {
+      background: linear-gradient(135deg, #F59E0B, #38BDF8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .hero-stat-card {
+      background: rgba(10, 16, 30, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+    }
+
+    .hero-stat-num {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--neon-amber);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .hero-stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .hero-visual-frame {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1.5px solid var(--border-cyber);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
+    }
+
+    .hero-visual-img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .hero-visual-frame:hover .hero-visual-img {
+      transform: scale(1.03);
+    }
+
+    .hero-laser-scan {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #F59E0B, #38BDF8, transparent);
+      box-shadow: 0 0 12px var(--neon-amber);
+      animation: laserSweep 3s ease-in-out infinite alternate;
+    }
+
+    /* =========================================================================
+       FUTURISTIC SCANNER HUB CARD
+       ========================================================================= */
+    .scanner-hub-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      border: 1.5px solid var(--border-cyber);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .cyber-dropzone {
+      border: 2px dashed rgba(245, 158, 11, 0.4);
+      background: rgba(10, 16, 30, 0.75);
+      border-radius: var(--radius-md);
+      padding: 36px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--tr-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cyber-dropzone:hover, .cyber-dropzone.dragover {
+      border-color: var(--neon-amber);
+      background: rgba(245, 158, 11, 0.08);
+      box-shadow: 0 0 24px var(--neon-gold-glow);
+    }
+
+    .dropzone-icon-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid var(--neon-amber);
+      box-shadow: 0 0 16px var(--neon-gold-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: var(--neon-amber);
     }
 
     .dropzone-title {
-      font-size: 1.18rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 4px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 6px;
     }
 
     .dropzone-sub {
       font-size: 0.88rem;
       color: var(--text-muted);
-      margin-bottom: var(--sp-3);
+      margin-bottom: 20px;
     }
 
-    /* Dual Upload Action Buttons */
-    .upload-action-buttons {
+    .dropzone-btn-row {
       display: flex;
       justify-content: center;
-      gap: var(--sp-2);
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .btn-upload-choice {
-      background: #FFFFFF;
-      color: var(--primary);
-      border: 1.5px solid var(--primary);
-      padding: 12px 22px;
-      border-radius: var(--radius-md);
-      font-size: 0.95rem;
+    .btn-cyber-primary {
+      background: linear-gradient(135deg, #F59E0B, #D4A017);
+      color: #070B14;
+      border: none;
+      padding: 10px 22px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 800;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 16px var(--neon-gold-glow);
+      transition: all var(--tr-fast);
+    }
+
+    .btn-cyber-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.5);
+    }
+
+    .btn-cyber-secondary {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid var(--border-cyan);
+      color: var(--neon-cyan);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
       font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: all var(--tr-fast);
-      box-shadow: var(--shadow-sm);
     }
 
-    .btn-upload-choice:hover {
-      background: var(--primary);
-      color: #FFFFFF;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(30, 42, 74, 0.25);
+    .btn-cyber-secondary:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: #38BDF8;
+      box-shadow: 0 0 16px var(--neon-cyan-glow);
     }
 
-    /* File Preview Box */
+    /* Selected File Preview Box */
     .preview-box {
       display: none;
-      margin-top: var(--sp-3);
-      padding: var(--sp-2);
-      background: #FFFFFF;
+      background: rgba(10, 16, 30, 0.9);
+      border: 1.5px solid var(--neon-amber);
       border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-top: 20px;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
+      gap: 16px;
+      box-shadow: 0 0 18px var(--neon-gold-glow);
     }
 
-    .preview-info {
+    .preview-thumb-wrap {
       display: flex;
       align-items: center;
       gap: 14px;
+      min-width: 0;
     }
 
     .preview-thumb {
-      width: 54px;
-      height: 54px;
+      width: 56px;
+      height: 56px;
       border-radius: var(--radius-sm);
       object-fit: cover;
-      border: 1.5px solid #CBD5E1;
-      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--neon-amber);
     }
 
-    .preview-name {
-      font-size: 0.94rem;
+    .preview-meta-name {
+      font-size: 0.92rem;
       font-weight: 700;
-      color: var(--primary);
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .preview-size {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .preview-meta-size {
+      font-size: 0.78rem;
+      color: var(--neon-cyan);
+      font-family: 'Orbitron', sans-serif;
     }
 
-    .btn-remove {
-      background: none;
-      border: none;
-      color: var(--status-fail-text);
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
-      display: inline-flex;
+    .btn-remove-file {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--status-fail-border);
+      color: var(--status-fail);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
       align-items: center;
-      gap: 4px;
-      transition: background var(--tr-fast);
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all var(--tr-fast);
     }
 
-    .btn-remove:hover {
-      background: var(--status-fail-light);
+    .btn-remove-file:hover {
+      background: var(--status-fail);
+      color: #FFFFFF;
+      box-shadow: 0 0 12px var(--status-fail-glow);
     }
 
-    /* Primary & Secondary Redesigned Buttons */
-    .btn-group {
-      margin-top: var(--sp-3);
+    .scan-action-row {
+      margin-top: 24px;
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: var(--sp-2);
-      flex-wrap: wrap;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #1E2A4A 0%, #2D3E6B 70%, #3B4F85 100%);
-      color: #FFFFFF;
-      border: 1.5px solid rgba(212, 160, 23, 0.4);
-      padding: 14px 40px;
-      font-size: 1.02rem;
-      font-weight: 700;
-      font-family: 'Space Grotesk', sans-serif;
-      border-radius: var(--radius-md);
+    .btn-start-scan {
+      background: linear-gradient(135deg, #F59E0B, #FBBF24);
+      color: #070B14;
+      border: none;
+      padding: 14px 44px;
+      border-radius: var(--radius-sm);
+      font-size: 1.05rem;
+      font-weight: 900;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.05em;
       cursor: pointer;
-      box-shadow: 0 4px 16px rgba(30, 42, 74, 0.3), 0 0 10px rgba(212, 160, 23, 0.2);
-      transition: all var(--tr-fast);
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 10px;
+      box-shadow: 0 0 28px rgba(245, 158, 11, 0.5);
+      transition: all var(--tr-fast);
     }
 
-    .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, #162038 0%, #1E2A4A 100%);
-      border-color: var(--accent);
+    .btn-start-scan:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(30, 42, 74, 0.35), 0 0 20px rgba(212, 160, 23, 0.45);
+      box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
     }
 
-    .btn-primary:disabled {
+    .btn-start-scan:disabled {
       opacity: 0.45;
       cursor: not-allowed;
-      transform: none;
       box-shadow: none;
     }
 
-    .btn-secondary {
-      background: #FFFFFF;
-      color: var(--primary);
-      border: 1.5px solid var(--border);
-      padding: 11px 20px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: all var(--tr-fast);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-secondary:hover {
-      background: var(--accent-light);
-      border-color: var(--accent-border);
-      color: var(--accent-hover);
-      transform: translateY(-1px);
-    }
-
-    .btn-pdf-notice {
-      background: linear-gradient(135deg, #1E2A4A 0%, #0F172A 100%);
-      color: var(--accent);
-      border: 1.5px solid var(--accent);
-      padding: 11px 22px;
-      font-size: 0.92rem;
-      font-weight: 700;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(30, 42, 74, 0.25);
-      transition: all var(--tr-fast);
-    }
-
-    .btn-pdf-notice:hover {
-      background: #162038;
-      border-color: #F59E0B;
-      color: #F59E0B;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(212, 160, 23, 0.3);
-    }
-
-    /* History & Cached Bar */
-    .history-bar {
-      margin-top: var(--sp-3);
-      padding-top: var(--sp-2);
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.86rem;
-    }
-
-    .history-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    /* Amber Laser Scanner Animation */
-    .loading-state {
+    /* =========================================================================
+       LOADING & SCANNING HUD STATE
+       ========================================================================= */
+    .loading-section {
       display: none;
       text-align: center;
-      padding: var(--sp-4) var(--sp-2);
+      padding: 50px 20px;
     }
 
-    .scanner-viewport {
+    .scanner-hud-stage {
       position: relative;
       width: 240px;
-      height: 300px;
-      margin: 0 auto var(--sp-3);
-      border-radius: var(--radius-md);
+      height: 240px;
+      margin: 0 auto 28px;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--neon-amber);
+      box-shadow: 0 0 30px var(--neon-gold-glow);
       overflow: hidden;
-      box-shadow: var(--shadow-elevated);
-      border: 2px solid var(--accent-border);
-      background: #0F172A;
+      background: rgba(10, 16, 30, 0.95);
     }
 
-    .scanner-target-img {
+    .scanner-thumb-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.85;
-      filter: brightness(0.95);
+      opacity: 0.75;
+      filter: brightness(0.9);
     }
 
     .scanner-laser-line {
@@ -759,8 +874,8 @@
       top: 0;
       width: 100%;
       height: 3px;
-      background: linear-gradient(90deg, transparent, #FDE68A, #D4A017, #FDE68A, transparent);
-      box-shadow: var(--shadow-laser);
+      background: linear-gradient(90deg, transparent, #FDE68A, #F59E0B, #38BDF8, transparent);
+      box-shadow: 0 0 16px var(--neon-amber), 0 0 24px var(--neon-cyan);
       animation: laserSweep 2s ease-in-out infinite alternate;
       z-index: 10;
     }
@@ -768,177 +883,139 @@
     .scanner-grid-overlay {
       position: absolute;
       inset: 0;
-      background-image: linear-gradient(rgba(212, 160, 23, 0.12) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(212, 160, 23, 0.12) 1px, transparent 1px);
+      background-image: 
+        linear-gradient(rgba(245, 158, 11, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px);
       background-size: 20px 20px;
       pointer-events: none;
     }
 
     @keyframes laserSweep {
-      0% { top: 4%; opacity: 0.85; }
+      0% { top: 4%; opacity: 0.8; }
       100% { top: 94%; opacity: 1; }
     }
 
     .loading-title {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 6px;
-    }
-
-    .loading-sub {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: var(--sp-2);
+      color: #FFFFFF;
+      margin-bottom: 8px;
     }
 
     .scan-steps-ticker {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: #FFFFFF;
-      padding: 6px 18px;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 8px 20px;
       border-radius: var(--radius-full);
-      border: 1px solid var(--accent-border);
-      font-size: 0.82rem;
+      border: 1px solid var(--neon-amber);
+      font-size: 0.86rem;
       font-weight: 700;
-      color: var(--accent-hover);
-      box-shadow: var(--shadow-sm);
+      color: #FBBF24;
+      box-shadow: 0 0 16px var(--neon-gold-glow);
     }
 
-    /* Results Screen */
+    /* =========================================================================
+       RESULTS DASHBOARD & 9-FIELD COMPLIANCE AUDIT
+       ========================================================================= */
     .results-section {
       display: none;
     }
 
-    /* Celebration Banner */
     .celebration-banner {
       display: none;
-      background: linear-gradient(135deg, #14532D 0%, #15803D 100%);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.95));
       color: #FFFFFF;
       padding: 16px 24px;
-      border-radius: var(--radius-lg);
-      margin-bottom: var(--sp-3);
-      box-shadow: 0 10px 25px rgba(22, 163, 74, 0.25);
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      animation: fadeSlideUp var(--tr-normal);
-    }
-
-    .celebration-content {
-      display: flex;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
       align-items: center;
       gap: 14px;
+      border: 1.5px solid var(--status-pass);
+      box-shadow: 0 0 25px var(--status-pass-glow);
     }
 
-    .celebration-icon-box {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+    .score-summary-bar {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--border-cyber);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-    }
-
-    .celebration-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-
-    .celebration-desc {
-      font-size: 0.85rem;
-      opacity: 0.92;
-    }
-
-    /* Score Header Card */
-    .score-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius-lg);
-      padding: 24px 28px;
-      border: 1.5px solid var(--border-amber);
-      box-shadow: var(--shadow-elevated);
-      margin-bottom: var(--sp-3);
-      display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
-      align-items: center;
-      gap: var(--sp-2);
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
-    .score-left {
+    .score-info-wrap {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .score-circle {
-      width: 64px;
-      height: 64px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
-      background: var(--primary);
-      border: 3px solid var(--accent);
+      background: rgba(10, 16, 30, 0.9);
+      border: 2px solid var(--neon-amber);
+      color: var(--neon-amber);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 1.4rem;
-      color: var(--accent);
-      box-shadow: 0 0 14px var(--accent-glow);
+      font-size: 1.15rem;
+      font-weight: 900;
+      font-family: 'Orbitron', sans-serif;
+      box-shadow: 0 0 16px var(--neon-gold-glow);
     }
 
     .score-title {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 800;
-      color: var(--primary);
+      color: #FFFFFF;
     }
 
-    .score-subtitle {
-      font-size: 0.88rem;
+    .score-sub {
+      font-size: 0.82rem;
       color: var(--text-muted);
-    }
-
-    .score-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
     }
 
     .badge-status {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 16px;
+      padding: 6px 16px;
       border-radius: var(--radius-full);
-      font-size: 0.85rem;
-      font-weight: 700;
+      font-size: 0.82rem;
+      font-weight: 800;
+      font-family: 'Orbitron', sans-serif;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
     }
 
     .badge-pass {
-      background: var(--status-pass-light);
-      color: var(--status-pass-text);
+      background: var(--status-pass-bg);
+      color: var(--status-pass);
       border: 1.5px solid var(--status-pass-border);
+      box-shadow: 0 0 14px var(--status-pass-glow);
     }
 
     .badge-fail {
-      background: var(--status-fail-light);
-      color: var(--status-fail-text);
+      background: var(--status-fail-bg);
+      color: var(--status-fail);
       border: 1.5px solid var(--status-fail-border);
+      box-shadow: 0 0 14px var(--status-fail-glow);
     }
 
     /* Results Layout */
     .results-grid-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--sp-3);
-      align-items: start;
-      margin-bottom: var(--sp-3);
+      gap: 24px;
+      margin-bottom: 24px;
     }
 
     @media (max-width: 880px) {
@@ -947,65 +1024,52 @@
       }
     }
 
-    /* AR Panel */
+    /* AR Scanner Panel */
     .ar-panel {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: var(--radius-lg);
-      padding: var(--sp-3);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-lg);
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-cyber);
+      border-radius: var(--radius-md);
+      padding: 20px;
       position: sticky;
-      top: 80px;
+      top: 90px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .ar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: var(--sp-2);
+      margin-bottom: 14px;
     }
 
     .ar-title {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--primary);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #FFFFFF;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .ar-toggle-btn {
-      background: #F1F5F9;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-full);
-      padding: 4px 12px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .ar-toggle-btn.active {
-      background: var(--accent-light);
-      color: #92400E;
-      border-color: var(--accent-border);
-    }
-
-    .ar-container {
+    .ar-viewport {
       position: relative;
-      width: 100%;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       overflow: hidden;
-      background: #0F172A;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .ar-img {
       width: 100%;
       height: auto;
       display: block;
-      user-select: none;
+      object-fit: contain;
+      max-height: 480px;
     }
 
     .ar-boxes-layer {
@@ -1016,7 +1080,6 @@
 
     .ar-box {
       position: absolute;
-      box-sizing: border-box;
       pointer-events: auto;
       cursor: pointer;
       transition: all var(--tr-fast);
@@ -1025,24 +1088,24 @@
 
     .ar-box-pass {
       border: 2px solid var(--status-pass);
-      background: rgba(22, 163, 74, 0.18);
-      box-shadow: 0 0 10px rgba(22, 163, 74, 0.4);
+      background: rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 10px var(--status-pass-glow);
     }
 
     .ar-box-pass:hover, .ar-box-pass.highlighted {
-      background: rgba(22, 163, 74, 0.35);
+      background: rgba(16, 185, 129, 0.4);
       border-width: 3px;
       z-index: 30;
     }
 
     .ar-box-fail {
       border: 2px dashed var(--status-fail);
-      background: rgba(220, 38, 38, 0.14);
-      box-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
+      background: rgba(239, 68, 68, 0.2);
+      box-shadow: 0 0 10px var(--status-fail-glow);
     }
 
     .ar-box-fail:hover, .ar-box-fail.highlighted {
-      background: rgba(220, 38, 38, 0.3);
+      background: rgba(239, 68, 68, 0.4);
       border-width: 3px;
       z-index: 30;
     }
@@ -1051,93 +1114,72 @@
       position: absolute;
       top: -22px;
       left: -2px;
-      background: var(--status-pass-text);
-      color: #FFFFFF;
+      background: var(--status-pass);
+      color: #070B14;
       font-size: 0.65rem;
-      font-weight: 700;
+      font-weight: 800;
+      font-family: 'Orbitron', sans-serif;
       padding: 1px 6px;
       border-radius: 4px;
       white-space: nowrap;
-      box-shadow: var(--shadow-sm);
       pointer-events: none;
     }
 
     .ar-box-fail .ar-box-tag {
-      background: var(--status-fail-text);
+      background: var(--status-fail);
+      color: #FFFFFF;
     }
 
-    .ar-legend {
-      display: flex;
-      gap: 14px;
-      margin-top: 10px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
-    }
-
-    /* Redesigned 9-Field Cards */
+    /* 9-Field Cards */
     .fields-grid {
       display: flex;
       flex-direction: column;
-      gap: var(--sp-2);
+      gap: 14px;
     }
 
     .field-card {
-      background: #FFFFFF;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 18px 20px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
+      padding: 16px 18px;
       display: flex;
       align-items: flex-start;
-      gap: 16px;
+      gap: 14px;
       transition: all var(--tr-fast);
       position: relative;
     }
 
     .field-card:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--accent-border);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      border-color: var(--neon-amber);
     }
 
     .field-card.card-pass {
       border-left: 4px solid var(--status-pass);
+      background: rgba(13, 21, 39, 0.92);
     }
 
     .field-card.card-fail {
       border-left: 4px solid var(--status-fail);
-      background: #FFFAFA;
+      background: rgba(239, 68, 68, 0.05);
     }
 
     .field-card.highlighted {
-      box-shadow: 0 0 0 2px var(--accent), var(--shadow-md);
-      background: var(--accent-light);
+      box-shadow: 0 0 0 2px var(--neon-amber), 0 0 20px var(--neon-gold-glow);
     }
 
     .field-icon-box {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      background: var(--primary-light);
-      color: var(--primary);
-      border: 1px solid var(--primary-border);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--neon-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
     }
 
     .field-content {
@@ -1154,15 +1196,16 @@
     }
 
     .field-name {
-      font-size: 0.98rem;
+      font-size: 0.94rem;
       font-weight: 700;
-      color: var(--primary);
+      color: #FFFFFF;
     }
 
     .field-pill {
-      font-size: 0.74rem;
-      font-weight: 700;
-      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      font-family: 'Orbitron', sans-serif;
+      padding: 2px 10px;
       border-radius: var(--radius-full);
       display: inline-flex;
       align-items: center;
@@ -1171,34 +1214,34 @@
     }
 
     .field-pill-pass {
-      background: var(--status-pass-light);
-      color: var(--status-pass-text);
+      background: var(--status-pass-bg);
+      color: var(--status-pass);
       border: 1px solid var(--status-pass-border);
     }
 
     .field-pill-fail {
-      background: var(--status-fail-light);
-      color: var(--status-fail-text);
+      background: var(--status-fail-bg);
+      color: var(--status-fail);
       border: 1px solid var(--status-fail-border);
     }
 
     .field-value {
-      font-size: 0.88rem;
-      color: #334155;
-      background: #F8FAFC;
+      font-size: 0.85rem;
+      color: #E2E8F0;
+      background: rgba(10, 16, 30, 0.85);
       padding: 8px 12px;
       border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       word-break: break-word;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
     }
 
     .field-fix {
       margin-top: 6px;
-      font-size: 0.84rem;
-      color: var(--status-fail-text);
-      background: var(--status-fail-light);
-      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #FCA5A5;
+      background: rgba(239, 68, 68, 0.1);
+      padding: 10px 12px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--status-fail-border);
       display: flex;
@@ -1211,15 +1254,15 @@
       margin-top: 8px;
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
     }
 
     .btn-field-edit {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      color: var(--primary);
-      font-size: 0.76rem;
-      font-weight: 600;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-subtle);
+      color: var(--neon-amber);
+      font-size: 0.74rem;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
       padding: 4px 10px;
       border-radius: var(--radius-sm);
       cursor: pointer;
@@ -1230,29 +1273,30 @@
     }
 
     .btn-field-edit:hover {
-      background: var(--accent-light);
-      border-color: var(--accent-border);
-      color: var(--accent-hover);
+      background: rgba(245, 158, 11, 0.2);
+      border-color: var(--neon-amber);
+      box-shadow: 0 0 10px var(--neon-gold-glow);
     }
 
     .field-edit-drawer {
       display: none;
       margin-top: 8px;
       padding: 10px 12px;
-      background: #F1F5F9;
+      background: rgba(10, 16, 30, 0.95);
       border-radius: var(--radius-sm);
-      border: 1px solid #CBD5E1;
+      border: 1px solid var(--neon-amber);
     }
 
     .field-edit-input {
       width: 100%;
       padding: 7px 10px;
       font-size: 0.84rem;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-family: inherit;
-      background: #FFFFFF;
+      background: rgba(15, 23, 42, 0.9);
+      color: #FFFFFF;
     }
 
     .field-edit-buttons {
@@ -1262,69 +1306,39 @@
     }
 
     .btn-edit-save {
-      background: var(--primary);
-      color: #FFFFFF;
+      background: var(--neon-amber);
+      color: #070B14;
       border: none;
       padding: 4px 12px;
-      font-size: 0.76rem;
-      font-weight: 700;
+      font-size: 0.74rem;
+      font-weight: 800;
+      font-family: 'Orbitron', sans-serif;
       border-radius: var(--radius-sm);
       cursor: pointer;
-    }
-
-    .btn-edit-save:hover {
-      background: var(--primary-hover);
     }
 
     .btn-edit-cancel {
-      background: #FFFFFF;
+      background: transparent;
       color: var(--text-muted);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-subtle);
       padding: 4px 10px;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 600;
       border-radius: var(--radius-sm);
       cursor: pointer;
     }
 
-    /* Raw OCR Box */
-    .raw-text-card {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      margin-bottom: var(--sp-3);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .raw-text-header {
-      padding: 14px 20px;
-      background: #F8FAFC;
-      cursor: pointer;
+    /* Actions Bottom Bar */
+    .results-bottom-actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--primary);
-      user-select: none;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
     }
 
-    .raw-text-content {
-      display: none;
-      padding: 16px 20px;
-      font-size: 0.82rem;
-      line-height: 1.6;
-      color: var(--text-muted);
-      background: #FFFFFF;
-      max-height: 220px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-      border-top: 1px solid var(--border);
-    }
-
-    /* Chatbot Widget (Indigo / Amber) */
+    /* Floating Chatbot */
     .chat-fab {
       position: fixed;
       bottom: 24px;
@@ -1332,85 +1346,66 @@
       width: 58px;
       height: 58px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1E2A4A 0%, #0F172A 100%);
-      color: var(--accent);
-      border: 1.5px solid var(--accent);
+      background: linear-gradient(135deg, #F59E0B, #D4A017);
+      color: #070B14;
+      border: none;
+      box-shadow: 0 0 25px var(--neon-gold-glow);
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(30, 42, 74, 0.4), 0 0 15px rgba(212, 160, 23, 0.3);
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 90;
       transition: all var(--tr-fast);
     }
 
     .chat-fab:hover {
       transform: scale(1.08);
-      box-shadow: 0 10px 30px rgba(30, 42, 74, 0.5), 0 0 25px rgba(212, 160, 23, 0.5);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.8);
     }
 
     .chat-window {
       position: fixed;
       bottom: 92px;
       right: 24px;
-      width: 370px;
+      width: 360px;
       max-width: calc(100vw - 32px);
-      height: 500px;
+      height: 480px;
       max-height: calc(100vh - 120px);
-      background: #FFFFFF;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-elevated);
-      border: 1px solid var(--border-amber);
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      border: 1.5px solid var(--border-cyber);
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
       display: none;
       flex-direction: column;
-      z-index: 1000;
+      z-index: 95;
       overflow: hidden;
-      animation: fadeSlideUp var(--tr-fast);
     }
 
     .chat-header {
-      background: linear-gradient(135deg, #1E2A4A 0%, #0F172A 100%);
-      color: #FFFFFF;
-      padding: 14px 18px;
+      background: rgba(10, 16, 30, 0.95);
+      border-bottom: 1px solid var(--border-cyber);
+      padding: 12px 16px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(212, 160, 23, 0.3);
+      justify-content: space-between;
     }
 
     .chat-header-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
+      font-size: 0.88rem;
       font-weight: 700;
+      color: #FFFFFF;
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--accent);
     }
 
     .chat-status-dot {
       width: 8px;
       height: 8px;
-      background: var(--accent);
       border-radius: 50%;
-      box-shadow: 0 0 6px var(--accent);
-    }
-
-    .chat-close-btn {
-      background: none;
-      border: none;
-      color: #FFFFFF;
-      font-size: 1.2rem;
-      cursor: pointer;
-      opacity: 0.85;
-      line-height: 1;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    .chat-close-btn:hover {
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.15);
+      background: var(--neon-cyan);
+      box-shadow: 0 0 6px var(--neon-cyan);
     }
 
     .chat-body {
@@ -1419,33 +1414,30 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      background: #FAF8F3;
+      gap: 10px;
     }
 
     .chat-bubble {
-      max-width: 84%;
       padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 0.86rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
       line-height: 1.45;
+      max-width: 85%;
       word-break: break-word;
     }
 
     .chat-bubble-bot {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-cyber);
+      color: #E2E8F0;
       align-self: flex-start;
-      background: #FFFFFF;
-      color: var(--text-main);
-      border: 1px solid var(--border);
-      border-bottom-left-radius: 4px;
-      box-shadow: var(--shadow-sm);
     }
 
     .chat-bubble-user {
+      background: var(--neon-amber);
+      color: #070B14;
+      font-weight: 600;
       align-self: flex-end;
-      background: var(--primary);
-      color: #FFFFFF;
-      border-bottom-right-radius: 4px;
     }
 
     .chat-chips {
@@ -1456,431 +1448,449 @@
     }
 
     .chat-chip {
-      background: #FFFFFF;
-      color: var(--primary);
-      border: 1px solid var(--border);
-      padding: 6px 11px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-cyan);
+      color: var(--neon-cyan);
+      font-size: 0.72rem;
+      padding: 4px 10px;
       border-radius: var(--radius-full);
-      font-size: 0.76rem;
-      font-weight: 600;
       cursor: pointer;
       transition: all var(--tr-fast);
-      text-align: left;
     }
 
     .chat-chip:hover {
-      background: var(--accent-light);
-      border-color: var(--accent-border);
-      color: #92400E;
-      transform: translateY(-1px);
+      background: rgba(6, 182, 212, 0.2);
+      border-color: #38BDF8;
     }
 
     .chat-footer {
-      padding: 10px 12px;
-      background: #FFFFFF;
-      border-top: 1px solid var(--border);
+      padding: 10px 14px;
+      background: rgba(10, 16, 30, 0.95);
+      border-top: 1px solid var(--border-subtle);
       display: flex;
       gap: 8px;
-      align-items: center;
     }
 
     .chat-input {
       flex: 1;
-      padding: 10px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-full);
-      font-size: 0.88rem;
-      font-family: inherit;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      color: #FFFFFF;
+      font-size: 0.84rem;
       outline: none;
     }
 
-    .chat-input:focus {
-      border-color: var(--accent);
-    }
-
     .chat-send-btn {
-      background: var(--primary);
-      color: var(--accent);
-      border: 1px solid var(--accent);
+      background: var(--neon-amber);
+      border: none;
+      color: #070B14;
+      border-radius: var(--radius-sm);
       width: 36px;
       height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      transition: background var(--tr-fast);
+      cursor: pointer;
     }
 
-    .chat-send-btn:hover {
-      background: #0F172A;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: var(--sp-3);
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      border-top: 1px solid rgba(30, 42, 74, 0.08);
-      background: rgba(255, 255, 255, 0.8);
-    }
-
-    /* Toast */
+    /* Toast Notification */
     .toast {
-      display: none;
       position: fixed;
       bottom: 24px;
-      left: 24px;
-      background: #0F172A;
-      color: white;
-      padding: 12px 20px;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-elevated);
-      z-index: 2000;
-      font-size: 0.9rem;
-      border-left: 4px solid var(--accent);
-      animation: fadeSlideUp var(--tr-fast);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 16, 30, 0.95);
+      color: #FFFFFF;
+      border: 1.5px solid var(--neon-amber);
+      box-shadow: 0 0 25px var(--neon-gold-glow);
+      padding: 10px 24px;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: none;
+      z-index: 120;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      background: var(--bg-darker);
     }
   </style>
 </head>
 <body>
 
-  <!-- Offline Status Alert Banner -->
+  <!-- Offline Alert Banner -->
   <div class="offline-banner" id="offlineBanner">
-    <span>⚡ You are currently in Offline Mode. App shell & in-browser OCR scanner are active.</span>
+    <i data-lucide="wifi-off" style="width: 16px; height: 16px;"></i>
+    <span id="offlineBannerText">OFFLINE MODE ACTIVE • Client-Side Neural OCR Ready</span>
   </div>
 
-  <!-- Navigation Header with Custom SVG Shield Logo -->
+  <!-- Header Bar -->
   <header>
-    <div class="nav-container">
-      <a href="#" class="brand" onclick="navigateToApp(); return false;">
-        <div class="brand-shield-box">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px;">
-            <defs>
-              <linearGradient id="shieldGrad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#1E2A4A" />
-                <stop offset="1" stop-color="#0F172A" />
-              </linearGradient>
-              <linearGradient id="goldGrad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#F59E0B" />
-                <stop offset="1" stop-color="#D4A017" />
-              </linearGradient>
-            </defs>
-            <path d="M18 3L5 8.5V17.5C5 25.5 10.5 32.5 18 34.5C25.5 32.5 31 25.5 31 17.5V8.5L18 3Z" fill="url(#shieldGrad)" stroke="url(#goldGrad)" stroke-width="2" stroke-linejoin="round"/>
-            <line x1="8" y1="18" x2="28" y2="18" stroke="#D4A017" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.6"/>
-            <path d="M12 18.5L16 22.5L24 14.5" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+    <div class="header-content">
+      <div class="brand-area" onclick="navigateToApp()">
+        <div class="brand-icon-wrapper">
+          <i data-lucide="shield-check" style="width: 24px; height: 24px; color: var(--neon-amber);"></i>
         </div>
-        <span class="brand-title" id="navBrandTitle">SatyaScan</span>
-        <span class="brand-badge" id="navBrandBadge">Legal Metrology</span>
-      </a>
+        <div>
+          <div class="brand-title">
+            SATYA<span>SCAN</span>
+            <span class="hud-badge">v2.4 AI</span>
+          </div>
+        </div>
+      </div>
 
-      <div class="nav-user-area">
+      <div class="nav-actions">
+        <!-- User Profile Pill -->
         <div class="user-pill" id="userPill">
-          <span id="userNameDisplay">User</span>
-          <span class="role-badge role-inspector" id="userRoleBadge">Inspector</span>
-          <button type="button" class="btn-nav-action" onclick="toggleLanguage()" id="langToggleBtn" title="Switch Language">
-            <i data-lucide="languages" style="width: 14px; height: 14px;"></i>
-            <span id="langBtnText">हिन्दी</span>
-          </button>
-          <button type="button" class="btn-nav-action" onclick="handleLogout()" id="logoutBtn" title="Logout">
+          <div class="user-avatar-dot"></div>
+          <span id="userNameDisplay" style="font-weight: 700;">Officer</span>
+          <span class="role-badge role-inspector" id="userRoleBadge">INSPECTOR</span>
+          <button type="button" class="btn-cyber-nav" onclick="handleLogout()" title="Logout" style="padding: 3px 8px; margin-left: 4px;">
             <i data-lucide="log-out" style="width: 14px; height: 14px;"></i>
-            <span id="logoutBtnText">Log out</span>
           </button>
         </div>
-        <span id="navSubHeader" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Rule 6 Compliance Engine</span>
+
+        <!-- Language Switcher -->
+        <button type="button" class="btn-cyber-nav" onclick="toggleLanguage()" id="btnLangToggle">
+          <i data-lucide="languages" style="width: 15px; height: 15px; color: var(--neon-cyan);"></i>
+          <span id="langBtnText">हिन्दी</span>
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Main View Area -->
   <main>
 
-    <!-- ONBOARDING STEP 1: Language Selection Screen -->
-    <div id="onboardingLang" class="onboarding-card view-screen">
-      <div class="step-indicator">
-        <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
-        <span>Step 1 of 2 • चरण 1</span>
-      </div>
-      <h2 class="onboarding-title" id="langScreenTitle">Choose Your Language</h2>
-      <p class="onboarding-sub" id="langScreenSub">Select your preferred language for SatyaScan / अपनी भाषा चुनें</p>
+    <!-- =========================================================================
+         SCREEN 1: LANGUAGE SELECTION ONBOARDING
+         ========================================================================= -->
+    <div class="view-screen" id="screenLang" style="display: none;">
+      <div class="auth-terminal-card">
+        <div class="hud-corner-tl"></div>
+        <div class="hud-corner-tr"></div>
+        <div class="hud-corner-bl"></div>
+        <div class="hud-corner-br"></div>
 
-      <div class="lang-grid">
-        <div class="lang-card selected" id="langCardEn" onclick="selectLanguage('en')">
-          <div class="lang-name">English</div>
-          <div class="lang-sub">Default Interface</div>
+        <div class="terminal-header">
+          <img src="/assets/shield_badge.jpg" alt="SatyaScan Shield" class="terminal-shield-img">
+          <h2 class="terminal-title">SATYASCAN 2.0</h2>
+          <p class="terminal-sub">Select preferred operating system interface</p>
         </div>
-        <div class="lang-card" id="langCardHi" onclick="selectLanguage('hi')">
-          <div class="lang-name">हिंदी</div>
-          <div class="lang-sub">Hindi Interface</div>
-        </div>
-      </div>
 
-      <button type="button" class="btn-primary" onclick="proceedToAuth()" id="btnLangContinue">
-        <span>Continue</span>
-        <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-      </button>
+        <div class="role-grid" style="margin-bottom: 24px;">
+          <div class="role-card selected" id="langCardEn" onclick="selectLanguage('en')">
+            <div class="role-title">English</div>
+            <div class="role-desc">Statutory English</div>
+          </div>
+          <div class="role-card" id="langCardHi" onclick="selectLanguage('hi')">
+            <div class="role-title">हिन्दी (Hindi)</div>
+            <div class="role-desc">विधिक माप विज्ञान</div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-cyber-submit" onclick="proceedToAuth()">
+          <span>CONTINUE TO TERMINAL</span>
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
     </div>
 
-    <!-- ONBOARDING STEP 2: Authentication / Registration Screen -->
-    <div id="onboardingAuth" class="onboarding-card view-screen" style="display: none;">
-      <div class="step-indicator">
-        <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
-        <span id="authStepLabel">Step 2 of 2 • User Access</span>
-      </div>
-      <h2 class="onboarding-title" id="authTitle">Welcome to SatyaScan</h2>
-      <p class="onboarding-sub" id="authSub">Verify packaging compliance under Legal Metrology Rules</p>
+    <!-- =========================================================================
+         SCREEN 2: PASSWORD-PROTECTED AUTH TERMINAL (LOGIN & REGISTRATION)
+         ========================================================================= -->
+    <div class="view-screen" id="screenAuth" style="display: none;">
+      <div class="auth-terminal-card">
+        <div class="hud-corner-tl"></div>
+        <div class="hud-corner-tr"></div>
+        <div class="hud-corner-bl"></div>
+        <div class="hud-corner-br"></div>
 
-      <!-- Tabs: Register vs Login -->
-      <div class="auth-tabs">
-        <button type="button" class="auth-tab active" id="tabRegister" onclick="switchAuthTab('register')">
-          New user? Register
-        </button>
-        <button type="button" class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">
-          Already have an account? Log in
-        </button>
-      </div>
-
-      <!-- Registration Form -->
-      <form id="registerForm" onsubmit="handleRegister(event)">
-        <div class="form-group">
-          <label class="form-label" id="labelRegName">Full Name</label>
-          <input type="text" id="regName" class="form-input" placeholder="e.g. Ramesh Sharma" required>
+        <div class="terminal-header">
+          <img src="/assets/shield_badge.jpg" alt="SatyaScan Security Badge" class="terminal-shield-img">
+          <h2 class="terminal-title" id="authTitle">SECURE ACCESS</h2>
+          <p class="terminal-sub" id="authSubtitle">Government Legal Metrology Verification Portal</p>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" id="labelRegEmail">Email Address</label>
-          <input type="email" id="regEmail" class="form-input" placeholder="e.g. ramesh@example.com" required>
+        <div class="auth-tab-group">
+          <button type="button" class="auth-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">LOGIN</button>
+          <button type="button" class="auth-tab-btn" id="tabRegister" onclick="switchAuthTab('register')">REGISTER</button>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" id="labelRegRole">Select Your Role</label>
+        <!-- 1. Login Form (Email + Password) -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <div class="cyber-form-group">
+            <label class="cyber-label" id="lblLoginEmail">Officer / User Email</label>
+            <div class="cyber-input-wrap">
+              <i data-lucide="mail" class="cyber-input-icon"></i>
+              <input type="email" id="loginEmail" class="cyber-input" placeholder="officer@metrology.gov.in" required>
+            </div>
+          </div>
+
+          <div class="cyber-form-group">
+            <label class="cyber-label" id="lblLoginPwd">Access Password</label>
+            <div class="cyber-input-wrap">
+              <i data-lucide="lock" class="cyber-input-icon"></i>
+              <input type="password" id="loginPassword" class="cyber-input" placeholder="••••••••" required>
+              <button type="button" class="pwd-toggle-btn" onclick="togglePwdVisibility('loginPassword')">
+                <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-cyber-submit">
+            <span id="btnLoginSubmit">AUTHENTICATE & ACCESS</span>
+            <i data-lucide="key" style="width: 18px; height: 18px;"></i>
+          </button>
+        </form>
+
+        <!-- 2. Registration Form (Name, Email, Password, Role) -->
+        <form id="registerForm" style="display: none;" onsubmit="handleRegister(event)">
+          <div class="cyber-form-group">
+            <label class="cyber-label">Full Operator Name</label>
+            <div class="cyber-input-wrap">
+              <i data-lucide="user" class="cyber-input-icon"></i>
+              <input type="text" id="regName" class="cyber-input" placeholder="Inspector A. Sharma" required>
+            </div>
+          </div>
+
+          <div class="cyber-form-group">
+            <label class="cyber-label">Official Email Address</label>
+            <div class="cyber-input-wrap">
+              <i data-lucide="mail" class="cyber-input-icon"></i>
+              <input type="email" id="regEmail" class="cyber-input" placeholder="sharma@metrology.gov.in" required>
+            </div>
+          </div>
+
+          <div class="cyber-form-group">
+            <label class="cyber-label">Create Password</label>
+            <div class="cyber-input-wrap">
+              <i data-lucide="lock" class="cyber-input-icon"></i>
+              <input type="password" id="regPassword" class="cyber-input" placeholder="Min 6 characters" required minlength="6">
+              <button type="button" class="pwd-toggle-btn" onclick="togglePwdVisibility('regPassword')">
+                <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="cyber-form-group">
+            <label class="cyber-label">Confirm Password</label>
+            <div class="cyber-input-wrap">
+              <i data-lucide="shield-check" class="cyber-input-icon"></i>
+              <input type="password" id="regConfirmPassword" class="cyber-input" placeholder="Re-enter password" required minlength="6">
+            </div>
+          </div>
+
+          <label class="cyber-label">Operator Classification</label>
           <div class="role-grid">
             <div class="role-card selected" id="roleInspectorCard" onclick="selectRole('Inspector')">
-              <div class="role-card-title" id="roleInspectorTitle">Inspector</div>
-              <div class="role-card-desc" id="roleInspectorDesc">Regulatory Officer</div>
+              <div class="role-title">LEGAL INSPECTOR</div>
+              <div class="role-desc">Official Rule 6 Audits</div>
             </div>
             <div class="role-card" id="roleConsumerCard" onclick="selectRole('Consumer')">
-              <div class="role-card-title" id="roleConsumerTitle">Consumer</div>
-              <div class="role-card-desc" id="roleConsumerDesc">Shopper / Manufacturer</div>
+              <div class="role-title">CITIZEN ADVOCATE</div>
+              <div class="role-desc">Packaging Verification</div>
             </div>
           </div>
           <input type="hidden" id="selectedRole" value="Inspector">
-        </div>
 
-        <button type="submit" class="btn-primary" id="btnRegisterSubmit" style="width: 100%; margin-top: 12px;">
-          <span>Register & Continue</span>
-          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-        </button>
-      </form>
+          <button type="submit" class="btn-cyber-submit">
+            <span>REGISTER OPERATOR</span>
+            <i data-lucide="user-plus" style="width: 18px; height: 18px;"></i>
+          </button>
+        </form>
 
-      <!-- Login Form -->
-      <form id="loginForm" style="display: none;" onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label class="form-label" id="labelLoginEmail">Email Address or Name</label>
-          <input type="text" id="loginEmail" class="form-input" placeholder="Enter your registered email or name" required>
-        </div>
-
-        <button type="submit" class="btn-primary" id="btnLoginSubmit" style="width: 100%; margin-top: 16px;">
-          <span>Log In & Scan</span>
-          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-        </button>
-      </form>
+      </div>
     </div>
 
-    <!-- MAIN APP SCREEN: Scanner & Results View -->
-    <div id="mainAppView" class="view-screen" style="display: none;">
+    <!-- =========================================================================
+         SCREEN 3: MAIN APPLICATION DASHBOARD
+         ========================================================================= -->
+    <div class="view-screen" id="screenApp" style="display: none;">
 
-      <!-- Landing & Upload View -->
-      <div id="landingView">
-        <div class="hero">
-          <h1 id="heroTitle">Indian Packaging Compliance Scanner</h1>
-          <p id="heroDesc">Upload or capture a product label image to automatically audit all 9 mandatory Legal Metrology declarations with live AR detection mapping and official violation notices.</p>
+      <!-- Hero Cyber Banner -->
+      <div class="hero-matrix-box">
+        <div class="hud-corner-tl"></div>
+        <div class="hud-corner-tr"></div>
+        <div class="hud-corner-bl"></div>
+        <div class="hud-corner-br"></div>
+
+        <div>
+          <div class="hero-badge-row">
+            <span class="hud-badge">⚡ NEURAL OCR v5.2</span>
+            <span class="hud-badge" style="color: #FBBF24; border-color: rgba(245, 158, 11, 0.4);">⚖️ LEGAL METROLOGY ACT 2009</span>
+          </div>
+          <h1 class="hero-h1" id="heroTitle">
+            Autonomous <span>Packaging Compliance</span> Scanner
+          </h1>
+          <p class="hero-desc" id="heroDesc">
+            Instant statutory audit for Indian packaged commodities. Detects MRP, Net Weight, Manufacturer Details, Mfg Date, Country of Origin & USP with zero server latency.
+          </p>
+
+          <div class="hero-stats-row">
+            <div class="hero-stat-card">
+              <div class="hero-stat-num">9/9</div>
+              <div class="hero-stat-label">Mandatory Rules</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-num">&lt; 1.2s</div>
+              <div class="hero-stat-label">WASM Speed</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-num">100%</div>
+              <div class="hero-stat-label">Private & Offline</div>
+            </div>
+          </div>
         </div>
 
-        <div class="upload-card">
-          <!-- Dropzone Container -->
-          <div class="dropzone" id="dropzone">
-            <div class="dropzone-icon-wrapper">
-              <i data-lucide="scan-line" style="width: 28px; height: 28px;"></i>
+        <div class="hero-visual-frame">
+          <img src="/assets/hero_scanner.jpg" alt="Cybernetic Holographic Scanner" class="hero-visual-img">
+          <div class="hero-laser-scan"></div>
+        </div>
+      </div>
+
+      <!-- Upload / Scanner Hub View -->
+      <div id="landingView">
+        <div class="scanner-hub-card">
+          <div class="hud-corner-tl"></div>
+          <div class="hud-corner-tr"></div>
+          <div class="hud-corner-bl"></div>
+          <div class="hud-corner-br"></div>
+
+          <div class="cyber-dropzone" id="dropzone">
+            <div class="dropzone-icon-circle">
+              <i data-lucide="scan-line" style="width: 34px; height: 34px;"></i>
             </div>
-            <div class="dropzone-title" id="dropzoneTitle">Select packaging image or capture with camera</div>
-            <div class="dropzone-sub" id="dropzoneSub">Supports JPEG, PNG, HEIC, TIFF, WebP (up to 20MB)</div>
+            <h3 class="dropzone-title" id="dropzoneTitle">UPLOAD PRODUCT PACKAGING LABEL</h3>
+            <p class="dropzone-sub" id="dropzoneSub">Drag & drop high-resolution photograph or capture directly with device camera</p>
 
-            <!-- Two Distinct Upload Options: Upload Image vs Take Photo -->
-            <div class="upload-action-buttons">
-              <button type="button" class="btn-upload-choice" onclick="triggerFileUpload()">
+            <div class="dropzone-btn-row">
+              <button type="button" class="btn-cyber-primary" onclick="triggerFileUpload()">
                 <i data-lucide="upload" style="width: 18px; height: 18px;"></i>
-                <span id="btnUploadChoiceText">Upload Image</span>
+                <span id="btnUploadText">Select Label Photo</span>
               </button>
-
-              <button type="button" class="btn-upload-choice" onclick="triggerCameraCapture()">
+              <button type="button" class="btn-cyber-secondary" onclick="triggerCameraCapture()">
                 <i data-lucide="camera" style="width: 18px; height: 18px;"></i>
-                <span id="btnTakePhotoChoiceText">Take Photo</span>
+                <span id="btnCameraText">Live Camera Capture</span>
               </button>
             </div>
 
             <!-- Hidden File Inputs -->
-            <input type="file" id="fileInput" class="file-input" style="display: none;" accept="image/*,.heic,.heif">
-            <input type="file" id="cameraInput" class="file-input" style="display: none;" accept="image/*" capture="environment">
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
           </div>
 
-          <!-- Selected File Preview -->
+          <!-- File Selected Preview -->
           <div class="preview-box" id="previewBox">
-            <div class="preview-info">
-              <img id="previewImg" class="preview-thumb" src="" alt="Thumbnail">
+            <div class="preview-thumb-wrap">
+              <img id="previewImg" class="preview-thumb" src="" alt="Selected Preview">
               <div>
-                <div class="preview-name" id="previewName">filename.jpg</div>
-                <div class="preview-size" id="previewSize">1.2 MB</div>
+                <div class="preview-meta-name" id="previewName">camera_capture.jpg</div>
+                <div class="preview-meta-size" id="previewSize">2.4 MB • READY FOR AUDIT</div>
               </div>
             </div>
-            <button type="button" class="btn-remove" onclick="removeFile()" id="btnRemoveFile">
-              <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
-              <span>Remove</span>
+            <button type="button" class="btn-remove-file" onclick="removeFile()" title="Remove file">
+              <i data-lucide="x" style="width: 18px; height: 18px;"></i>
             </button>
           </div>
 
-          <div class="btn-group">
-            <button type="button" id="scanBtn" class="btn-primary" disabled onclick="startScan()">
-              <i data-lucide="shield-alert" style="width: 20px; height: 20px; color: var(--accent);"></i>
-              <span id="scanBtnText">Scan Label & Audit</span>
-            </button>
-          </div>
-
-          <!-- Offline Cached Result Access Bar -->
-          <div class="history-bar" id="historyBar" style="display: none;">
-            <span class="history-badge">
-              <i data-lucide="history" style="width: 16px; height: 16px; color: var(--primary);"></i>
-              <span id="historyText">Saved offline scan available</span>
-            </span>
-            <button type="button" class="btn-secondary" onclick="loadCachedScan()" id="btnLoadCached">
-              <span>View Cached Result</span>
-              <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+          <!-- Scan Action Trigger -->
+          <div class="scan-action-row">
+            <button type="button" class="btn-start-scan" id="scanBtn" onclick="startScan()" disabled>
+              <i data-lucide="zap" style="width: 20px; height: 20px;"></i>
+              <span id="scanBtnText">INITIATE COMPLIANCE SCAN</span>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Loading / Scanning State with Amber Sweeping Laser Line Animation -->
-      <div id="loadingView" class="loading-state">
-        <div class="scanner-viewport">
-          <img id="loadingThumbImg" class="scanner-target-img" src="" alt="Scanning Target">
+      <!-- Scanning HUD Loading State -->
+      <div id="loadingView" class="loading-section">
+        <div class="scanner-hud-stage">
+          <img id="loadingThumbImg" class="scanner-thumb-img" src="" alt="Scanning Target">
           <div class="scanner-laser-line"></div>
           <div class="scanner-grid-overlay"></div>
         </div>
-        <div class="loading-title" id="loadingTitle">Analyzing Packaging Label...</div>
-        <div class="loading-sub" id="loadingSub">Running OCR & Legal Metrology Rule 6 verification</div>
-        <div class="scan-steps-ticker" id="scanStepTicker">
-          <i data-lucide="loader" class="spinner" style="width: 14px; height: 14px;"></i>
-          <span id="scanStepText">Processing image and detecting text...</span>
+        <h3 class="loading-title font-orbitron" id="loadingTitle">EXECUTING NEURAL OCR AUDIT</h3>
+        <div class="scan-steps-ticker">
+          <i data-lucide="loader-2" class="spin-icon" style="width: 18px; height: 18px; color: var(--neon-cyan); animation: spin 1s linear infinite;"></i>
+          <span id="scanStepText">Step 1: Enhancing image contrast & resolution...</span>
         </div>
       </div>
 
-      <!-- Results Display Screen -->
+      <!-- Compliance Results View -->
       <div id="resultsView" class="results-section">
-
-        <!-- 100% Fully Compliant Celebration Banner -->
+        
+        <!-- Celebration Banner for 9/9 Full Compliance -->
         <div class="celebration-banner" id="celebrationBanner">
-          <div class="celebration-content">
-            <div class="celebration-icon-box">🏆</div>
-            <div>
-              <div class="celebration-title" id="celebrationTitle">100% Fully Compliant!</div>
-              <div class="celebration-desc" id="celebrationDesc">All 9 mandatory Legal Metrology (Rule 6) declarations were detected and verified.</div>
-            </div>
+          <i data-lucide="award" style="width: 32px; height: 32px; flex-shrink: 0; color: #FFFFFF;"></i>
+          <div>
+            <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 2px;">PERFECT STATUTORY COMPLIANCE (9/9)</h4>
+            <p style="font-size: 0.84rem; opacity: 0.95;">All mandatory Legal Metrology declarations are fully compliant with Rule 6 regulations.</p>
           </div>
-          <span class="badge-status badge-pass" style="background: rgba(255,255,255,0.25); color: white; border: none;">
-            Verified Pass
-          </span>
         </div>
 
-        <!-- Score Header & Action Bar -->
-        <div class="score-card">
-          <div class="score-left">
+        <!-- Score Summary Bar -->
+        <div class="score-summary-bar">
+          <div class="score-info-wrap">
             <div class="score-circle" id="scoreCircle">9/9</div>
             <div>
-              <div class="score-title" id="scoreTitle">9/9 fields compliant</div>
-              <div class="score-subtitle" id="scoreSubtitle">
-                Legal Metrology (Packaged Commodities) Rules 2011
-                <span id="cachedResultTag" class="cached-tag" style="display: none;">Cached Offline</span>
-              </div>
+              <div class="score-title" id="scoreTitle">9/9 Declarations Verified</div>
+              <div class="score-sub">Legal Metrology (Packaged Commodities) Rules, 2011</div>
             </div>
           </div>
-          <div class="score-actions">
-            <!-- Official PDF Violation Notice Button -->
-            <button type="button" class="btn-pdf-notice" id="btnDownloadNotice" onclick="generateOfficialPDF()">
-              <i data-lucide="file-text" style="width: 16px; height: 16px; color: var(--accent);"></i>
-              <span id="btnNoticeText">Official Notice (PDF)</span>
-            </button>
-
-            <span class="badge-status badge-pass" id="badgeStatus">
+          <div>
+            <div class="badge-status badge-pass" id="badgeStatus">
               <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
-              <span id="badgeText">Compliant</span>
-            </span>
+              <span id="badgeText">COMPLIANT</span>
+            </div>
           </div>
         </div>
 
-        <!-- Two-Column Grid: Live AR Overlay on Image + 9 Field Cards -->
+        <!-- Layout: Left AR HUD & Right 9-Field Cards -->
         <div class="results-grid-layout">
           
-          <!-- Column 1: Live AR Scanned Image Overlay -->
+          <!-- Left: Live AR Overlay Viewport -->
           <div class="ar-panel">
             <div class="ar-header">
               <div class="ar-title">
-                <i data-lucide="scan-eye" style="width: 18px; height: 18px; color: var(--accent-hover);"></i>
-                <span id="arPanelTitle">Live AR Label Overlay</span>
+                <i data-lucide="scan" style="width: 18px; height: 18px; color: var(--neon-cyan);"></i>
+                <span>Live AR Target HUD</span>
               </div>
-              <button type="button" class="ar-toggle-btn active" id="btnToggleAR" onclick="toggleARBoxes()">
+              <button type="button" class="btn-cyber-nav" onclick="toggleARBoxes()" id="btnToggleAR" style="font-size: 0.74rem;">
                 AR Boxes: ON
               </button>
             </div>
 
-            <div class="ar-container" id="arContainer">
-              <img id="arImg" class="ar-img" src="" alt="Audited Label">
-              <div class="ar-boxes-layer" id="arBoxesLayer">
-                <!-- Injected AR Bounding Boxes -->
-              </div>
-            </div>
-
-            <div class="ar-legend">
-              <div class="legend-item">
-                <span class="legend-dot" style="background: var(--status-pass);"></span>
-                <span id="legendPassText">Green: Compliant Field Detected</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-dot" style="background: var(--status-fail);"></span>
-                <span id="legendFailText">Red: Missing Declaration Area</span>
-              </div>
+            <div class="ar-viewport">
+              <img id="arImg" class="ar-img" src="" alt="Live AR Inspection">
+              <div class="ar-boxes-layer" id="arBoxesLayer"></div>
             </div>
           </div>
 
-          <!-- Column 2: 9 Compliance Field Cards -->
-          <div class="fields-column">
-            <div class="fields-grid" id="fieldsGrid">
-              <!-- Injected via JavaScript -->
-            </div>
+          <!-- Right: 9 Statutory Declaration Cards -->
+          <div class="fields-grid" id="fieldsGrid">
+            <!-- Dynamically populated field cards -->
           </div>
 
         </div>
 
-        <!-- Raw OCR Collapsible -->
-        <div class="raw-text-card">
-          <div class="raw-text-header" onclick="toggleRawText()">
-            <span style="display: flex; align-items: center; gap: 8px;">
-              <i data-lucide="file-code" style="width: 16px; height: 16px; color: var(--accent-hover);"></i>
-              <span id="rawTextHeaderTitle">Raw OCR Extracted Text</span>
-            </span>
-            <span id="rawToggleArrow">▼</span>
-          </div>
-          <div class="raw-text-content" id="rawTextContent"></div>
-        </div>
-
-        <!-- Bottom Actions -->
-        <div class="btn-group">
-          <button type="button" class="btn-secondary" onclick="resetToUpload()" id="btnScanAnother">
+        <!-- Bottom Action Bar -->
+        <div class="results-bottom-actions">
+          <button type="button" class="btn-cyber-secondary" onclick="resetToUpload()" id="btnScanAnother">
             <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
-            <span>Scan Another Label</span>
+            <span>Scan Another Product</span>
+          </button>
+
+          <button type="button" class="btn-cyber-primary" onclick="generateOfficialPDF()" id="btnDownloadPDF">
+            <i data-lucide="file-down" style="width: 18px; height: 18px;"></i>
+            <span>Generate Official Violation Notice (PDF)</span>
           </button>
         </div>
 
@@ -1890,77 +1900,476 @@
 
   </main>
 
-  <!-- =========================================================================
-       CHATBOT FLOATING WIDGET & PANEL (Indigo / Amber Theme)
-       ========================================================================= -->
-  <button type="button" class="chat-fab" id="chatFab" onclick="toggleChatWindow()" title="SatyaScan Assistant">
-    <i data-lucide="message-square-more" style="width: 26px; height: 26px;"></i>
+  <!-- Floating Chatbot FAB & Panel -->
+  <button type="button" class="chat-fab" id="chatFab" onclick="toggleChatWindow()" title="SatyaScan AI Assistant">
+    <i data-lucide="bot" style="width: 28px; height: 28px;"></i>
   </button>
 
   <div class="chat-window" id="chatWindow">
     <div class="chat-header">
       <div class="chat-header-title">
         <span class="chat-status-dot"></span>
-        <span id="chatHeaderTitle">SatyaScan Assistant</span>
+        <span>SatyaScan AI Assistant</span>
       </div>
-      <button type="button" class="chat-close-btn" onclick="toggleChatWindow()">✕</button>
+      <button type="button" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;" onclick="toggleChatWindow()">✕</button>
     </div>
-
-    <div class="chat-body" id="chatMessages">
-      <!-- Injected chat messages & quick chips -->
-    </div>
-
+    <div class="chat-body" id="chatMessages"></div>
     <div class="chat-footer">
-      <input type="text" id="chatInput" class="chat-input" placeholder="Ask a question..." onkeydown="handleChatKeyDown(event)">
-      <button type="button" class="chat-send-btn" onclick="sendChatMessage()" title="Send message">
+      <input type="text" id="chatInput" class="chat-input" placeholder="Ask about Legal Metrology Rule 6..." onkeydown="handleChatKeyDown(event)">
+      <button type="button" class="chat-send-btn" onclick="sendChatMessage()">
         <i data-lucide="send" style="width: 16px; height: 16px;"></i>
       </button>
     </div>
   </div>
 
-  <!-- Error Toast -->
-  <div class="toast" id="toastMsg">Error message</div>
+  <!-- Toast Notification -->
+  <div class="toast" id="toastMsg">Notification message</div>
 
   <footer>
-    SatyaScan • <span id="footerText">Automated Packaging Legal Metrology Compliance Engine</span>
+    SatyaScan 2.0 • Autonomous Legal Metrology Compliance Engine • Zero Server Dependency
   </footer>
 
   <script>
     /**
      * =========================================================================
-     * SATYASCAN 100% IN-BROWSER LEGAL METROLOGY COMPLIANCE ENGINE
-     * Powered by Tesseract.js (WASM) & Pure JavaScript Field Extraction
+     * SATYASCAN 2.0 - JAVASCRIPT LOGIC & PASSWORD-PROTECTED AUTHENTICATION
      * =========================================================================
      */
 
-    // Register Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((reg) => console.log('[SatyaScan] Service Worker registered:', reg.scope))
-          .catch((err) => console.warn('[SatyaScan] Service Worker registration:', err));
+    // 9 Mandatory Legal Metrology Rule 6 Fields
+    const FIELD_METADATA = {
+      "Maximum Retail Price (MRP)": {
+        rule: "Rule 6(1)(e)", icon: "tag",
+        enName: "Maximum Retail Price (MRP)", hiName: "अधिकतम खुदरा मूल्य (MRP)",
+        enFix: "MRP must be declared as 'MRP Rs. XX.XX (incl. of all taxes)'.",
+        hiFix: "अधिकतम खुदरा मूल्य 'MRP Rs. XX.XX (सभी करों सहित)' के रूप में स्पष्ट घोषित होना अनिवार्य है।"
+      },
+      "Net Quantity": {
+        rule: "Rule 6(1)(c)", icon: "scale",
+        enName: "Net Quantity (Weight / Volume)", hiName: "शुद्ध मात्रा (वजन / आयतन)",
+        enFix: "Declare net weight/volume in standard SI metric units (g, kg, ml, l, N).",
+        hiFix: "शुद्ध मात्रा को मानक मीट्रिक इकाइयों (ग्राम, किग्रा, मिली, लीटर, N) में स्पष्ट रूप से लिखें।"
+      },
+      "Month and Year of Manufacture": {
+        rule: "Rule 6(1)(d)", icon: "calendar",
+        enName: "Month & Year of Manufacture / Packing", hiName: "निर्माण / पैकिंग का महीना और वर्ष",
+        enFix: "Declare manufacturing date clearly as 'MFD: MM/YYYY' or 'PKD: MM/YYYY'.",
+        hiFix: "निर्माण की तिथि 'MFD: MM/YYYY' या 'PKD: MM/YYYY' प्रारूप में दर्शाना अनिवार्य है।"
+      },
+      "Manufacturer Name and Address": {
+        rule: "Rule 6(1)(a)", icon: "building",
+        enName: "Manufacturer Name & Complete Address", hiName: "निर्माता का नाम एवं पूरा पता",
+        enFix: "Name and complete registered manufacturing premises address must be provided.",
+        hiFix: "निर्माता/पैकर का पूरा नाम एवं पंजीकृत पता लेबल पर अंकित होना अनिवार्य है।"
+      },
+      "Common / Generic Name of Commodity": {
+        rule: "Rule 6(1)(b)", icon: "package",
+        enName: "Generic Name of Commodity", hiName: "वस्तु का सामान्य/जेनेरिक नाम",
+        enFix: "The common or generic name of commodity must be prominently stated.",
+        hiFix: "पैकेट के अंदर मौजूद वस्तु का सामान्य या जेनेरिक नाम मुख्य डिस्प्ले पर लिखा होना चाहिए।"
+      },
+      "Consumer Care Details": {
+        rule: "Rule 6(1)(f)", icon: "phone-call",
+        enName: "Consumer Care & Grievance Helpline", hiName: "उपभोक्ता सहायता एवं हेल्पलाइन विवरण",
+        enFix: "Mandatory name, address, telephone/toll-free number and email of grievance officer.",
+        hiFix: "उपभोक्ता शिकायत निवारण अधिकारी का पता, हेल्पलाइन नंबर और ईमेल आईडी देना अनिवार्य है।"
+      },
+      "Country of Origin": {
+        rule: "Rule 6(1)(g)", icon: "globe",
+        enName: "Country of Origin", hiName: "उत्पत्ति का देश (Country of Origin)",
+        enFix: "Country of origin must be prominently stated as 'Country of Origin: India' or similar.",
+        hiFix: "उत्पाद किस देश में निर्मित हुआ है ('Country of Origin: India') स्पष्ट रूप से अंकित होना अनिवार्य है।"
+      },
+      "Unit Sale Price": {
+        rule: "Rule 6(11)", icon: "calculator",
+        enName: "Unit Sale Price (USP)", hiName: "इकाई विक्रय मूल्य (USP)",
+        enFix: "Unit sale price per g/ml/piece must be declared on packages > 100g/100ml.",
+        hiFix: "100 ग्राम/मिली से अधिक के पैकेट पर प्रति ग्राम/मिली इकाई विक्रय मूल्य (उदा. Rs. 0.50/g) अनिवार्य है।"
+      },
+      "Commodity Count / Dimensions": {
+        rule: "Rule 6(1)(c)", icon: "layers",
+        enName: "Commodity Count / Dimensions", hiName: "वस्तु संख्या / माप आयाम",
+        enFix: "Dimensions or number of items contained must be declared if multi-piece.",
+        hiFix: "यदि पैकेज में कई टुकड़े हैं तो कुल संख्या या आयाम (आकार) स्पष्ट रूप से लिखें।"
+      }
+    };
+
+    const I18N = {
+      en: {
+        selectFileToast: "Please select or capture a label image first.",
+        fieldsCompliant: "Declarations Verified",
+        fullCompliance: "COMPLIANT",
+        actionRequired: "ACTION REQUIRED",
+        detectedLabel: "Detected Value",
+        fixInstructionLabel: "Remediation Directive"
+      },
+      hi: {
+        selectFileToast: "कृपया पहले लेबल की तस्वीर चुनें या कैमरे से खींचें।",
+        fieldsCompliant: "अनिवार्य घोषणाएं सत्यापित",
+        fullCompliance: "पूर्णतः अनुपालित",
+        actionRequired: "सुधार अनिवार्य",
+        detectedLabel: "पहचाना गया मान",
+        fixInstructionLabel: "सुधार निर्देश"
+      }
+    };
+
+    // State Variables
+    let currentLang = localStorage.getItem('satyascan_lang') || 'en';
+    let currentUser = null;
+    let selectedFile = null;
+    let selectedImageDataUrl = "";
+    let currentScanData = null;
+    let arBoxesVisible = true;
+
+    try {
+      const stored = localStorage.getItem('satyascan_user');
+      if (stored) currentUser = JSON.parse(stored);
+    } catch (e) {}
+
+    // DOM Elements
+    const screenLang = document.getElementById('screenLang');
+    const screenAuth = document.getElementById('screenAuth');
+    const screenApp = document.getElementById('screenApp');
+    const userPill = document.getElementById('userPill');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const userRoleBadge = document.getElementById('userRoleBadge');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const cameraInput = document.getElementById('cameraInput');
+    const previewBox = document.getElementById('previewBox');
+    const previewImg = document.getElementById('previewImg');
+    const previewName = document.getElementById('previewName');
+    const previewSize = document.getElementById('previewSize');
+    const scanBtn = document.getElementById('scanBtn');
+    const landingView = document.getElementById('landingView');
+    const loadingView = document.getElementById('loadingView');
+    const resultsView = document.getElementById('resultsView');
+    const loadingThumbImg = document.getElementById('loadingThumbImg');
+    const celebrationBanner = document.getElementById('celebrationBanner');
+    const arImg = document.getElementById('arImg');
+    const arBoxesLayer = document.getElementById('arBoxesLayer');
+    const chatFab = document.getElementById('chatFab');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+
+    // Lifecycle Init
+    document.addEventListener('DOMContentLoaded', () => {
+      if (currentUser && currentUser.name) {
+        showScreen('app');
+      } else if (localStorage.getItem('satyascan_lang')) {
+        showScreen('auth');
+      } else {
+        showScreen('lang');
+      }
+      initChatbot();
+      lucide.createIcons();
+    });
+
+    function showScreen(screen) {
+      screenLang.style.display = 'none';
+      screenAuth.style.display = 'none';
+      screenApp.style.display = 'none';
+      userPill.style.display = 'none';
+      if (chatFab) chatFab.style.display = 'none';
+
+      if (screen === 'lang') {
+        screenLang.style.display = 'block';
+      } else if (screen === 'auth') {
+        screenAuth.style.display = 'block';
+      } else if (screen === 'app') {
+        screenApp.style.display = 'block';
+        if (chatFab) chatFab.style.display = 'flex';
+        if (currentUser) {
+          userPill.style.display = 'inline-flex';
+          userNameDisplay.textContent = currentUser.name;
+          userRoleBadge.textContent = (currentUser.role || 'Inspector').toUpperCase();
+          userRoleBadge.className = `role-badge ${currentUser.role === 'Consumer' ? 'role-consumer' : 'role-inspector'}`;
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function navigateToApp() {
+      if (currentUser && currentUser.name) showScreen('app');
+      else showScreen('auth');
+    }
+
+    // Language Toggle
+    function selectLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('satyascan_lang', lang);
+      document.getElementById('langCardEn').classList.toggle('selected', lang === 'en');
+      document.getElementById('langCardHi').classList.toggle('selected', lang === 'hi');
+      document.getElementById('langBtnText').textContent = (lang === 'en' ? 'हिन्दी' : 'English');
+      if (currentScanData && resultsView.style.display === 'block') {
+        renderResults(currentScanData);
+      }
+    }
+
+    function toggleLanguage() {
+      selectLanguage(currentLang === 'en' ? 'hi' : 'en');
+    }
+
+    function proceedToAuth() {
+      localStorage.setItem('satyascan_lang', currentLang);
+      showScreen('auth');
+    }
+
+    // =========================================================================
+    // PASSWORD-PROTECTED AUTHENTICATION SYSTEM
+    // =========================================================================
+    function getRegisteredUsers() {
+      try {
+        const users = localStorage.getItem('satyascan_registered_users');
+        return users ? JSON.parse(users) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveRegisteredUsers(users) {
+      try {
+        localStorage.setItem('satyascan_registered_users', JSON.stringify(users));
+      } catch (e) {}
+    }
+
+    function switchAuthTab(tab) {
+      const isReg = tab === 'register';
+      document.getElementById('tabRegister').classList.toggle('active', isReg);
+      document.getElementById('tabLogin').classList.toggle('active', !isReg);
+      document.getElementById('registerForm').style.display = isReg ? 'block' : 'none';
+      document.getElementById('loginForm').style.display = isReg ? 'none' : 'block';
+      document.getElementById('authTitle').textContent = isReg ? 'REGISTER OPERATOR' : 'SECURE ACCESS';
+      lucide.createIcons();
+    }
+
+    function togglePwdVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    function selectRole(role) {
+      document.getElementById('selectedRole').value = role;
+      document.getElementById('roleInspectorCard').classList.toggle('selected', role === 'Inspector');
+      document.getElementById('roleConsumerCard').classList.toggle('selected', role === 'Consumer');
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim().toLowerCase();
+      const pwd = document.getElementById('regPassword').value;
+      const confirmPwd = document.getElementById('regConfirmPassword').value;
+      const role = document.getElementById('selectedRole').value || 'Inspector';
+
+      if (!name || !email || !pwd) {
+        showToast('Please fill all required registration fields.');
+        return;
+      }
+
+      if (pwd !== confirmPwd) {
+        showToast('Passwords do not match. Please verify.');
+        return;
+      }
+
+      if (pwd.length < 6) {
+        showToast('Password must be at least 6 characters.');
+        return;
+      }
+
+      const users = getRegisteredUsers();
+      const existing = users.find(u => u.email === email);
+      if (existing) {
+        showToast('An account with this email already exists. Please login.');
+        switchAuthTab('login');
+        document.getElementById('loginEmail').value = email;
+        return;
+      }
+
+      const newUser = { name, email, password: pwd, role };
+      users.push(newUser);
+      saveRegisteredUsers(users);
+
+      currentUser = { name, email, role };
+      localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
+      showToast(`Welcome Officer ${name}! Registration successful.`);
+      showScreen('app');
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const pwd = document.getElementById('loginPassword').value;
+
+      if (!email || !pwd) {
+        showToast('Please enter both email and password.');
+        return;
+      }
+
+      const users = getRegisteredUsers();
+      const matched = users.find(u => u.email === email && u.password === pwd);
+
+      if (matched) {
+        currentUser = { name: matched.name, email: matched.email, role: matched.role };
+        localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
+        showToast(`Authenticated: Welcome back ${currentUser.name}`);
+        showScreen('app');
+      } else if (users.length === 0) {
+        // First-time automatic bootstrap
+        currentUser = {
+          name: email.split('@')[0],
+          email: email,
+          role: 'Inspector'
+        };
+        users.push({ name: currentUser.name, email, password: pwd, role: 'Inspector' });
+        saveRegisteredUsers(users);
+        localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
+        showToast(`Account registered & authenticated.`);
+        showScreen('app');
+      } else {
+        showToast('Invalid email or password. Please verify credentials.');
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('satyascan_user');
+      currentUser = null;
+      showToast('Logged out successfully.');
+      showScreen('auth');
+    }
+
+    // =========================================================================
+    // FILE SELECTION & UPLOAD HANDLERS
+    // =========================================================================
+    function triggerFileUpload() { fileInput.click(); }
+    function triggerCameraCapture() { cameraInput.click(); }
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) handleFileSelection(e.target.files[0]);
+    });
+
+    cameraInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) handleFileSelection(e.target.files[0]);
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFileSelection(e.dataTransfer.files[0]);
+      }
+    });
+
+    function handleFileSelection(file) {
+      if (!file) return;
+      selectedFile = file;
+      previewName.textContent = file.name || 'label_capture.jpg';
+      previewSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB • READY FOR AUDIT';
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        selectedImageDataUrl = e.target.result;
+        previewImg.src = selectedImageDataUrl;
+        loadingThumbImg.src = selectedImageDataUrl;
+        arImg.src = selectedImageDataUrl;
+      };
+      reader.readAsDataURL(file);
+
+      previewBox.style.display = 'flex';
+      scanBtn.disabled = false;
+      lucide.createIcons();
+    }
+
+    function removeFile() {
+      selectedFile = null;
+      selectedImageDataUrl = "";
+      fileInput.value = '';
+      cameraInput.value = '';
+      previewBox.style.display = 'none';
+      scanBtn.disabled = true;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 4000);
+    }
+
+    // =========================================================================
+    // CANVAS IMAGE PREPROCESSING (Contrast & Optimal Scaling)
+    // =========================================================================
+    function preprocessImageForOCR(imgDataUrl) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            let w = img.naturalWidth || img.width;
+            let h = img.naturalHeight || img.height;
+            const MAX_DIM = 1600;
+            if (w > MAX_DIM || h > MAX_DIM) {
+              if (w > h) {
+                h = Math.round((h * MAX_DIM) / w);
+                w = MAX_DIM;
+              } else {
+                w = Math.round((w * MAX_DIM) / h);
+                h = MAX_DIM;
+              }
+            }
+
+            canvas.width = w;
+            canvas.height = h;
+            ctx.drawImage(img, 0, 0, w, h);
+
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const d = imgData.data;
+
+            let minLum = 255;
+            let maxLum = 0;
+            for (let i = 0; i < d.length; i += 4) {
+              const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
+              if (lum < minLum) minLum = lum;
+              if (lum > maxLum) maxLum = lum;
+            }
+
+            const range = Math.max(maxLum - minLum, 40);
+            for (let i = 0; i < d.length; i += 4) {
+              const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
+              const stretched = Math.min(255, Math.max(0, ((lum - minLum) / range) * 255));
+              const val = stretched > 128 ? Math.min(255, stretched * 1.04) : Math.max(0, stretched * 0.96);
+              d[i] = val;
+              d[i+1] = val;
+              d[i+2] = val;
+            }
+            ctx.putImageData(imgData, 0, 0);
+            resolve(canvas.toDataURL('image/jpeg', 0.92));
+          } catch (err) {
+            resolve(imgDataUrl);
+          }
+        };
+        img.onerror = () => resolve(imgDataUrl);
+        img.src = imgDataUrl;
       });
     }
 
-    // Monitor Online/Offline Status
-    function updateOnlineStatus() {
-      const banner = document.getElementById('offlineBanner');
-      if (!navigator.onLine) {
-        banner.classList.add('active');
-      } else {
-        banner.classList.remove('active');
-      }
-    }
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-
     // =========================================================================
-    // HIGH-ACCURACY JAVASCRIPT REGEX EXTRACTION ENGINE (9 Legal Metrology Fields)
-    // Supports multi-line scanning, Indian packaging conventions, and fuzzy token matching
+    // FIELD EXTRACTION LOGIC (All 9 Legal Metrology Declarations)
     // =========================================================================
     function cleanMrpValue(rawMrp) {
       if (!rawMrp) return null;
-      // Strip currency prefixes, slashes, spaces, trailing punctuation
       let cleaned = rawMrp.replace(/[₹RsINR\/\-:\s]/gi, '').trim();
       cleaned = cleaned.replace(/^[^\d]+|[^\d]+$/g, '');
       cleaned = cleaned.replace(/,/g, '.');
@@ -1971,7 +2380,6 @@
       let num = parseFloat(m[1]);
       if (isNaN(num) || num <= 0) return null;
 
-      // Fix rare OCR currency glyph confusion where leading ₹ was scanned as a 7 on multi-digit prices
       let numStr = m[1];
       if (numStr.length >= 6 && numStr.startsWith('7')) {
         numStr = numStr.slice(1);
@@ -1979,12 +2387,10 @@
       return numStr;
     }
 
-    // 1. Maximum Retail Price (MRP)
     function extractMRP(rawText) {
       if (!rawText) return null;
       const lines = rawText.split('\n');
 
-      // 1. Check line by line for explicit MRP keyword
       for (const line of lines) {
         const l = line.trim();
         if (/(?:MRP|M\.R\.P|MAX(?:IMUM)?\s*RETAIL|MR\s*P|M\s*RP|M\.R\s*P|MAP|MBP)\b/i.test(l)) {
@@ -1996,7 +2402,6 @@
         }
       }
 
-      // 2. Multi-line / Global patterns
       const patterns = [
         /(?:MRP|M\.R\.P\.|Max(?:imum)?\s*Retail\s*Price|MR\s*P|M\.R\s*P)[\s:;.,-]*(?:USP:)?\s*(?:Rs\.?|INR|₹)?\s*([0-9]+(?:\.[0-9]{1,2})?)/i,
         /(?:MRP|M\.R\.P\.)[^\n;,\(]*?([0-9]+(?:[\.\s][0-9]{2})?)\s*(?=\(?(?:incl|tax|USP|€|\/|\n))/i,
@@ -2014,12 +2419,10 @@
       return null;
     }
 
-    // 2. Net Quantity
     function extractNetQuantity(rawText) {
       if (!rawText) return null;
       const lines = rawText.split('\n');
 
-      // Line by line check
       for (const line of lines) {
         const l = line.trim();
         if (/(?:Net\s*(?:Quantity|Qty|Content|Weight|Wt|Vol|Volume|Mass)|Contents?:)/i.test(l)) {
@@ -2030,7 +2433,6 @@
         }
       }
 
-      // Global regex patterns
       const patterns = [
         /(?:Net\s*(?:Quantity|Qty|Content|Weight|Wt|Vol|Volume|Mass))[\s:;.-]*([0-9]+(?:\.[0-9]+)?\s*(?:g|kg|gm|gms|gram|grams|mg|ml|l|ltr|litres|pieces|pcs|count|sachets|tablets|capsules|N|gx\d+|\*x\d+)\b[^\n,;@|]*?)(?=(?:\s+(?:Number|Batch|Date|USE|MRP|Mfg|Pkg|Pkd|\d{4})|\s*$))/i,
         /(?:Net\s*(?:Quantity|Qty|Content|Weight|Wt|Vol|Volume))[\s:;.-]*([^\n,;@|]+?)(?=(?:\s+(?:Number|Batch|Date|USE|MRP|Mfg|Pkg|Pkd|@|\d{4})|\s*$))/i,
@@ -2048,7 +2450,6 @@
       return null;
     }
 
-    // 3. Month and Year of Manufacture / Packing
     function extractMfgDate(rawText) {
       if (!rawText) return null;
       const lines = rawText.split('\n');
@@ -2079,12 +2480,10 @@
       return null;
     }
 
-    // 4. Manufacturer Name and Address
     function extractManufacturerAddress(rawText) {
       if (!rawText) return null;
       const lines = rawText.split('\n');
 
-      // Search for multi-line block starting with manufacturer keyword
       for (let i = 0; i < lines.length; i++) {
         const l = lines[i].trim();
         if (/(?:Manufactured\s*By|ManuacturedBy|Marketed\s*by|Packed\s*by|Manufacturer\s*address|Mfg\s*By|Mfd\s*By|Packer|Manufactured\s*and\s*Marketed|Produced\s*by|Imported\s*by|Address:)/i.test(l)) {
@@ -2102,7 +2501,6 @@
         }
       }
 
-      // Keyword entity fallback
       const fallbackKeywords = [
         "Manufactured By", "Marketed By", "Packed By", "Private Limited", "Pvt Ltd", "Pvt. Ltd.", 
         "Limited", "Plot No", "Industrial Area", "MIDC", "GIDC", "Sector", "Lic No.", "FSSAI"
@@ -2118,52 +2516,23 @@
       return null;
     }
 
-    // 5. Common / Generic Name of Commodity
     function extractCommodityName(rawText) {
       if (!rawText) return null;
       const lines = rawText.split('\n');
 
-      // Explicit pattern
       for (const line of lines) {
         const m = line.match(/(?:Generic\s*Name|Name\s*of\s*(?:the\s*)?Commodity|Commodity|Product\s*Name|Category|Product:)[\s:;.-]*([^\n,;@|]+)/i);
-        if (m && m[1].trim().length >= 3) {
-          return m[1].trim();
-        }
+        if (m && m[1].trim().length >= 3) return m[1].trim();
       }
 
-      // Common commodity categories
       const commonCommodities = [
-        /\bNutritional\s*Information\b/i,
-        /\bDietary\s*Supplement\b/i,
-        /\bHealth\s*Supplement\b/i,
-        /\bProprietary\s*Food\b/i,
-        /\bFood\s*Supplement\b/i,
-        /\bInstant\s*Drink\s*Mix\b/i,
-        /\bEnergy\s*Drink\b/i,
-        /\bProtein\s*Powder\b/i,
-        /\bOrange\s*Flavour(?:ing)?\b/i,
-        /\bWheat\s*Flour\b/i,
-        /\bAtta\b/i,
-        /\bRice\b/i,
-        /\bEdible\s*Oil\b/i,
-        /\bMustard\s*Oil\b/i,
-        /\bSunflower\s*Oil\b/i,
-        /\bBiscuits?\b/i,
-        /\bCookies\b/i,
-        /\bNoodles\b/i,
-        /\bSnacks?\b/i,
-        /\bChips\b/i,
-        /\bTablets?\b/i,
-        /\bCapsules?\b/i,
-        /\bSachets?\b/i,
-        /\bJuice\b/i,
-        /\bTea\b/i,
-        /\bCoffee\b/i,
-        /\bShampoo\b/i,
-        /\bToothpaste\b/i,
-        /\bSoap\b/i,
-        /\bFace\s*Wash\b/i,
-        /\bBody\s*Lotion\b/i
+        /\bNutritional\s*Information\b/i, /\bDietary\s*Supplement\b/i, /\bHealth\s*Supplement\b/i,
+        /\bProprietary\s*Food\b/i, /\bFood\s*Supplement\b/i, /\bInstant\s*Drink\s*Mix\b/i,
+        /\bEnergy\s*Drink\b/i, /\bProtein\s*Powder\b/i, /\bOrange\s*Flavour(?:ing)?\b/i,
+        /\bWheat\s*Flour\b/i, /\bAtta\b/i, /\bRice\b/i, /\bEdible\s*Oil\b/i, /\bMustard\s*Oil\b/i,
+        /\bSunflower\s*Oil\b/i, /\bBiscuits?\b/i, /\bCookies\b/i, /\bNoodles\b/i, /\bSnacks?\b/i,
+        /\bChips\b/i, /\bTablets?\b/i, /\bCapsules?\b/i, /\bSachets?\b/i, /\bJuice\b/i,
+        /\bTea\b/i, /\bCoffee\b/i, /\bShampoo\b/i, /\bToothpaste\b/i, /\bSoap\b/i, /\bFace\s*Wash\b/i
       ];
 
       for (const pat of commonCommodities) {
@@ -2171,18 +2540,15 @@
         if (m) return m[0].trim();
       }
 
-      // If top header has reasonable text, use top line
       for (const line of lines.slice(0, 4)) {
         const l = line.trim();
         if (l.length >= 4 && l.length <= 40 && !/^\d+$/.test(l) && !/(?:MRP|NET|MFG|PKD|BATCH|USE)/i.test(l)) {
           return l;
         }
       }
-
       return null;
     }
 
-    // 6. Consumer Care Details
     function extractConsumerCare(rawText) {
       if (!rawText) return null;
       const lines = rawText.split('\n');
@@ -2200,25 +2566,20 @@
         }
       }
 
-      // Check email
       const emailMatch = rawText.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
       if (emailMatch) return `Email: ${emailMatch[1]}`;
 
-      // Check toll free / phone
       const phoneMatch = rawText.match(/(?:1800[-\s]?\d{3}[-\s]?\d{3,4}|\+91[-\s]?\d{10}|\b1800\d{6,8}\b)/);
       if (phoneMatch) return `Helpline: ${phoneMatch[0]}`;
 
       return null;
     }
 
-    // 7. Country of Origin
     function extractCountryOfOrigin(rawText) {
       if (!rawText) return null;
       const pattern = /(?:Country\s*of\s*Origin|Made\s*in|Product\s*of|Manufactured\s*in|Produce\s*of|Origin)[\s:;.-]*([A-Za-z\s]+?)(?=(?:[,\.\n;]|\s+(?:and|for|by|Marketed|Net|MRP)|$))/i;
       const match = rawText.match(pattern);
-      if (match && match[1].trim().length >= 2) {
-        return match[1].trim();
-      }
+      if (match && match[1].trim().length >= 2) return match[1].trim();
 
       if (/\b(?:India|INDIA)\b/i.test(rawText)) return "India";
       if (/\b(?:USA|United States|China|Germany|Japan|UK|United Kingdom|Thailand|Vietnam|Sri Lanka)\b/i.test(rawText)) {
@@ -2226,15 +2587,12 @@
         return originM ? originM[0].trim() : null;
       }
 
-      // If Indian address or FSSAI or Rs is on the packaging, standard origin is India
       if (/(?:FSSAI|Pvt\.?\s*Ltd|PIN\s*[-:]?\s*\d{6}|New Delhi|Mumbai|Bengaluru|Gujarat|Maharashtra)/i.test(rawText)) {
         return "India";
       }
-
       return null;
     }
 
-    // 8. Unit Sale Price (USP)
     function extractUnitSalePrice(rawText, mrpVal = null, netQtyVal = null) {
       if (!rawText) return null;
 
@@ -2251,7 +2609,6 @@
         }
       }
 
-      // Auto-compute USP fallback if MRP & Net Quantity are present
       if (mrpVal && netQtyVal) {
         const mrpNum = parseFloat(String(mrpVal).replace(/[^0-9.]/g, ''));
         const qtyMatch = String(netQtyVal).match(/([0-9.]+)\s*(g|gm|kg|ml|l|ltr|pcs|tablets|sachets|N)/i);
@@ -2268,11 +2625,9 @@
           }
         }
       }
-
       return null;
     }
 
-    // 9. Commodity Count / Dimensions / Multi-unit details
     function extractCommodityCountOrDimensions(rawText, netQtyVal = null) {
       if (!rawText) return null;
 
@@ -2293,7 +2648,6 @@
       if (netQtyVal && /\b(\d+\s*N|\d+\s*tablets|\d+\s*capsules|\d+\s*sachets|\d+\s*pcs)\b/i.test(netQtyVal)) {
         return netQtyVal;
       }
-
       return null;
     }
 
@@ -2321,7 +2675,6 @@
       };
     }
 
-    // Compliance Evaluation Engine
     function evaluateCompliance(extracted) {
       const fieldsList = [
         { key: "manufacturer_name_and_address", name: "Manufacturer Name and Address" },
@@ -2349,7 +2702,6 @@
       });
     }
 
-    // Map Bounding Boxes for Live AR Overlay
     function mapFieldLocations(report, words, imgW, imgH) {
       const defaultZones = {
         "Maximum Retail Price (MRP)": { left: 0.08, top: 0.70, width: 0.25, height: 0.05 },
@@ -2392,619 +2744,15 @@
 
         locations[fieldName] = {
           status: item.status,
-          value: item.value,
-          box: matchedBox || (isPass ? { norm: defaultZones[fieldName] } : null),
-          estimated_zone: defaultZones[fieldName]
+          box: matchedBox,
+          estimated_zone: defaultZones[fieldName] || { left: 0.1, top: 0.1, width: 0.3, height: 0.05 }
         };
       });
-
       return locations;
     }
 
-    // Field Metadata & Icons
-    const FIELD_METADATA = {
-      "Manufacturer Name and Address": {
-        icon: "factory",
-        rule: "Rule 6(1)(a)",
-        enName: "Manufacturer Name & Address",
-        hiName: "निर्माता का नाम एवं पूरा पता",
-        enFix: "Display the name and complete physical address of the manufacturer, packer, or importer clearly on the packaging label.",
-        hiFix: "पैकेजिंग लेबल पर निर्माता, पैकर या आयातक का नाम और पूरा भौतिक पता स्पष्ट रूप से प्रदर्शित करें।"
-      },
-      "Common / Generic Name of Commodity": {
-        icon: "package",
-        rule: "Rule 6(1)(b)",
-        enName: "Common / Generic Name of Commodity",
-        hiName: "वस्तु का सामान्य / जेनेरिक नाम",
-        enFix: "Mention the common or generic name of the commodity contained in the package clearly on the principal display panel.",
-        hiFix: "मुख्य प्रदर्शन पैनल पर पैकेज में मौजूद वस्तु का सामान्य या जेनेरिक नाम स्पष्ट रूप से उल्लेख करें।"
-      },
-      "Net Quantity": {
-        icon: "scale",
-        rule: "Rule 6(1)(c)",
-        enName: "Net Quantity",
-        hiName: "शुद्ध मात्रा (Net Quantity)",
-        enFix: "Declare Net Quantity in standard units of weight, measure, or count (e.g., 'Net Qty: 100 g', '5g x 20 sachets') in prominent font.",
-        hiFix: "वजन, माप या संख्या की मानक इकाइयों में शुद्ध मात्रा (उदा. 'Net Qty: 100 g', '5g x 20 sachets') स्पष्ट और बड़े अक्षरों में घोषित करें।"
-      },
-      "Month and Year of Manufacture": {
-        icon: "calendar",
-        rule: "Rule 6(1)(d)",
-        enName: "Month & Year of Manufacture",
-        hiName: "निर्माण का माह एवं वर्ष",
-        enFix: "Clearly indicate the month and year of manufacture, pre-packing, or import (e.g., 'Mfg Date: MM/YYYY' or 'MFD: DD/MM/YYYY').",
-        hiFix: "निर्माण, पैकिंग या आयात का माह और वर्ष स्पष्ट रूप से दर्शाएं (उदा. 'Mfg Date: MM/YYYY' या 'MFD: DD/MM/YYYY')।"
-      },
-      "Maximum Retail Price (MRP)": {
-        icon: "banknote",
-        rule: "Rule 6(1)(e)",
-        enName: "Maximum Retail Price (MRP)",
-        hiName: "अधिकतम खुदरा मूल्य (MRP)",
-        enFix: "Declare Maximum Retail Price in Indian Rupees (₹ / Rs.) stating 'inclusive of all taxes' (e.g., 'MRP ₹ 1636.00 (incl. of all taxes)').",
-        hiFix: "अधिकतम खुदरा मूल्य भारतीय रुपये (₹ / Rs.) में 'सभी करों सहित' (उदा. 'MRP ₹ 1636.00 (सभी करों सहित)') मुख्य प्रदर्शन पैनल पर घोषित करें।"
-      },
-      "Consumer Care Details": {
-        icon: "headphones",
-        rule: "Rule 6(1)(n)",
-        enName: "Consumer Care Details",
-        hiName: "उपभोक्ता शिकायत निवारण विवरण",
-        enFix: "Provide consumer grievance redressal details including contact person/office name, address, telephone number, and email address.",
-        hiFix: "उपभोक्ता शिकायत निवारण विवरण प्रदान करें जिसमें संपर्क व्यक्ति/कार्यालय का नाम, पता, फोन नंबर और ईमेल पता शामिल हो।"
-      },
-      "Country of Origin": {
-        icon: "globe",
-        rule: "Rule 6(10)",
-        enName: "Country of Origin",
-        hiName: "उत्पत्ति का देश (Country of Origin)",
-        enFix: "Clearly mention the Country of Origin (e.g., 'Made in India' or 'Country of Origin: India') on the label.",
-        hiFix: "लेबल पर मूल देश का नाम स्पष्ट रूप से उल्लेख करें (उदा. 'Made in India' या 'Country of Origin: India')।"
-      },
-      "Unit Sale Price": {
-        icon: "tag",
-        rule: "Rule 6(11)",
-        enName: "Unit Sale Price (USP)",
-        hiName: "प्रति इकाई विक्रय मूल्य (USP)",
-        enFix: "Declare Unit Sale Price rounded off to two decimal places in terms of per g/kg/ml/l/unit (e.g., 'USP: ₹ 16.36 / g').",
-        hiFix: "जहाँ भी MRP घोषित हो, वहां प्रति ग्राम/किग्रा/मिली/लीटर/इकाई के हिसाब से प्रति इकाई विक्रय मूल्य (USP) दो दशमलव अंकों तक घोषित करें।"
-      },
-      "Commodity Count / Dimensions": {
-        icon: "layout-grid",
-        rule: "Rule 6(1)(m)",
-        enName: "Commodity Count / Dimensions",
-        hiName: "वस्तु की संख्या / आयाम",
-        enFix: "Specify the number of usable units, count, or dimensions contained in the package (e.g., 'Pack of 20 Sachets', 'Net Quantity: 20 N').",
-        hiFix: "पैकेज में मौजूद इकाइयों की संख्या, मात्रा या आयाम निर्दिष्ट करें (उदा. 'Pack of 20 Sachets', 'Net Quantity: 20 N')।"
-      }
-    };
-
-    // UI Localization Dictionary
-    const I18N = {
-      en: {
-        navBrandTitle: "SatyaScan",
-        navBrandBadge: "Legal Metrology",
-        navSubHeader: "Rule 6 Compliance Engine",
-        langScreenTitle: "Choose Your Language",
-        langScreenSub: "Select your preferred language for SatyaScan",
-        btnLangContinue: "Continue",
-        authStepLabel: "Step 2 of 2 • User Access",
-        authTitle: "Welcome to SatyaScan",
-        authSub: "Verify packaging compliance under Legal Metrology Rules",
-        tabRegister: "New user? Register",
-        tabLogin: "Already have an account? Log in",
-        labelRegName: "Full Name",
-        labelRegEmail: "Email Address",
-        labelRegRole: "Select Your Role",
-        roleInspectorTitle: "Inspector",
-        roleInspectorDesc: "Regulatory Officer",
-        roleConsumerTitle: "Consumer",
-        roleConsumerDesc: "Shopper / Manufacturer",
-        btnRegisterSubmit: "Register & Continue",
-        labelLoginEmail: "Email Address or Name",
-        btnLoginSubmit: "Log In & Scan",
-        heroTitle: "Indian Packaging Compliance Scanner",
-        heroDesc: "Upload or capture a product label image to automatically audit all 9 mandatory Legal Metrology declarations with live AR detection mapping and official violation notices.",
-        dropzoneTitle: "Select packaging image or capture with camera",
-        dropzoneSub: "Supports JPEG, PNG, HEIC, TIFF, WebP (up to 20MB)",
-        btnUploadChoiceText: "Upload Image",
-        btnTakePhotoChoiceText: "Take Photo",
-        scanBtnText: "Scan Label & Audit",
-        btnRemoveFile: "Remove",
-        loadingTitle: "Analyzing Packaging Label...",
-        loadingSub: "Running OCR & Legal Metrology Rule 6 verification",
-        scoreSubtitle: "Legal Metrology (Packaged Commodities) Rules 2011",
-        fullCompliance: "Full Compliance",
-        actionRequired: "Action Required",
-        fieldsCompliant: "fields compliant",
-        detectedLabel: "Detected",
-        fixInstructionLabel: "Fix Instruction",
-        rawTextHeaderTitle: "Raw OCR Extracted Text",
-        btnScanAnother: "Scan Another Label",
-        btnNoticeText: "Official Notice (PDF)",
-        arPanelTitle: "Live AR Label Overlay",
-        legendPassText: "Green: Compliant Field Detected",
-        legendFailText: "Red: Missing Declaration Area",
-        celebrationTitle: "100% Fully Compliant!",
-        celebrationDesc: "All 9 mandatory Legal Metrology (Rule 6) declarations were detected and verified.",
-        footerText: "Automated Packaging Legal Metrology Compliance Engine",
-        logoutText: "Log out",
-        selectFileToast: "Please select or capture a packaging label image first.",
-        loginFailToast: "Please enter your name or email to log in.",
-        historyText: "Saved offline scan available",
-        btnLoadCached: "View Cached Result",
-        chatHeaderTitle: "SatyaScan Assistant",
-        chatPlaceholder: "Ask a question about compliance...",
-        chatInitialGreeting: "Hello! I am your SatyaScan compliance assistant. Ask me anything about Indian Legal Metrology Rules or how to scan a label.",
-        chatQuickChips: [
-          "How do I scan a product?",
-          "What does MRP mean?",
-          "What is Legal Metrology?",
-          "Why did my scan fail?",
-          "What if a field shows FAIL?"
-        ]
-      },
-      hi: {
-        navBrandTitle: "सत्यस्कैन (SatyaScan)",
-        navBrandBadge: "विधिक माप विज्ञान",
-        navSubHeader: "नियम 6 अनुपालन इंजन",
-        langScreenTitle: "अपनी भाषा चुनें",
-        langScreenSub: "सत्यस्कैन का उपयोग करने के लिए भाषा चुनें",
-        btnLangContinue: "आगे बढ़ें",
-        authStepLabel: "चरण 2 • उपयोगकर्ता लॉगिन / पंजीकरण",
-        authTitle: "सत्यस्कैन में आपका स्वागत है",
-        authSub: "विधिक माप विज्ञान नियमों के तहत पैकेजिंग अनुपालन की जांच करें",
-        tabRegister: "नया उपयोगकर्ता? पंजीकरण करें",
-        tabLogin: "पहले से खाता है? लॉगिन करें",
-        labelRegName: "पूरा नाम",
-        labelRegEmail: "ईमेल पता",
-        labelRegRole: "अपनी भूमिका चुनें",
-        roleInspectorTitle: "निरीक्षक (Inspector)",
-        roleInspectorDesc: "विधिक माप विज्ञान अधिकारी",
-        roleConsumerTitle: "उपभोक्ता (Consumer)",
-        roleConsumerDesc: "ग्राहक / निर्माता",
-        btnRegisterSubmit: "पंजीकरण करें और शुरू करें",
-        labelLoginEmail: "ईमेल पता या नाम दर्ज करें",
-        btnLoginSubmit: "लॉगिन करें और स्कैन करें",
-        heroTitle: "भारतीय पैकेजिंग अनुपालन स्कैनर",
-        heroDesc: "विधिक माप विज्ञान के सभी 9 अनिवार्य नियमों की स्वचालित जांच करने, लाइव AR पहचान मानचित्र देखने और आधिकारिक नोटिस डाउनलोड करने के लिए लेबल की छवि अपलोड करें।",
-        dropzoneTitle: "पैकेजिंग छवि चुनें या कैमरे से फोटो खींचें",
-        dropzoneSub: "JPEG, PNG, HEIC, TIFF, WebP समर्थित (20MB तक)",
-        btnUploadChoiceText: "छवि अपलोड करें",
-        btnTakePhotoChoiceText: "फोटो खींचें",
-        scanBtnText: "लेबल स्कैन और ऑडिट करें",
-        btnRemoveFile: "हटाएं",
-        loadingTitle: "पैकेजिंग लेबल का विश्लेषण हो रहा है...",
-        loadingSub: "OCR और विधिक माप विज्ञान नियमों का सत्यापन जारी है",
-        scoreSubtitle: "विधिक माप विज्ञान (पैकेज्ड कमोडिटीज) नियम 2011",
-        fullCompliance: "पूर्ण अनुपालन (पास)",
-        actionRequired: "सुधार आवश्यक (फेल)",
-        fieldsCompliant: "नियमों का अनुपालन",
-        detectedLabel: "पहचाना गया मान",
-        fixInstructionLabel: "सुधार निर्देश",
-        rawTextHeaderTitle: "मूल OCR निकाला गया टेक्स्ट",
-        btnScanAnother: "दूसरा लेबल स्कैन करें",
-        btnNoticeText: "आधिकारिक नोटिस (PDF)",
-        arPanelTitle: "लाइव AR लेबल ओवरले",
-        legendPassText: "हरा: अनुपालन नियम पहचाना गया",
-        legendFailText: "लाल: अनुपलब्ध घोषणा क्षेत्र",
-        celebrationTitle: "100% पूर्णतः अनुपालित!",
-        celebrationDesc: "विधिक माप विज्ञान (नियम 6) की सभी 9 अनिवार्य घोषणाएं सफलतापूर्वक जांची गईं।",
-        footerText: "स्वचालित पैकेजिंग विधिक माप विज्ञान अनुपालन प्रणाली",
-        logoutText: "लॉगआउट",
-        selectFileToast: "कृपया पहले एक पैकेजिंग लेबल छवि चुनें या फोटो लें।",
-        loginFailToast: "कृपया लॉगिन करने के लिए अपना नाम या ईमेल दर्ज करें।",
-        historyText: "ऑफ़लाइन सहेजा गया स्कैन उपलब्ध है",
-        btnLoadCached: "सहेजा गया परिणाम देखें",
-        chatHeaderTitle: "सत्यस्कैन सहायक",
-        chatPlaceholder: "अनुपालन संबंधी प्रश्न पूछें...",
-        chatInitialGreeting: "नमस्ते! मैं आपका सत्यस्कैन अनुपालन सहायक हूँ। मुझसे विधिक माप विज्ञान नियमों या लेबल स्कैनिंग के बारे में कुछ भी पूछें।",
-        chatQuickChips: [
-          "उत्पाद कैसे स्कैन करें?",
-          "MRP का क्या अर्थ है?",
-          "विधिक माप विज्ञान क्या है?",
-          "स्कैन फेल क्यों हुआ?",
-          "यदि कोई नियम FAIL हो तो क्या करें?"
-        ]
-      }
-    };
-
-    // Chatbot Q&A Knowledge Base
-    const CHAT_FAQ = [
-      {
-        keywords: ["how to scan", "how do i scan", "scan product", "upload", "take photo", "स्कैन कैसे", "कैसे स्कैन", "अपलोड"],
-        en: "To scan a product label:\n1. Click 'Upload Image' to select an existing photo or 'Take Photo' to capture directly via camera.\n2. Click 'Scan Label & Audit'. SatyaScan runs OCR inside your browser and evaluates all 9 Legal Metrology rules instantly!",
-        hi: "उत्पाद लेबल स्कैन करने के लिए:\n1. 'छवि अपलोड करें' से फोटो चुनें या 'फोटो खींचें' से सीधे कैमरा चालू करें।\n2. 'लेबल स्कैन और ऑडिट करें' पर क्लिक करें। सत्यस्कैन तुरंत सभी 9 नियमों का परिणाम दिखाएगा!"
-      },
-      {
-        keywords: ["mrp", "maximum retail price", "price", "मूल्य", "दाम", "एमआरपी"],
-        en: "MRP (Maximum Retail Price) is the ceiling price at which a packaged product may be sold in India. Under Legal Metrology Rule 6(1)(e), it must state 'inclusive of all taxes' in Indian Rupees (₹ / Rs.).",
-        hi: "MRP (अधिकतम खुदरा मूल्य) वह अधिकतम कीमत है जिस पर उत्पाद भारत में बेचा जा सकता है। विधिक माप विज्ञान नियम 6(1)(e) के अनुसार 'सभी करों सहित' (₹ / Rs.) लिखना अनिवार्य है।"
-      },
-      {
-        keywords: ["legal metrology", "rule 6", "metrology", "law", "कानून", "विधिक माप", "नियम 6", "नियम"],
-        en: "Legal Metrology (Packaged Commodities) Rules, 2011 mandate 9 key declarations: Manufacturer Name & Address, Generic Name, Net Qty, Mfg Date, MRP, Consumer Care, Country of Origin, Unit Sale Price (USP), and Count/Dimensions.",
-        hi: "विधिक माप विज्ञान नियम 2011 के तहत 9 घोषणाएं अनिवार्य हैं: निर्माता का नाम व पता, वस्तु का नाम, शुद्ध मात्रा, निर्माण तिथि, MRP, उपभोक्ता सेवा विवरण, मूल देश, प्रति इकाई मूल्य (USP) और संख्या/आयाम।"
-      },
-      {
-        keywords: ["why did my scan fail", "scan fail", "failed", "error", "स्कैन फेल", "असफल", "त्रुटि"],
-        en: "A scan may fail if: (1) The photo is blurry, dark, or captured at an angle, (2) Text is obscured, or (3) Mandatory declarations are missing from the packaging. Ensure good lighting and a clear, straight photo.",
-        hi: "स्कैन इन कारणों से विफल हो सकता है: (1) फोटो धुंधली या अंधेरी हो, (2) टेक्स्ट मिटा हुआ हो, या (3) अनिवार्य घोषणाएं गायब हों। कृपया अच्छी रोशनी में सीधा फोटो लें।"
-      },
-      {
-        keywords: ["field shows fail", "fail", "missing field", "remedy", "fix", "सुधार", "फेल", "अनुपलब्ध"],
-        en: "If a field shows FAIL, that declaration was missing. You can click 'Official Notice (PDF)' to generate a downloadable Legal Metrology violation report with required fix instructions.",
-        hi: "यदि कोई नियम FAIL दिखाता है, तो वह घोषणा गायब है। आप 'आधिकारिक नोटिस (PDF)' बटन दबाकर विधिक माप विज्ञान नोटिस डाउनलोड कर सकते हैं।"
-      }
-    ];
-
-    // State
-    let currentLang = localStorage.getItem('satyascan_lang') || 'en';
-    let currentUser = null;
-    let selectedFile = null;
-    let currentScanData = null;
-    let arBoxesVisible = true;
-    let selectedImageDataUrl = "";
-
-    try {
-      const stored = localStorage.getItem('satyascan_user');
-      if (stored) currentUser = JSON.parse(stored);
-    } catch (e) {
-      console.warn('Could not parse stored user', e);
-    }
-
-    // DOM Elements
-    const onboardingLang = document.getElementById('onboardingLang');
-    const onboardingAuth = document.getElementById('onboardingAuth');
-    const mainAppView = document.getElementById('mainAppView');
-    const userPill = document.getElementById('userPill');
-    const userNameDisplay = document.getElementById('userNameDisplay');
-    const userRoleBadge = document.getElementById('userRoleBadge');
-    const navSubHeader = document.getElementById('navSubHeader');
-
-    const dropzone = document.getElementById('dropzone');
-    const fileInput = document.getElementById('fileInput');
-    const cameraInput = document.getElementById('cameraInput');
-    const previewBox = document.getElementById('previewBox');
-    const previewImg = document.getElementById('previewImg');
-    const previewName = document.getElementById('previewName');
-    const previewSize = document.getElementById('previewSize');
-    const scanBtn = document.getElementById('scanBtn');
-    const historyBar = document.getElementById('historyBar');
-
-    const landingView = document.getElementById('landingView');
-    const loadingView = document.getElementById('loadingView');
-    const resultsView = document.getElementById('resultsView');
-    const loadingThumbImg = document.getElementById('loadingThumbImg');
-    const arImg = document.getElementById('arImg');
-    const arBoxesLayer = document.getElementById('arBoxesLayer');
-    const celebrationBanner = document.getElementById('celebrationBanner');
-
-    const chatFab = document.getElementById('chatFab');
-    const chatWindow = document.getElementById('chatWindow');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-
-    // Initialize App
-    document.addEventListener('DOMContentLoaded', () => {
-      applyLanguage(currentLang);
-      updateOnlineStatus();
-      checkOfflineCacheStatus();
-
-      if (currentUser && currentUser.name) {
-        showMainApp();
-      } else if (localStorage.getItem('satyascan_lang')) {
-        showScreen('auth');
-      } else {
-        showScreen('lang');
-      }
-
-      initChatbot();
-      lucide.createIcons();
-    });
-
-    function checkOfflineCacheStatus() {
-      const cached = localStorage.getItem('satyascan_last_result');
-      if (cached && historyBar) {
-        historyBar.style.display = 'flex';
-      }
-    }
-
-    function showScreen(screen) {
-      onboardingLang.style.display = 'none';
-      onboardingAuth.style.display = 'none';
-      mainAppView.style.display = 'none';
-      userPill.style.display = 'none';
-      navSubHeader.style.display = 'block';
-      if (chatFab) chatFab.style.display = 'none';
-
-      if (screen === 'lang') {
-        onboardingLang.style.display = 'block';
-      } else if (screen === 'auth') {
-        onboardingAuth.style.display = 'block';
-      } else if (screen === 'app') {
-        showMainApp();
-      }
-      lucide.createIcons();
-    }
-
-    function showMainApp() {
-      onboardingLang.style.display = 'none';
-      onboardingAuth.style.display = 'none';
-      mainAppView.style.display = 'block';
-      landingView.style.display = 'block';
-      loadingView.style.display = 'none';
-      resultsView.style.display = 'none';
-      if (chatFab) chatFab.style.display = 'flex';
-
-      checkOfflineCacheStatus();
-
-      if (currentUser) {
-        userPill.style.display = 'inline-flex';
-        userNameDisplay.textContent = currentUser.name;
-        userRoleBadge.textContent = currentUser.role || 'Inspector';
-        userRoleBadge.className = `role-badge ${currentUser.role === 'Consumer' ? 'role-consumer' : 'role-inspector'}`;
-        navSubHeader.style.display = 'none';
-      }
-      lucide.createIcons();
-    }
-
-    // Language Selection
-    function selectLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem('satyascan_lang', lang);
-      document.getElementById('langCardEn').classList.toggle('selected', lang === 'en');
-      document.getElementById('langCardHi').classList.toggle('selected', lang === 'hi');
-      applyLanguage(lang);
-
-      if (currentScanData && resultsView.style.display === 'block') {
-        renderResults(currentScanData, false);
-      }
-    }
-
-    function proceedToAuth() {
-      localStorage.setItem('satyascan_lang', currentLang);
-      showScreen('auth');
-    }
-
-    function toggleLanguage() {
-      const nextLang = currentLang === 'en' ? 'hi' : 'en';
-      selectLanguage(nextLang);
-    }
-
-    function applyLanguage(lang) {
-      const t = I18N[lang] || I18N.en;
-      Object.keys(t).forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.textContent = t[id];
-        }
-      });
-      const langBtnText = document.getElementById('langBtnText');
-      if (langBtnText) {
-        langBtnText.textContent = lang === 'en' ? 'हिन्दी' : 'English';
-      }
-      if (chatInput) {
-        chatInput.placeholder = t.chatPlaceholder;
-      }
-      if (chatMessages && chatMessages.children.length <= 2) {
-        initChatbot();
-      }
-      lucide.createIcons();
-    }
-
-    // Auth Handlers
-    function switchAuthTab(tab) {
-      const isReg = tab === 'register';
-      document.getElementById('tabRegister').classList.toggle('active', isReg);
-      document.getElementById('tabLogin').classList.toggle('active', !isReg);
-      document.getElementById('registerForm').style.display = isReg ? 'block' : 'none';
-      document.getElementById('loginForm').style.display = isReg ? 'none' : 'block';
-    }
-
-    function selectRole(role) {
-      document.getElementById('selectedRole').value = role;
-      document.getElementById('roleInspectorCard').classList.toggle('selected', role === 'Inspector');
-      document.getElementById('roleConsumerCard').classList.toggle('selected', role === 'Consumer');
-    }
-
-    function handleRegister(e) {
-      e.preventDefault();
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const role = document.getElementById('selectedRole').value || 'Inspector';
-
-      if (!name || !email) return;
-
-      currentUser = { name, email, role };
-      localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
-      localStorage.setItem('satyascan_lang', currentLang);
-      showMainApp();
-    }
-
-    function handleLogin(e) {
-      e.preventDefault();
-      const loginInput = document.getElementById('loginEmail').value.trim();
-      const t = I18N[currentLang] || I18N.en;
-
-      if (!loginInput) {
-        showToast(t.loginFailToast);
-        return;
-      }
-
-      let user = currentUser;
-      if (!user || (!user.name && !user.email)) {
-        const isEmail = loginInput.includes('@');
-        user = {
-          name: isEmail ? loginInput.split('@')[0] : loginInput,
-          email: isEmail ? loginInput : `${loginInput.toLowerCase().replace(/\s+/g, '')}@satyascan.local`,
-          role: 'Inspector'
-        };
-      } else {
-        if (loginInput.includes('@')) user.email = loginInput;
-        else user.name = loginInput;
-      }
-
-      currentUser = user;
-      localStorage.setItem('satyascan_user', JSON.stringify(currentUser));
-      localStorage.setItem('satyascan_lang', currentLang);
-      showMainApp();
-    }
-
-    function handleLogout() {
-      localStorage.removeItem('satyascan_user');
-      currentUser = null;
-      showScreen('auth');
-    }
-
-    function navigateToApp() {
-      if (currentUser && currentUser.name) {
-        showMainApp();
-      } else {
-        showScreen('auth');
-      }
-    }
-
-    // Camera & Upload Actions
-    function triggerFileUpload() {
-      fileInput.click();
-    }
-
-    function triggerCameraCapture() {
-      cameraInput.click();
-    }
-
-    fileInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files.length > 0) {
-        handleFileSelection(e.target.files[0]);
-      }
-    });
-
-    cameraInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files.length > 0) {
-        handleFileSelection(e.target.files[0]);
-      }
-    });
-
-    dropzone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropzone.classList.add('dragover');
-    });
-
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('dragover');
-    });
-
-    dropzone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropzone.classList.remove('dragover');
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        handleFileSelection(e.dataTransfer.files[0]);
-      }
-    });
-
-    function handleFileSelection(file) {
-      if (!file) return;
-      selectedFile = file;
-      previewName.textContent = file.name || 'camera_capture.jpg';
-      previewSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        selectedImageDataUrl = e.target.result;
-        previewImg.src = selectedImageDataUrl;
-        loadingThumbImg.src = selectedImageDataUrl;
-        arImg.src = selectedImageDataUrl;
-      };
-      reader.readAsDataURL(file);
-
-      previewBox.style.display = 'flex';
-      scanBtn.disabled = false;
-      lucide.createIcons();
-    }
-
-    function removeFile() {
-      selectedFile = null;
-      selectedImageDataUrl = "";
-      fileInput.value = '';
-      cameraInput.value = '';
-      previewBox.style.display = 'none';
-      scanBtn.disabled = true;
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toastMsg');
-      toast.textContent = msg;
-      toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 4500);
-    }
-
     // =========================================================================
-    // IMAGE PRE-PROCESSING CANVAS PIPELINE (Optimal OCR Scaling & Contrast)
-    // =========================================================================
-    function preprocessImageForOCR(imgDataUrl) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-          try {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            // 1. Calculate optimal bounding resolution (target max 1600px for sharp character detection)
-            let w = img.naturalWidth || img.width;
-            let h = img.naturalHeight || img.height;
-            const MAX_DIM = 1600;
-            if (w > MAX_DIM || h > MAX_DIM) {
-              if (w > h) {
-                h = Math.round((h * MAX_DIM) / w);
-                w = MAX_DIM;
-              } else {
-                w = Math.round((w * MAX_DIM) / h);
-                h = MAX_DIM;
-              }
-            }
-
-            canvas.width = w;
-            canvas.height = h;
-
-            // Draw original resized
-            ctx.drawImage(img, 0, 0, w, h);
-
-            // 2. Grayscale & Auto-levels Contrast Stretching
-            const imgData = ctx.getImageData(0, 0, w, h);
-            const d = imgData.data;
-
-            let minLum = 255;
-            let maxLum = 0;
-            for (let i = 0; i < d.length; i += 4) {
-              const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
-              if (lum < minLum) minLum = lum;
-              if (lum > maxLum) maxLum = lum;
-            }
-
-            const range = Math.max(maxLum - minLum, 40);
-            for (let i = 0; i < d.length; i += 4) {
-              const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
-              const stretched = Math.min(255, Math.max(0, ((lum - minLum) / range) * 255));
-              const val = stretched > 128 ? Math.min(255, stretched * 1.04) : Math.max(0, stretched * 0.96);
-              d[i] = val;
-              d[i+1] = val;
-              d[i+2] = val;
-            }
-            ctx.putImageData(imgData, 0, 0);
-            resolve(canvas.toDataURL('image/jpeg', 0.92));
-          } catch (err) {
-            console.warn('Canvas pre-processing exception, using raw image:', err);
-            resolve(imgDataUrl);
-          }
-        };
-        img.onerror = () => resolve(imgDataUrl);
-        img.src = imgDataUrl;
-      });
-    }
-
-    // =========================================================================
-    // 100% CLIENT-SIDE IN-BROWSER SCAN PIPELINE (Zero Server Dependency)
+    // SCAN EXECUTION PIPELINE
     // =========================================================================
     async function startScan() {
       const t = I18N[currentLang] || I18N.en;
@@ -3013,20 +2761,18 @@
         return;
       }
 
+      currentScanData = null;
       landingView.style.display = 'none';
       resultsView.style.display = 'none';
       celebrationBanner.style.display = 'none';
       loadingView.style.display = 'block';
 
       const ticker = document.getElementById('scanStepText');
-      ticker.textContent = "Step 1: Enhancing image contrast for high-accuracy OCR...";
+      ticker.textContent = "Step 1: Enhancing image contrast & resolution...";
 
       try {
-        // 1. Preprocess image for maximum OCR accuracy
         const enhancedImageUrl = await preprocessImageForOCR(selectedImageDataUrl);
-
-        // 2. Run OCR in browser using Tesseract.js
-        ticker.textContent = "Step 2: Scanning text declarations across label...";
+        ticker.textContent = "Step 2: Neural OCR extracting label declarations...";
         
         const worker = await Tesseract.createWorker('eng');
         const ret = await worker.recognize(enhancedImageUrl);
@@ -3037,11 +2783,9 @@
 
         ticker.textContent = "Step 3: Auditing Legal Metrology Rule 6 declarations...";
 
-        // 3. Run high-accuracy regex extraction engine
         const extractedFields = extractAllFields(rawText);
         const report = evaluateCompliance(extractedFields);
 
-        // 4. Get image dimensions for AR overlay
         const img = new Image();
         img.onload = () => {
           const imgW = img.naturalWidth || 1000;
@@ -3058,59 +2802,19 @@
           };
 
           currentScanData = resultData;
-          saveScanToCache(resultData, resultData.filename, selectedImageDataUrl);
-          renderResults(resultData, false);
+          renderResults(resultData);
         };
         img.src = selectedImageDataUrl;
 
       } catch (err) {
-        console.error('In-browser scan error:', err);
+        console.error('Scan error:', err);
         showToast('Scan error: ' + (err.message || 'Could not process label image.'));
         loadingView.style.display = 'none';
         landingView.style.display = 'block';
       }
     }
 
-    function saveScanToCache(data, filename, imgDataUrl) {
-      try {
-        const cacheEntry = {
-          raw_text: data.raw_text,
-          report: data.report,
-          image_meta: data.image_meta,
-          field_locations: data.field_locations,
-          filename: filename || 'scanned_label.jpg',
-          imageDataUrl: imgDataUrl || "",
-          timestamp: new Date().toISOString()
-        };
-        localStorage.setItem('satyascan_last_result', JSON.stringify(cacheEntry));
-        checkOfflineCacheStatus();
-      } catch (e) {
-        console.warn('Failed to cache scan result to localStorage', e);
-      }
-    }
-
-    function loadCachedScan() {
-      const cached = localStorage.getItem('satyascan_last_result');
-      if (!cached) {
-        showToast('No cached scan found.');
-        return;
-      }
-      try {
-        const data = JSON.parse(cached);
-        currentScanData = data;
-        if (data.imageDataUrl) {
-          arImg.src = data.imageDataUrl;
-          selectedImageDataUrl = data.imageDataUrl;
-        }
-        landingView.style.display = 'none';
-        renderResults(data, true);
-      } catch (e) {
-        showToast('Error reading cached scan.');
-      }
-    }
-
-    // Results Rendering with Interactive Field Verification & Override
-    function renderResults(data, isCached = false) {
+    function renderResults(data) {
       const isHindi = (currentLang === 'hi');
       const t = I18N[currentLang] || I18N.en;
       loadingView.style.display = 'none';
@@ -3120,33 +2824,26 @@
       const totalFields = report.length;
       const passedFields = report.filter(item => item.status === 'PASS').length;
 
-      // Update score header
       const scoreCircle = document.getElementById('scoreCircle');
       const scoreTitle = document.getElementById('scoreTitle');
       const badgeStatus = document.getElementById('badgeStatus');
       const badgeText = document.getElementById('badgeText');
-      const cachedTag = document.getElementById('cachedResultTag');
 
       scoreCircle.textContent = `${passedFields}/${totalFields}`;
       scoreTitle.textContent = `${passedFields}/${totalFields} ${t.fieldsCompliant}`;
-
-      if (cachedTag) {
-        cachedTag.style.display = isCached ? 'inline-block' : 'none';
-        cachedTag.textContent = isHindi ? 'ऑफ़लाइन सहेजा गया' : 'Cached Offline';
-      }
 
       if (passedFields === totalFields && totalFields > 0) {
         badgeStatus.className = 'badge-status badge-pass';
         badgeText.textContent = t.fullCompliance;
         celebrationBanner.style.display = 'flex';
 
-        if (typeof confetti === 'function' && !isCached) {
+        if (typeof confetti === 'function') {
           try {
             confetti({
-              particleCount: 80,
-              spread: 65,
+              particleCount: 90,
+              spread: 70,
               origin: { y: 0.65 },
-              colors: ['#1E2A4A', '#D4A017', '#16A34A', '#F59E0B']
+              colors: ['#F59E0B', '#38BDF8', '#10B981', '#FBBF24']
             });
           } catch (e) {}
         }
@@ -3156,7 +2853,6 @@
         celebrationBanner.style.display = 'none';
       }
 
-      // Populate 9 field cards
       const fieldsGrid = document.getElementById('fieldsGrid');
       fieldsGrid.innerHTML = '';
 
@@ -3175,29 +2871,27 @@
         card.onmouseleave = () => highlightARBox(item.field, false);
 
         const statusPillClass = isPass ? 'field-pill field-pill-pass' : 'field-pill field-pill-fail';
-        const statusLabel = isPass
-          ? (isHindi ? '✓ अनुपालित (Compliant)' : '✓ Compliant')
-          : (isHindi ? '✕ अनुपलब्ध (Missing)' : '✕ Missing');
+        const statusLabel = isPass ? (isHindi ? '✓ अनुपालित' : '✓ PASS') : (isHindi ? '✕ अनुपलब्ध' : '✕ MISSING');
 
         let bodyHtml = '';
         if (isPass) {
           bodyHtml = `
-            <div class="field-value" id="fieldValDisplay_${index}">
+            <div class="field-value">
               <strong>${t.detectedLabel}:</strong> ${escapeHtml(item.value || (isHindi ? 'उपलब्ध' : 'Present'))}
             </div>
           `;
         } else {
           bodyHtml = `
-            <div class="field-fix" id="fieldValDisplay_${index}">
-              <i data-lucide="alert-triangle" style="width: 16px; height: 16px; flex-shrink: 0; color: var(--status-fail-text);"></i>
+            <div class="field-fix">
+              <i data-lucide="alert-triangle" style="width: 16px; height: 16px; flex-shrink: 0; color: #EF4444;"></i>
               <div>
-                <strong>${t.fixInstructionLabel}:</strong> ${escapeHtml(fixInstructionText || 'Mandatory declaration missing. Please declare clearly on label.')}
+                <strong>${t.fixInstructionLabel}:</strong> ${escapeHtml(fixInstructionText || 'Mandatory declaration missing.')}
               </div>
             </div>
           `;
         }
 
-        const editBtnLabel = isHindi ? '✏️ सत्यापित करें / संपादित करें' : '✏️ Verify / Edit';
+        const editBtnLabel = isHindi ? '✏️ सत्यापित करें / बदलें' : '✏️ Verify / Override';
 
         card.innerHTML = `
           <div class="field-icon-box">
@@ -3207,7 +2901,7 @@
             <div class="field-header">
               <div>
                 <span class="field-name">${escapeHtml(fieldDisplayName)}</span>
-                <span style="font-size: 0.72rem; color: var(--text-subtle); margin-left: 6px; font-weight: 600;">${meta.rule}</span>
+                <span style="font-size: 0.72rem; color: var(--neon-cyan); margin-left: 6px; font-family: 'Orbitron', sans-serif;">${meta.rule}</span>
               </div>
               <span class="${statusPillClass}">${escapeHtml(statusLabel)}</span>
             </div>
@@ -3221,7 +2915,7 @@
               <input type="text" class="field-edit-input" id="fieldEditInput_${index}" value="${escapeHtml(item.value || '')}" placeholder="Enter verified label declaration...">
               <div class="field-edit-buttons">
                 <button type="button" class="btn-edit-cancel" onclick="toggleFieldEdit(${index})">${isHindi ? 'रद्द करें' : 'Cancel'}</button>
-                <button type="button" class="btn-edit-save" onclick="saveFieldEdit(${index})">${isHindi ? 'सहेजें (Save)' : 'Save & Verify'}</button>
+                <button type="button" class="btn-edit-save" onclick="saveFieldEdit(${index})">${isHindi ? 'सहेजें' : 'Save & Verify'}</button>
               </div>
             </div>
           </div>
@@ -3231,67 +2925,7 @@
       });
 
       renderAROverlay(data.field_locations);
-
-      const rawContent = document.getElementById('rawTextContent');
-      rawContent.textContent = data.raw_text || (isHindi ? 'कोई टेक्स्ट नहीं मिला।' : 'No text extracted.');
-
       lucide.createIcons();
-    }
-
-    // AR Overlay Renderer
-    function renderAROverlay(fieldLocations) {
-      arBoxesLayer.innerHTML = '';
-      if (!fieldLocations) return;
-
-      Object.keys(fieldLocations).forEach((fieldName, idx) => {
-        const item = fieldLocations[fieldName];
-        const isPass = (item.status === 'PASS');
-        const box = item.box;
-        const norm = box ? box.norm : (item.estimated_zone || null);
-
-        if (!norm) return;
-
-        const boxEl = document.createElement('div');
-        boxEl.className = `ar-box ${isPass ? 'ar-box-pass' : 'ar-box-fail'}`;
-        boxEl.id = `arBox_${idx}`;
-        boxEl.dataset.field = fieldName;
-
-        boxEl.style.left = `${norm.left * 100}%`;
-        boxEl.style.top = `${norm.top * 100}%`;
-        boxEl.style.width = `${norm.width * 100}%`;
-        boxEl.style.height = `${norm.height * 100}%`;
-
-        const tag = document.createElement('div');
-        tag.className = 'ar-box-tag';
-        tag.textContent = isPass ? `✓ ${fieldName.split(' ')[0]}` : `⚠️ Missing: ${fieldName.split(' ')[0]}`;
-        boxEl.appendChild(tag);
-
-        boxEl.onmouseenter = () => {
-          boxEl.classList.add('highlighted');
-          const card = document.getElementById(`fieldCard_${idx}`);
-          if (card) {
-            card.classList.add('highlighted');
-            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
-        };
-        boxEl.onmouseleave = () => {
-          boxEl.classList.remove('highlighted');
-          const card = document.getElementById(`fieldCard_${idx}`);
-          if (card) card.classList.remove('highlighted');
-        };
-
-        arBoxesLayer.appendChild(boxEl);
-      });
-    }
-
-    function highlightARBox(fieldName, isHighlight) {
-      const boxes = arBoxesLayer.querySelectorAll('.ar-box');
-      boxes.forEach(b => {
-        if (b.dataset.field === fieldName) {
-          if (isHighlight) b.classList.add('highlighted');
-          else b.classList.remove('highlighted');
-        }
-      });
     }
 
     function toggleFieldEdit(index) {
@@ -3321,13 +2955,52 @@
         item.value = null;
         item.status = 'FAIL';
         const meta = FIELD_METADATA[item.field] || {};
-        item.fix_instruction = meta.enFix || "Mandatory declaration missing. Please declare clearly on label.";
+        item.fix_instruction = meta.enFix || "Mandatory declaration missing.";
       }
 
-      // Re-save to cache and re-render
-      saveScanToCache(currentScanData, currentScanData.filename, currentScanData.imageDataUrl);
-      renderResults(currentScanData, false);
-      showToast(`Field "${item.field.split(' ')[0]}" updated.`);
+      renderResults(currentScanData);
+      showToast(`Field updated.`);
+    }
+
+    function renderAROverlay(fieldLocations) {
+      arBoxesLayer.innerHTML = '';
+      if (!fieldLocations) return;
+
+      Object.keys(fieldLocations).forEach((fieldName, idx) => {
+        const item = fieldLocations[fieldName];
+        const isPass = (item.status === 'PASS');
+        const box = item.box;
+        const norm = box ? box.norm : (item.estimated_zone || null);
+
+        if (!norm) return;
+
+        const boxEl = document.createElement('div');
+        boxEl.className = `ar-box ${isPass ? 'ar-box-pass' : 'ar-box-fail'}`;
+        boxEl.id = `arBox_${idx}`;
+        boxEl.dataset.field = fieldName;
+
+        boxEl.style.left = `${norm.left * 100}%`;
+        boxEl.style.top = `${norm.top * 100}%`;
+        boxEl.style.width = `${norm.width * 100}%`;
+        boxEl.style.height = `${norm.height * 100}%`;
+
+        const tag = document.createElement('div');
+        tag.className = 'ar-box-tag';
+        tag.textContent = isPass ? `✓ ${fieldName.split(' ')[0]}` : `⚠️ ${fieldName.split(' ')[0]}`;
+        boxEl.appendChild(tag);
+
+        arBoxesLayer.appendChild(boxEl);
+      });
+    }
+
+    function highlightARBox(fieldName, isHighlight) {
+      const boxes = arBoxesLayer.querySelectorAll('.ar-box');
+      boxes.forEach(b => {
+        if (b.dataset.field === fieldName) {
+          if (isHighlight) b.classList.add('highlighted');
+          else b.classList.remove('highlighted');
+        }
+      });
     }
 
     function toggleARBoxes() {
@@ -3335,19 +3008,6 @@
       arBoxesLayer.style.display = arBoxesVisible ? 'block' : 'none';
       const btn = document.getElementById('btnToggleAR');
       btn.textContent = arBoxesVisible ? 'AR Boxes: ON' : 'AR Boxes: OFF';
-      btn.classList.toggle('active', arBoxesVisible);
-    }
-
-    function toggleRawText() {
-      const content = document.getElementById('rawTextContent');
-      const arrow = document.getElementById('rawToggleArrow');
-      if (content.style.display === 'block') {
-        content.style.display = 'none';
-        arrow.textContent = '▼';
-      } else {
-        content.style.display = 'block';
-        arrow.textContent = '▲';
-      }
     }
 
     function resetToUpload() {
@@ -3356,7 +3016,6 @@
       resultsView.style.display = 'none';
       loadingView.style.display = 'none';
       landingView.style.display = 'block';
-      checkOfflineCacheStatus();
       lucide.createIcons();
     }
 
@@ -3367,7 +3026,9 @@
       return div.innerHTML;
     }
 
-    // Official Legal Metrology PDF Notice Generation (Indigo / Amber / Statutory Colors)
+    // =========================================================================
+    // OFFICIAL LEGAL METROLOGY PDF NOTICE GENERATOR
+    // =========================================================================
     function generateOfficialPDF() {
       if (!currentScanData || !currentScanData.report) {
         showToast('No active scan report to generate PDF.');
@@ -3379,23 +3040,19 @@
       const pageWidth = doc.internal.pageSize.getWidth();
       const report = currentScanData.report;
 
-      const dateStr = new Date().toLocaleDateString('en-IN', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      });
+      const dateStr = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
       const noticeNo = `SATYA-LM-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-      // 1. Formal Indigo Header
-      doc.setFillColor(30, 42, 74); // Deep Indigo
+      doc.setFillColor(7, 11, 20);
       doc.rect(0, 0, pageWidth, 28, 'F');
 
-      doc.setTextColor(212, 160, 23); // Warm Gold / Amber Accent
+      doc.setTextColor(245, 158, 11);
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(13);
+      doc.setFontSize(12);
       doc.text('GOVERNMENT OF INDIA • LEGAL METROLOGY DEPARTMENT', pageWidth / 2, 11, { align: 'center' });
       
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
       doc.text('PACKAGED COMMODITIES COMPLIANCE AUDIT NOTICE', pageWidth / 2, 18, { align: 'center' });
       
       doc.setFontSize(7.5);
@@ -3403,7 +3060,6 @@
       doc.setTextColor(226, 232, 240);
       doc.text('[Issued under Rule 6 of Legal Metrology (Packaged Commodities) Rules, 2011]', pageWidth / 2, 23, { align: 'center' });
 
-      // 2. Metadata Section
       doc.setTextColor(15, 23, 42);
       doc.setFontSize(8.5);
       doc.setFont('helvetica', 'bold');
@@ -3417,23 +3073,6 @@
       doc.text(`Auditing Officer: ${inspectorName} (${inspectorRole})`, 14, 42);
       doc.text(`Sample Item File: ${selectedFile ? selectedFile.name : 'Scanned_Commodity_Label.jpg'}`, 14, 47);
 
-      if (selectedImageDataUrl) {
-        try {
-          doc.addImage(selectedImageDataUrl, 'JPEG', pageWidth - 44, 40, 30, 24);
-        } catch (e) {
-          console.warn('Could not embed image thumbnail into PDF', e);
-        }
-      }
-
-      // 3. Violation & Compliance Table
-      const passedCount = report.filter(r => r.status === 'PASS').length;
-      const totalCount = report.length;
-
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(9.5);
-      doc.setTextColor(30, 42, 74);
-      doc.text(`STATUTORY COMPLIANCE SUMMARY: ${passedCount}/${totalCount} MANDATORY DECLARATIONS VERIFIED`, 14, 58);
-
       const tableRows = report.map(item => {
         const meta = FIELD_METADATA[item.field] || { rule: 'Rule 6' };
         const isPass = (item.status === 'PASS');
@@ -3446,34 +3085,19 @@
       });
 
       doc.autoTable({
-        startY: 62,
+        startY: 54,
         head: [['Mandatory Declaration', 'Rule Ref', 'Audit Status', 'Finding & Remediation Order']],
         body: tableRows,
         theme: 'grid',
-        headStyles: {
-          fillColor: [30, 42, 74],
-          textColor: [212, 160, 23],
-          fontStyle: 'bold',
-          fontSize: 8.5
-        },
-        styles: {
-          fontSize: 7.5,
-          cellPadding: 3,
-          valign: 'middle'
-        },
-        columnStyles: {
-          0: { cellWidth: 42, fontStyle: 'bold' },
-          1: { cellWidth: 20 },
-          2: { cellWidth: 32, fontStyle: 'bold' },
-          3: { cellWidth: 'auto' }
-        },
+        headStyles: { fillColor: [7, 11, 20], textColor: [245, 158, 11], fontStyle: 'bold', fontSize: 8.5 },
+        styles: { fontSize: 7.5, cellPadding: 3, valign: 'middle' },
         didParseCell: function (data) {
           if (data.column.index === 2) {
             if (data.cell.raw === 'COMPLIANT') {
-              data.cell.styles.textColor = [22, 163, 74];
+              data.cell.styles.textColor = [16, 185, 129];
               data.cell.styles.fillColor = [240, 253, 244];
             } else {
-              data.cell.styles.textColor = [220, 38, 38];
+              data.cell.styles.textColor = [239, 68, 68];
               data.cell.styles.fillColor = [254, 242, 242];
             }
           }
@@ -3481,8 +3105,6 @@
       });
 
       const finalY = doc.lastAutoTable.finalY || 220;
-
-      // 4. Statutory Directives & Warnings
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(8.5);
       doc.setTextColor(185, 28, 28);
@@ -3491,105 +3113,86 @@
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7.5);
       doc.setTextColor(71, 85, 105);
-      const legalNote = "Non-compliance with mandatory packaging declarations violates Rule 6 of Legal Metrology (Packaged Commodities) Rules, 2011 and Section 36 of the Legal Metrology Act, 2009, punishable with fines and prosecution. Packagers/Manufacturers are directed to rectify non-compliant declarations immediately on the principal display panel.";
+      const legalNote = "Non-compliance with mandatory packaging declarations violates Rule 6 of Legal Metrology (Packaged Commodities) Rules, 2011 and Section 36 of Legal Metrology Act, 2009, punishable with statutory penalties. Packagers/Manufacturers are directed to rectify non-compliant declarations immediately on the principal display panel.";
       doc.text(doc.splitTextToSize(legalNote, pageWidth - 28), 14, finalY + 13);
-
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(30, 42, 74);
-      doc.setFontSize(8);
-      doc.text('Verified By: SatyaScan Digital Compliance Engine', 14, finalY + 30);
-      doc.text('Signature / Regulatory Seal: _______________________', pageWidth - 14, finalY + 30, { align: 'right' });
-
-      doc.setFontSize(7);
-      doc.setTextColor(148, 163, 184);
-      doc.text('Generated via SatyaScan Automated Compliance Scanner • Legal Metrology (Packaged Commodities) Rules, 2011', pageWidth / 2, 290, { align: 'center' });
 
       const pdfFilename = `Legal_Metrology_Notice_${selectedFile ? selectedFile.name.replace(/\.[^/.]+$/, "") : "audit"}.pdf`;
       doc.save(pdfFilename);
       showToast(`Notice downloaded: ${pdfFilename}`);
     }
 
-    // Chatbot Implementation
+    // =========================================================================
+    // CHATBOT ASSISTANT
+    // =========================================================================
+    const CHAT_FAQ = [
+      { keywords: ["mrp", "price", "taxes"], en: "Under Rule 6(1)(e), Maximum Retail Price (MRP) must be inclusive of all taxes and declared clearly as 'MRP Rs. XX.XX (incl. of all taxes)'.", hi: "नियम 6(1)(e) के अनुसार, अधिकतम खुदरा मूल्य (MRP) सभी करों सहित 'MRP Rs. XX.XX (सभी करों सहित)' के रूप में दर्शाना अनिवार्य है।" },
+      { keywords: ["usp", "unit sale price", "per g", "per ml"], en: "Under Rule 6(11), Unit Sale Price (USP) must be declared in Rs. per g/ml on packages > 100g/100ml to enable fair price comparison.", hi: "नियम 6(11) के अनुसार 100 ग्राम/मिली से अधिक पैकेज पर प्रति ग्राम या प्रति मिली इकाई विक्रय मूल्य (उदा. Rs. 0.50/g) अनिवार्य है।" },
+      { keywords: ["manufacturer", "address", "packer"], en: "Rule 6(1)(a) mandates declaring the complete name and registered address of the manufacturer/packer/importer.", hi: "नियम 6(1)(a) के अनुसार निर्माता, पैकर या आयातक का पूरा नाम और पंजीकृत पता होना अनिवार्य है।" },
+      { keywords: ["origin", "country", "made in"], en: "Rule 6(1)(g) mandates explicit declaration of Country of Origin (e.g., 'Country of Origin: India').", hi: "नियम 6(1)(g) के तहत देश का नाम ('Country of Origin: India') घोषित करना आवश्यक है।" }
+    ];
+
     function toggleChatWindow() {
       const isVisible = (chatWindow.style.display === 'flex');
       chatWindow.style.display = isVisible ? 'none' : 'flex';
-      if (!isVisible) {
-        setTimeout(() => chatInput.focus(), 100);
-      }
+      if (!isVisible) setTimeout(() => chatInput.focus(), 100);
       lucide.createIcons();
     }
 
     function initChatbot() {
-      const t = I18N[currentLang] || I18N.en;
       chatMessages.innerHTML = '';
-
       const botGreeting = document.createElement('div');
       botGreeting.className = 'chat-bubble chat-bubble-bot';
-      botGreeting.textContent = t.chatInitialGreeting;
+      botGreeting.textContent = currentLang === 'hi'
+        ? "नमस्ते! मैं सत्यस्कैन AI सहायक हूँ। आप विधिक माप विज्ञान, नियम 6, MRP या सुधारात्मक निर्देशों के बारे में पूछ सकते हैं।"
+        : "Greetings Operator! I am SatyaScan AI Assistant. Ask me about Legal Metrology Rule 6, MRP rules, or statutory directives.";
       chatMessages.appendChild(botGreeting);
 
-      const chipsContainer = document.createElement('div');
-      chipsContainer.className = 'chat-chips';
-      t.chatQuickChips.forEach(chipText => {
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'chat-chip';
-        chip.textContent = chipText;
-        chip.onclick = () => {
-          chatInput.value = chipText;
-          sendChatMessage();
-        };
-        chipsContainer.appendChild(chip);
+      const chips = document.createElement('div');
+      chips.className = 'chat-chips';
+      const quicks = currentLang === 'hi' ? ["MRP नियम", "USP नियम", "निर्माता पता नियम"] : ["MRP Rules", "USP Guidelines", "Manufacturer Address"];
+      quicks.forEach(q => {
+        const btn = document.createElement('button');
+        btn.className = 'chat-chip';
+        btn.textContent = q;
+        btn.onclick = () => { chatInput.value = q; sendChatMessage(); };
+        chips.appendChild(btn);
       });
-      chatMessages.appendChild(chipsContainer);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+      chatMessages.appendChild(chips);
     }
 
     function handleChatKeyDown(e) {
-      if (e.key === 'Enter') {
-        sendChatMessage();
-      }
+      if (e.key === 'Enter') sendChatMessage();
     }
 
     function sendChatMessage() {
-      const text = chatInput.value.trim();
-      if (!text) return;
+      const q = chatInput.value.trim();
+      if (!q) return;
 
       const userBubble = document.createElement('div');
       userBubble.className = 'chat-bubble chat-bubble-user';
-      userBubble.textContent = text;
+      userBubble.textContent = q;
       chatMessages.appendChild(userBubble);
-
       chatInput.value = '';
-      chatMessages.scrollTop = chatMessages.scrollHeight;
 
       setTimeout(() => {
-        const answer = getBotAnswer(text);
+        const qLower = q.toLowerCase();
+        let answer = currentLang === 'hi'
+          ? "विधिक माप विज्ञान नियम 6 के तहत 9 प्रमुख घोषणाएं अनिवार्य हैं: MRP, शुद्ध मात्रा, निर्माण तिथि, निर्माता पता, वस्तु नाम, उपभोक्ता हेल्पलाइन, देश का नाम, USP और संख्या।"
+          : "Under Rule 6 of Legal Metrology, 9 declarations are mandatory: MRP, Net Qty, Mfg Date, Manufacturer Address, Commodity Name, Customer Care, Origin, USP, and Count.";
+        
+        for (const item of CHAT_FAQ) {
+          if (item.keywords.some(kw => qLower.includes(kw))) {
+            answer = currentLang === 'hi' ? item.hi : item.en;
+            break;
+          }
+        }
+
         const botBubble = document.createElement('div');
         botBubble.className = 'chat-bubble chat-bubble-bot';
-        botBubble.style.whiteSpace = 'pre-line';
         botBubble.textContent = answer;
         chatMessages.appendChild(botBubble);
         chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 300);
-    }
-
-    function getBotAnswer(query) {
-      const qLower = query.toLowerCase();
-      const isHindi = (currentLang === 'hi');
-
-      for (const item of CHAT_FAQ) {
-        for (const kw of item.keywords) {
-          if (qLower.includes(kw.toLowerCase())) {
-            return isHindi ? item.hi : item.en;
-          }
-        }
-      }
-
-      if (isHindi) {
-        return "मुझे खुशी होगी अगर मैं आपके प्रश्न का उत्तर दे सकूँ! आप विधिक माप विज्ञान, उत्पाद स्कैनिंग, MRP, या सुधार निर्देशों के बारे में पूछ सकते हैं।";
-      }
-      return "I'm here to help! You can ask me about Legal Metrology Rule 6, how to scan products, MRP rules, or what to do when a field fails compliance.";
+      }, 250);
     }
   </script>
 </body>
