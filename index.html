@@ -88,7 +88,6 @@
       --shadow-card: 0 10px 30px -5px rgba(16, 24, 40, 0.06), 0 4px 10px -2px rgba(16, 24, 40, 0.03);
       --shadow-glow-indigo: 0 8px 32px rgba(79, 70, 229, 0.25);
       --shadow-glow-saffron: 0 8px 32px rgba(245, 158, 11, 0.25);
-      --shadow-glow-mint: 0 8px 32px rgba(20, 184, 166, 0.25);
 
       --tr-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
       --tr-smooth: 280ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -112,7 +111,6 @@
       overflow-x: hidden;
     }
 
-    /* Screen Transitions */
     .view-screen {
       animation: screenFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -289,9 +287,7 @@
       font-weight: 800;
     }
 
-    /* =========================================================================
-       MAIN CONTENT CONTAINER
-       ========================================================================= */
+    /* Main Container */
     main.app-main {
       flex: 1;
       max-width: 1200px;
@@ -643,7 +639,6 @@
       background: rgba(245, 158, 11, 0.08);
     }
 
-    /* Sleek Corner Brackets */
     .scanner-corner {
       position: absolute;
       width: 24px;
@@ -739,7 +734,6 @@
       transform: translateY(-2px);
     }
 
-    /* Active Loaded Image Area */
     .scanner-loaded-area {
       display: none;
       position: relative;
@@ -759,7 +753,6 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    /* Smooth Elegant Laser Beam */
     .scanner-laser-beam {
       display: none;
       position: absolute;
@@ -778,7 +771,6 @@
       100% { top: 96%; opacity: 1; }
     }
 
-    /* Floating AI Detection Points */
     .ai-detection-layer {
       position: absolute;
       inset: 0;
@@ -820,7 +812,6 @@
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    /* Scanner Status Bar */
     .scanner-footer-bar {
       display: flex;
       align-items: center;
@@ -884,7 +875,7 @@
     }
 
     /* =========================================================================
-       3. COMPLIANCE REPORT SCREEN (VISUALLY EXCITING AI AUDIT)
+       3. COMPLIANCE REPORT SCREEN
        ========================================================================= */
     .report-screen-wrap {
       max-width: 1040px;
@@ -900,7 +891,6 @@
       margin-bottom: 28px;
     }
 
-    /* Top Gauge & Indicators Header */
     .report-hero-header {
       display: grid;
       grid-template-columns: 240px 1fr;
@@ -980,7 +970,6 @@
       color: var(--navy-900);
     }
 
-    /* Small surrounding indicator pills */
     .surrounding-indicators-row {
       display: flex;
       flex-wrap: wrap;
@@ -1010,7 +999,6 @@
       border: 1px solid rgba(239, 68, 68, 0.3);
     }
 
-    /* Vertical Declarations Cards */
     .declarations-container {
       display: flex;
       flex-direction: column;
@@ -1138,7 +1126,6 @@
       box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
     }
 
-    /* Edit Drawer */
     .dec-drawer-edit {
       display: none;
       margin-top: 12px;
@@ -1160,7 +1147,7 @@
     }
 
     /* =========================================================================
-       4. SATYA AI CONTEXTUAL ASSISTANT
+       4. SATYA AI CONTEXTUAL ASSISTANT (IN-REPORT)
        ========================================================================= */
     .satya-ai-card-advanced {
       background: linear-gradient(135deg, #FFFFFF 0%, #F5F7FF 100%);
@@ -1253,7 +1240,6 @@
       transform: translateY(-1px);
     }
 
-    /* Report Bottom Bar */
     .report-action-footer {
       display: flex;
       align-items: center;
@@ -1261,6 +1247,194 @@
       margin-top: 36px;
       gap: 16px;
       flex-wrap: wrap;
+    }
+
+    /* =========================================================================
+       5. FLOATING INTERACTIVE SATYA AI CHATBOT WIDGET
+       ========================================================================= */
+    @keyframes chatPulse {
+      0%, 100% { box-shadow: 0 10px 30px rgba(79, 70, 229, 0.45), 0 0 0 0 rgba(79,70,229,0.4); }
+      50% { box-shadow: 0 10px 30px rgba(79, 70, 229, 0.6), 0 0 0 10px rgba(79,70,229,0); }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.7; }
+    }
+
+    .floating-chat-trigger {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9000;
+      background: linear-gradient(135deg, var(--indigo-600) 0%, var(--saffron-500) 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 13px 22px;
+      border-radius: var(--radius-full);
+      font-size: 0.94rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.45);
+      transition: all var(--tr-smooth);
+      animation: chatPulse 2.5s ease-in-out infinite;
+    }
+
+    .floating-chat-trigger:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 16px 42px rgba(79, 70, 229, 0.7);
+      animation: none;
+    }
+
+    .chat-trigger-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 10px #4ADE80;
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+
+    .floating-chat-window {
+      position: fixed;
+      bottom: 86px;
+      right: 28px;
+      width: 380px;
+      max-width: calc(100vw - 40px);
+      height: 520px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22);
+      display: none;
+      flex-direction: column;
+      z-index: 9001;
+      overflow: hidden;
+      animation: chatPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes chatPop {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--navy-900) 0%, var(--indigo-600) 100%);
+      color: #FFFFFF;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.98rem;
+      font-weight: 800;
+    }
+
+    .chat-close-btn {
+      background: transparent;
+      border: none;
+      color: #FFFFFF;
+      cursor: pointer;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+    }
+
+    .chat-close-btn:hover { opacity: 1; }
+
+    .chat-messages-body {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg-page);
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .chat-msg-ai {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .chat-msg-user {
+      background: linear-gradient(135deg, var(--indigo-600), var(--blue-600));
+      color: #FFFFFF;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-suggestions-row {
+      padding: 8px 16px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .chat-sug-chip {
+      background: var(--indigo-50);
+      color: var(--indigo-600);
+      border: 1px solid rgba(79, 70, 229, 0.15);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chat-input-area {
+      padding: 12px 16px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input-field {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      outline: none;
+    }
+
+    .chat-input-field:focus { border-color: var(--indigo-600); }
+
+    .chat-send-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--indigo-600);
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* =========================================================================
@@ -1387,7 +1561,6 @@
       background: #000000;
     }
 
-    /* History & Rules List Clean */
     .history-card-clean {
       background: #FFFFFF;
       border: 1px solid var(--border-light);
@@ -1396,7 +1569,6 @@
       box-shadow: var(--shadow-card);
     }
 
-    /* Toast Notification */
     .toast-clean {
       position: fixed;
       bottom: 24px;
@@ -1423,7 +1595,6 @@
       background: #FFFFFF;
     }
 
-    /* Responsive */
     @media (max-width: 900px) {
       .dashboard-hero-banner { grid-template-columns: 1fr; padding: 32px; }
       .insights-grid { grid-template-columns: 1fr; }
@@ -1444,7 +1615,7 @@
         </div>
         <div class="brand-title">
           SATYASCAN
-          <span class="brand-badge-ai">AI INSPECTOR</span>
+          <span class="brand-badge-ai" id="i18nBrandBadge">AI INSPECTOR</span>
         </div>
       </div>
 
@@ -1452,19 +1623,19 @@
       <nav class="floating-nav-bar" id="navTabs">
         <button type="button" class="nav-pill-btn active" id="tabNavHome" onclick="switchNav('home')">
           <i data-lucide="layout-grid" style="width: 15px; height: 15px;"></i>
-          <span>Home</span>
+          <span id="navHomeText">Home</span>
         </button>
         <button type="button" class="nav-pill-btn btn-scan-highlight" id="tabNavScan" onclick="switchNav('scan')">
           <i data-lucide="scan" style="width: 15px; height: 15px;"></i>
-          <span>Scan</span>
+          <span id="navScanText">Scan</span>
         </button>
         <button type="button" class="nav-pill-btn" id="tabNavHistory" onclick="switchNav('history')">
           <i data-lucide="history" style="width: 15px; height: 15px;"></i>
-          <span>History</span>
+          <span id="navHistoryText">History</span>
         </button>
         <button type="button" class="nav-pill-btn" id="tabNavReports" onclick="switchNav('reports')">
           <i data-lucide="book-open" style="width: 15px; height: 15px;"></i>
-          <span>Rules</span>
+          <span id="navRulesText">Rules</span>
         </button>
       </nav>
 
@@ -1478,7 +1649,7 @@
         <!-- Sign In Button (when logged out) -->
         <button type="button" class="btn-lang-switch" id="btnLoginNav" onclick="switchNav('auth')">
           <i data-lucide="log-in" style="width: 14px; height: 14px;"></i>
-          <span>Sign In</span>
+          <span id="navSignInText">Sign In</span>
         </button>
 
         <!-- User Profile Chip (when logged in) -->
@@ -1513,14 +1684,14 @@
         <!-- Login Form -->
         <form id="loginForm" onsubmit="handleLogin(event)">
           <div class="form-group-clean">
-            <label class="label-clean">Email Address</label>
+            <label class="label-clean" data-i18n="authEmailLabel">Email Address</label>
             <div class="input-clean-wrap">
               <input type="email" id="loginEmail" class="input-clean" placeholder="officer@metrology.gov.in" required>
             </div>
           </div>
 
           <div class="form-group-clean">
-            <label class="label-clean">Password</label>
+            <label class="label-clean" data-i18n="authPassLabel">Password</label>
             <div class="input-clean-wrap">
               <input type="password" id="loginPassword" class="input-clean" placeholder="••••••••" required>
               <button type="button" class="pwd-toggle-clean" onclick="togglePwdVisibility('loginPassword')">
@@ -1529,23 +1700,23 @@
             </div>
           </div>
 
-          <button type="submit" class="btn-submit-clean">Sign In to Inspector</button>
+          <button type="submit" class="btn-submit-clean" id="loginSubmitBtn">Sign In to SatyaScan</button>
         </form>
 
         <!-- Register Form -->
         <form id="registerForm" style="display: none;" onsubmit="handleRegister(event)">
           <div class="form-group-clean">
-            <label class="label-clean">Full Name</label>
+            <label class="label-clean" data-i18n="authNameLabel">Full Name</label>
             <input type="text" id="regName" class="input-clean" placeholder="Inspector A. Sharma" required>
           </div>
 
           <div class="form-group-clean">
-            <label class="label-clean">Email Address</label>
+            <label class="label-clean" data-i18n="authEmailLabel">Email Address</label>
             <input type="email" id="regEmail" class="input-clean" placeholder="sharma@metrology.gov.in" required>
           </div>
 
           <div class="form-group-clean">
-            <label class="label-clean">Password</label>
+            <label class="label-clean" data-i18n="authPassLabel">Password</label>
             <div class="input-clean-wrap">
               <input type="password" id="regPassword" class="input-clean" placeholder="Minimum 6 characters" required minlength="6">
               <button type="button" class="pwd-toggle-clean" onclick="togglePwdVisibility('regPassword')">
@@ -1555,11 +1726,11 @@
           </div>
 
           <div class="form-group-clean">
-            <label class="label-clean">Confirm Password</label>
+            <label class="label-clean" data-i18n="authConfirmPassLabel">Confirm Password</label>
             <input type="password" id="regConfirmPassword" class="input-clean" placeholder="Re-enter password" required minlength="6">
           </div>
 
-          <button type="submit" class="btn-submit-clean">Create Inspector Account</button>
+          <button type="submit" class="btn-submit-clean" id="registerSubmitBtn">Create Operator Account</button>
         </form>
 
       </div>
@@ -1578,23 +1749,23 @@
         <div class="hero-content-left">
           <div class="hero-pre-badge">
             <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
-            <span>LEGAL METROLOGY ACT COMPLIANCE</span>
+            <span id="heroPreBadgeText">LEGAL METROLOGY ACT COMPLIANCE</span>
           </div>
           <h1 class="hero-main-title">
-            Scan. Verify.<br>
-            <span class="hero-highlight-span">Know the Truth.</span>
+            <span id="heroLine1">Scan. Verify.</span><br>
+            <span class="hero-highlight-span" id="heroLine2">Know the Truth.</span>
           </h1>
-          <p class="hero-sub-p">
+          <p class="hero-sub-p" id="heroSubDesc">
             AI-powered packaging compliance for every pre-packaged commodity. Instantaneous Rule 6 audits, MRP verification, and automated violation notices.
           </p>
           <div class="hero-cta-row">
             <button type="button" class="btn-hero-primary" onclick="switchNav('scan')">
               <i data-lucide="scan-line" style="width: 18px; height: 18px;"></i>
-              <span>Scan Product Now</span>
+              <span id="btnHeroScanText">Scan Product Now</span>
             </button>
             <button type="button" class="btn-hero-secondary" onclick="switchNav('reports')">
               <i data-lucide="file-check" style="width: 17px; height: 17px;"></i>
-              <span>Statutory Rule 6</span>
+              <span id="btnHeroRulesText">Statutory Rule 6</span>
             </button>
           </div>
         </div>
@@ -1606,7 +1777,7 @@
 
       <!-- Today's Insights Section -->
       <div class="section-title-wrap">
-        <h2 class="section-heading">Today's Inspection Insights</h2>
+        <h2 class="section-heading" id="insightsHeading">Today's Inspection Insights</h2>
       </div>
 
       <div class="insights-grid">
@@ -1616,10 +1787,10 @@
             <div class="icon-badge-indigo">
               <i data-lucide="layers" style="width: 22px; height: 22px;"></i>
             </div>
-            <span style="font-size: 0.75rem; font-weight: 700; color: var(--indigo-600); background: var(--indigo-50); padding: 3px 8px; border-radius: var(--radius-full);">Live Stream</span>
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--indigo-600); background: var(--indigo-50); padding: 3px 8px; border-radius: var(--radius-full);" id="badgeLiveStream">Live Stream</span>
           </div>
           <div class="insight-num-stat" id="statScansCompleted">142</div>
-          <div class="insight-label-text">Packaging Audits Conducted</div>
+          <div class="insight-label-text" id="labelAuditsConducted">Packaging Audits Conducted</div>
           <div class="mini-trend-bar">
             <div class="mini-trend-fill" style="width: 88%;"></div>
           </div>
@@ -1631,10 +1802,10 @@
             <div class="icon-badge-mint">
               <i data-lucide="check-circle" style="width: 22px; height: 22px;"></i>
             </div>
-            <span style="font-size: 0.75rem; font-weight: 700; color: var(--mint-600); background: var(--mint-50); padding: 3px 8px; border-radius: var(--radius-full);">+3.4% This Week</span>
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--mint-600); background: var(--mint-50); padding: 3px 8px; border-radius: var(--radius-full);" id="badgeComplianceTrend">+3.4% This Week</span>
           </div>
           <div class="insight-num-stat" style="color: var(--mint-600);">94.8%</div>
-          <div class="insight-label-text">Statutory Compliance Rate</div>
+          <div class="insight-label-text" id="labelComplianceRate">Statutory Compliance Rate</div>
           <div class="mini-trend-bar">
             <div class="mini-trend-fill" style="width: 95%; background: linear-gradient(90deg, var(--mint-500), var(--green-500));"></div>
           </div>
@@ -1646,10 +1817,10 @@
             <div class="icon-badge-saffron">
               <i data-lucide="alert-triangle" style="width: 22px; height: 22px;"></i>
             </div>
-            <span style="font-size: 0.75rem; font-weight: 700; color: var(--saffron-600); background: var(--saffron-50); padding: 3px 8px; border-radius: var(--radius-full);">Directives Issued</span>
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--saffron-600); background: var(--saffron-50); padding: 3px 8px; border-radius: var(--radius-full);" id="badgeDirectives">Directives Issued</span>
           </div>
           <div class="insight-num-stat" style="color: var(--saffron-600);">12</div>
-          <div class="insight-label-text">Rule 6 Violations Flagged</div>
+          <div class="insight-label-text" id="labelViolationsFlagged">Rule 6 Violations Flagged</div>
           <div class="mini-trend-bar">
             <div class="mini-trend-fill" style="width: 28%; background: linear-gradient(90deg, var(--saffron-500), var(--coral-500));"></div>
           </div>
@@ -1659,15 +1830,15 @@
       <!-- Quick Launch & Features -->
       <div class="quick-launch-grid">
         <div class="feature-action-card">
-          <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--navy-900); margin-bottom: 14px;">Instant Audit Workflows</h3>
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--navy-900); margin-bottom: 14px;" id="quickWorkflowsTitle">Instant Audit Workflows</h3>
           
           <div class="quick-action-item" onclick="switchNav('scan'); triggerFileUpload();">
             <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--indigo-50); color: var(--indigo-600); display: flex; align-items: center; justify-content: center;">
               <i data-lucide="upload-cloud" style="width: 18px; height: 18px;"></i>
             </div>
             <div>
-              <div style="font-size: 0.92rem; font-weight: 700; color: var(--navy-900);">Upload Packaging Photograph</div>
-              <div style="font-size: 0.78rem; color: var(--text-secondary);">High-resolution label scanning with automatic contrast enhancement.</div>
+              <div style="font-size: 0.92rem; font-weight: 700; color: var(--navy-900);" id="quickUploadTitle">Upload Packaging Photograph</div>
+              <div style="font-size: 0.78rem; color: var(--text-secondary);" id="quickUploadSub">High-resolution label scanning with automatic contrast enhancement.</div>
             </div>
           </div>
 
@@ -1676,8 +1847,8 @@
               <i data-lucide="camera" style="width: 18px; height: 18px;"></i>
             </div>
             <div>
-              <div style="font-size: 0.92rem; font-weight: 700; color: var(--navy-900);">Live Camera Inspection</div>
-              <div style="font-size: 0.78rem; color: var(--text-secondary);">Direct on-device camera capture for physical store shelves.</div>
+              <div style="font-size: 0.92rem; font-weight: 700; color: var(--navy-900);" id="quickCameraTitle">Live Camera Inspection</div>
+              <div style="font-size: 0.78rem; color: var(--text-secondary);" id="quickCameraSub">Direct on-device camera capture for physical store shelves.</div>
             </div>
           </div>
         </div>
@@ -1687,12 +1858,12 @@
             <i data-lucide="sparkles" style="color: var(--saffron-500); width: 18px; height: 18px;"></i>
             <span style="font-size: 0.8rem; font-weight: 800; color: var(--saffron-500); text-transform: uppercase;">Satya AI Engine</span>
           </div>
-          <h3 style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin-bottom: 8px;">Zero Cloud Latency</h3>
-          <p style="font-size: 0.86rem; color: #94A3B8; line-height: 1.5; margin-bottom: 16px;">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin-bottom: 8px;" id="zeroCloudTitle">Zero Cloud Latency</h3>
+          <p style="font-size: 0.86rem; color: #94A3B8; line-height: 1.5; margin-bottom: 16px;" id="zeroCloudSub">
             Audits execute 100% inside your browser via WebAssembly OCR. Zero server roundtrips, total data privacy.
           </p>
           <button type="button" class="btn-action-primary" style="padding: 9px 18px; font-size: 0.82rem;" onclick="switchNav('scan')">
-            <span>Launch Scanner</span>
+            <span id="btnLaunchScannerText">Launch Scanner</span>
             <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
           </button>
         </div>
@@ -1728,11 +1899,11 @@
               <div class="scanner-btns-row">
                 <button type="button" class="btn-action-primary" onclick="triggerFileUpload()">
                   <i data-lucide="upload" style="width: 16px; height: 16px;"></i>
-                  <span>Upload Label Photo</span>
+                  <span id="btnUploadLabel">Upload Label Photo</span>
                 </button>
                 <button type="button" class="btn-action-camera" onclick="triggerCameraCapture()">
                   <i data-lucide="camera" style="width: 16px; height: 16px;"></i>
-                  <span>Open Camera</span>
+                  <span id="btnCameraLabel">Open Camera</span>
                 </button>
               </div>
 
@@ -1758,10 +1929,10 @@
 
             <div style="display: flex; gap: 10px;">
               <button type="button" class="btn-hero-secondary" id="btnResetCanvas" onclick="resetCanvas()" style="display: none; padding: 11px 20px; font-size: 0.88rem;">
-                <span>Clear</span>
+                <span id="btnClearCanvasText">Clear</span>
               </button>
               <button type="button" class="btn-run-verify" id="btnRunScan" onclick="startScan()" disabled>
-                <span>Verify Compliance</span>
+                <span id="btnVerifyText">Verify Compliance</span>
                 <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
               </button>
             </div>
@@ -1773,7 +1944,7 @@
     </div>
 
     <!-- =========================================================================
-         SCREEN 4: COMPLIANCE REPORT VIEW (VISUALLY EXCITING AI AUDIT)
+         SCREEN 4: COMPLIANCE REPORT VIEW
          ========================================================================= -->
     <div class="view-screen" id="screenReport" style="display: none;">
       <div class="report-screen-wrap">
@@ -1798,7 +1969,7 @@
               </svg>
               <div class="gauge-inner-score">
                 <div class="gauge-score-number" id="gaugeCenterText">92%</div>
-                <div class="gauge-score-label">Compliance</div>
+                <div class="gauge-score-label" id="gaugeScoreLabel">Compliance</div>
               </div>
             </div>
 
@@ -1835,7 +2006,7 @@
             <div class="satya-ai-main-content">
               <div class="satya-ai-title-row">
                 <span class="satya-ai-name">Satya AI</span>
-                <span class="satya-ai-status-badge">Legal Metrology Explainer</span>
+                <span class="satya-ai-status-badge" id="satyaAiSubBadge">Legal Metrology Explainer</span>
               </div>
               <div class="satya-ai-chat-bubble" id="satyaAiExplanation">
                 All mandatory packaging declarations have been audited according to the Legal Metrology (Packaged Commodities) Rules, 2011.
@@ -1853,12 +2024,12 @@
           <div class="report-action-footer">
             <button type="button" class="btn-lang-switch" onclick="switchNav('scan')" style="padding: 10px 20px;">
               <i data-lucide="rotate-ccw" style="width: 15px; height: 15px;"></i>
-              <span>Scan Another Package</span>
+              <span id="btnScanAnotherText">Scan Another Package</span>
             </button>
 
             <button type="button" class="btn-hero-primary" onclick="generateOfficialPDF()">
               <i data-lucide="download" style="width: 16px; height: 16px;"></i>
-              <span>Download Compliance Report (PDF)</span>
+              <span id="btnDownloadPdfText">Download Compliance Report (PDF)</span>
             </button>
           </div>
 
@@ -1872,8 +2043,8 @@
          ========================================================================= -->
     <div class="view-screen" id="screenRules" style="display: none;">
       <div class="history-card-clean">
-        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--navy-900); margin-bottom: 8px;">Legal Metrology Rule 6 Reference</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 24px;">Mandatory statutory declarations required on every pre-packaged commodity in India.</p>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--navy-900); margin-bottom: 8px;" id="rulesHeaderTitle">Legal Metrology Rule 6 Reference</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;" id="rulesHeaderSub">Mandatory statutory declarations required on every pre-packaged commodity in India.</p>
 
         <div class="declarations-container" id="rulesReferenceList">
           <!-- Populated from metadata -->
@@ -1886,15 +2057,56 @@
          ========================================================================= -->
     <div class="view-screen" id="screenHistory" style="display: none;">
       <div class="history-card-clean">
-        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--navy-900); margin-bottom: 6px;">Audit History</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 24px;">Previous packaging compliance verifications conducted on this device.</p>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--navy-900); margin-bottom: 6px;" id="historyHeaderTitle">Audit History</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;" id="historyHeaderSub">Previous packaging compliance verifications conducted on this device.</p>
         <div id="historyListContainer" class="declarations-container">
-          <p style="color: var(--text-tertiary); font-size: 0.9rem;">No previous scans recorded yet.</p>
+          <p style="color: var(--text-tertiary); font-size: 0.9rem;" id="noHistoryText">No previous scans recorded yet.</p>
         </div>
       </div>
     </div>
 
   </main>
+
+  <!-- =========================================================================
+       FLOATING INTERACTIVE SATYA AI CHATBOT WIDGET
+       ========================================================================= -->
+  <button type="button" class="floating-chat-trigger" onclick="toggleChatWindow()">
+    <div class="chat-trigger-dot"></div>
+    <i data-lucide="bot" style="width: 18px; height: 18px;"></i>
+    <span id="chatTriggerBtnText">Satya AI Chat</span>
+  </button>
+
+  <div class="floating-chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <i data-lucide="sparkles" style="width: 18px; height: 18px; color: var(--saffron-500);"></i>
+        <span>Satya AI Assistant</span>
+      </div>
+      <button type="button" class="chat-close-btn" onclick="toggleChatWindow()">
+        <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+      </button>
+    </div>
+
+    <div class="chat-messages-body" id="chatMessages">
+      <div class="chat-msg chat-msg-ai" id="chatWelcomeMsg">
+        👋 Namaste! I am Satya AI, your Legal Metrology & Pre-Packaged Commodity assistant. Ask me anything about Rule 6, MRP requirements, Unit Sale Price, or packaging penalties in English or Hindi!
+      </div>
+    </div>
+
+    <div class="chat-suggestions-row">
+      <span class="chat-sug-chip" onclick="sendQuickChatMessage('What are the 9 mandatory declarations?')">9 Mandatory Rules</span>
+      <span class="chat-sug-chip" onclick="sendQuickChatMessage('What is Unit Sale Price Rule?')">USP Rule</span>
+      <span class="chat-sug-chip" onclick="sendQuickChatMessage('नियम 6 क्या है?')">नियम 6</span>
+      <span class="chat-sug-chip" onclick="sendQuickChatMessage('What are penalties for violation?')">Penalties</span>
+    </div>
+
+    <form class="chat-input-area" onsubmit="handleChatSubmit(event)">
+      <input type="text" id="chatInputField" class="chat-input-field" placeholder="Ask about Legal Metrology rules..." autocomplete="off">
+      <button type="submit" class="chat-send-btn">
+        <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+      </button>
+    </form>
+  </div>
 
   <!-- Clean Toast -->
   <div class="toast-clean" id="toastMsg">Notification message</div>
@@ -1906,9 +2118,125 @@
   <script>
     /**
      * =========================================================================
-     * SATYASCAN ADVANCED AI INSPECTION ENGINE & STATE
+     * SATYASCAN COMPREHENSIVE BILINGUAL TRANSLATION DICTIONARY
      * =========================================================================
      */
+    const I18N = {
+      en: {
+        brandBadge: "AI INSPECTOR",
+        navHome: "Home",
+        navScan: "Scan",
+        navHistory: "History",
+        navRules: "Rules",
+        navSignIn: "Sign In",
+        heroPreBadge: "LEGAL METROLOGY ACT COMPLIANCE",
+        heroLine1: "Scan. Verify.",
+        heroLine2: "Know the Truth.",
+        heroSubDesc: "AI-powered packaging compliance for every pre-packaged commodity. Instantaneous Rule 6 audits, MRP verification, and automated violation notices.",
+        btnHeroScan: "Scan Product Now",
+        btnHeroRules: "Statutory Rule 6",
+        insightsHeading: "Today's Inspection Insights",
+        badgeLiveStream: "Live Stream",
+        labelAudits: "Packaging Audits Conducted",
+        badgeComplianceTrend: "+3.4% This Week",
+        labelComplianceRate: "Statutory Compliance Rate",
+        badgeDirectives: "Directives Issued",
+        labelViolations: "Rule 6 Violations Flagged",
+        quickWorkflows: "Instant Audit Workflows",
+        quickUploadTitle: "Upload Packaging Photograph",
+        quickUploadSub: "High-resolution label scanning with automatic contrast enhancement.",
+        quickCameraTitle: "Live Camera Inspection",
+        quickCameraSub: "Direct on-device camera capture for physical store shelves.",
+        zeroCloudTitle: "Zero Cloud Latency",
+        zeroCloudSub: "Audits execute 100% inside your browser via WebAssembly OCR. Zero server roundtrips, total data privacy.",
+        btnLaunchScanner: "Launch Scanner",
+        canvasTitle: "Position Packaging Label to Inspect",
+        canvasSub: "Upload or capture label photo for real-time extraction of MRP, Net Quantity, Dates, Manufacturer and Origin.",
+        btnUploadLabel: "Upload Label Photo",
+        btnCameraLabel: "Open Camera",
+        btnClearCanvas: "Clear",
+        btnVerify: "Verify Compliance",
+        statusStandby: "AI Engine Standby • Ready for audit",
+        statusLoaded: "loaded • Ready for verification",
+        gaugeScoreLabel: "Compliance",
+        btnScanAnother: "Scan Another Package",
+        btnDownloadPdf: "Download Compliance Report (PDF)",
+        rulesHeaderTitle: "Legal Metrology Rule 6 Reference",
+        rulesHeaderSub: "Mandatory statutory declarations required on every pre-packaged commodity in India.",
+        historyHeaderTitle: "Audit History",
+        historyHeaderSub: "Previous packaging compliance verifications conducted on this device.",
+        noHistoryText: "No previous scans recorded yet.",
+        chatTrigger: "Satya AI Chat",
+        chatWelcome: "👋 Namaste! I am Satya AI, your Legal Metrology & Pre-Packaged Commodity assistant. Ask me anything about Rule 6, MRP requirements, Unit Sale Price, or packaging penalties in English or Hindi!",
+        authSignIn: "Sign In",
+        authRegister: "Register",
+        authEmailLabel: "Email Address",
+        authPassLabel: "Password",
+        authConfirmPassLabel: "Confirm Password",
+        authNameLabel: "Full Name",
+        authRoleLabel: "Operator Classification",
+        authLoginBtn: "Sign In to SatyaScan",
+        authRegisterBtn: "Create Operator Account",
+        authSubtitle: "Verify packaged commodity compliance"
+      },
+      hi: {
+        brandBadge: "एआई निरीक्षक",
+        navHome: "होम",
+        navScan: "स्कैन",
+        navHistory: "इतिहास",
+        navRules: "नियम",
+        navSignIn: "लॉग इन",
+        heroPreBadge: "विधिक मापविज्ञान अधिनियम अनुपालन",
+        heroLine1: "स्कैन करें। सत्यापित करें।",
+        heroLine2: "सच जानें।",
+        heroSubDesc: "प्रत्येक प्री-पैकेज्ड वस्तु के लिए एआई-संचालित पैकेजिंग अनुपालन। त्वरित नियम 6 ऑडिट, अधिकतम खुदरा मूल्य सत्यापन, और उल्लंघन नोटिस।",
+        btnHeroScan: "अब उत्पाद स्कैन करें",
+        btnHeroRules: "संवैधानिक नियम 6",
+        insightsHeading: "आज के निरीक्षण अंतर्दृष्टि",
+        badgeLiveStream: "लाइव स्ट्रीम",
+        labelAudits: "कुल पैकेजिंग ऑडिट",
+        badgeComplianceTrend: "+3.4% इस सप्ताह",
+        labelComplianceRate: "वैधानिक अनुपालन दर",
+        badgeDirectives: "जारी निर्देश",
+        labelViolations: "नियम 6 उल्लंघन चिह्नित",
+        quickWorkflows: "त्वरित ऑडिट कार्यप्रणाली",
+        quickUploadTitle: "पैकेजिंग फोटो अपलोड करें",
+        quickUploadSub: "स्वचालित कंट्रास्ट सुधार के साथ उच्च रिज़ॉल्यूशन लेबल स्कैनिंग।",
+        quickCameraTitle: "लाइव कैमरा निरीक्षण",
+        quickCameraSub: "दुकान शेल्फ पर त्वरित मोबाइल कैमरा कैप्चर।",
+        zeroCloudTitle: "शून्य क्लाउड लेटेंसी (सुरक्षित)",
+        zeroCloudSub: "सभी ऑडिट 100% आपके ब्राउज़र में WebAssembly OCR द्वारा प्रोसेस होते हैं। पूर्ण डेटा गोपनीयता।",
+        btnLaunchScanner: "स्कैनर शुरू करें",
+        canvasTitle: "निरीक्षण हेतु पैकेजिंग लेबल रखें",
+        canvasSub: "एमआरपी, शुद्ध मात्रा, विनिर्माण तिथि, निर्माता और उत्पत्ति देश निकालने के लिए फोटो चुनें।",
+        btnUploadLabel: "लेबल फोटो चुनें",
+        btnCameraLabel: "कैमरा खोलें",
+        btnClearCanvas: "हटाएं",
+        btnVerify: "अनुपालन सत्यापित करें",
+        statusStandby: "एआई इंजन तैयार • निरीक्षण हेतु उपलब्ध",
+        statusLoaded: "तैयार • सत्यापन शुरू करें",
+        gaugeScoreLabel: "अनुपालन",
+        btnScanAnother: "अन्य पैकेज स्कैन करें",
+        btnDownloadPdf: "अनुपालन रिपोर्ट डाउनलोड करें (PDF)",
+        rulesHeaderTitle: "विधिक मापविज्ञान नियम 6 संदर्भ",
+        rulesHeaderSub: "भारत में प्रत्येक प्री-पैकेज्ड वस्तु पर अनिवार्य संवैधानिक घोषणाएं।",
+        historyHeaderTitle: "ऑडिट इतिहास",
+        historyHeaderSub: "इस उपकरण पर पहले किए गए पैकेजिंग अनुपालन सत्यापन।",
+        noHistoryText: "अभी तक कोई पूर्व स्कैन रिकॉर्ड नहीं है।",
+        chatTrigger: "सत्य एआई चैट",
+        chatWelcome: "👋 नमस्ते! मैं सत्य एआई हूँ, आपका कानूनी माप विज्ञान सहायक। नियम 6, एमआरपी, प्रति इकाई मूल्य (USP), या विधिक दंड के बारे में हिंदी या अंग्रेजी में पूछें!",
+        authSignIn: "लॉग इन",
+        authRegister: "पंजीकरण",
+        authEmailLabel: "ईमेल पता",
+        authPassLabel: "पासवर्ड",
+        authConfirmPassLabel: "पासवर्ड की पुष्टि करें",
+        authNameLabel: "पूरा नाम",
+        authRoleLabel: "ऑपरेटर श्रेणी",
+        authLoginBtn: "SatyaScan में लॉग इन करें",
+        authRegisterBtn: "ऑपरेटर खाता बनाएं",
+        authSubtitle: "प्री-पैकेज्ड वस्तु अनुपालन सत्यापित करें"
+      }
+    };
 
     const FIELD_METADATA = {
       "Maximum Retail Price (MRP)": {
@@ -2056,16 +2384,103 @@
       userInitial.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'A';
     }
 
-    // Language Toggle
+    // =========================================================================
+    // DYNAMIC LANGUAGE SWITCHER
+    // =========================================================================
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
       localStorage.setItem('satyascan_lang', currentLang);
       applyLanguage(currentLang);
+      showToast(currentLang === 'hi' ? 'भाषा बदलकर हिन्दी कर दी गई है।' : 'Language switched to English.');
     }
 
     function applyLanguage(lang) {
+      const t = I18N[lang] || I18N.en;
       document.getElementById('langBtnText').textContent = lang === 'en' ? 'हिन्दी' : 'English';
-      if (currentScanData && screenReport.style.display === 'block') {
+
+      // Header & Nav
+      const badge = document.getElementById('i18nBrandBadge'); if (badge) badge.textContent = t.brandBadge;
+      const navHome = document.getElementById('navHomeText'); if (navHome) navHome.textContent = t.navHome;
+      const navScan = document.getElementById('navScanText'); if (navScan) navScan.textContent = t.navScan;
+      const navHist = document.getElementById('navHistoryText'); if (navHist) navHist.textContent = t.navHistory;
+      const navRules = document.getElementById('navRulesText'); if (navRules) navRules.textContent = t.navRules;
+      const navSign = document.getElementById('navSignInText'); if (navSign) navSign.textContent = t.navSignIn;
+
+      // Home Hero
+      const preBadge = document.getElementById('heroPreBadgeText'); if (preBadge) preBadge.textContent = t.heroPreBadge;
+      const line1 = document.getElementById('heroLine1'); if (line1) line1.textContent = t.heroLine1;
+      const line2 = document.getElementById('heroLine2'); if (line2) line2.textContent = t.heroLine2;
+      const subDesc = document.getElementById('heroSubDesc'); if (subDesc) subDesc.textContent = t.heroSubDesc;
+      const btnHeroScan = document.getElementById('btnHeroScanText'); if (btnHeroScan) btnHeroScan.textContent = t.btnHeroScan;
+      const btnHeroRules = document.getElementById('btnHeroRulesText'); if (btnHeroRules) btnHeroRules.textContent = t.btnHeroRules;
+
+      // Insights
+      const inHead = document.getElementById('insightsHeading'); if (inHead) inHead.textContent = t.insightsHeading;
+      const inLive = document.getElementById('badgeLiveStream'); if (inLive) inLive.textContent = t.badgeLiveStream;
+      const inAudits = document.getElementById('labelAuditsConducted'); if (inAudits) inAudits.textContent = t.labelAudits;
+      const inTrend = document.getElementById('badgeComplianceTrend'); if (inTrend) inTrend.textContent = t.badgeComplianceTrend;
+      const inRate = document.getElementById('labelComplianceRate'); if (inRate) inRate.textContent = t.labelComplianceRate;
+      const inDir = document.getElementById('badgeDirectives'); if (inDir) inDir.textContent = t.badgeDirectives;
+      const inViol = document.getElementById('labelViolationsFlagged'); if (inViol) inViol.textContent = t.labelViolations;
+
+      // Quick Workflows
+      const qTitle = document.getElementById('quickWorkflowsTitle'); if (qTitle) qTitle.textContent = t.quickWorkflows;
+      const qUpT = document.getElementById('quickUploadTitle'); if (qUpT) qUpT.textContent = t.quickUploadTitle;
+      const qUpS = document.getElementById('quickUploadSub'); if (qUpS) qUpS.textContent = t.quickUploadSub;
+      const qCamT = document.getElementById('quickCameraTitle'); if (qCamT) qCamT.textContent = t.quickCameraTitle;
+      const qCamS = document.getElementById('quickCameraSub'); if (qCamS) qCamS.textContent = t.quickCameraSub;
+      const zTitle = document.getElementById('zeroCloudTitle'); if (zTitle) zTitle.textContent = t.zeroCloudTitle;
+      const zSub = document.getElementById('zeroCloudSub'); if (zSub) zSub.textContent = t.zeroCloudSub;
+      const btnLaunch = document.getElementById('btnLaunchScannerText'); if (btnLaunch) btnLaunch.textContent = t.btnLaunchScanner;
+
+      // Scanner View
+      const cTitle = document.getElementById('canvasTitle'); if (cTitle) cTitle.textContent = t.canvasTitle;
+      const cSub = document.getElementById('canvasSub'); if (cSub) cSub.textContent = t.canvasSub;
+      const btnUpL = document.getElementById('btnUploadLabel'); if (btnUpL) btnUpL.textContent = t.btnUploadLabel;
+      const btnCamL = document.getElementById('btnCameraLabel'); if (btnCamL) btnCamL.textContent = t.btnCameraLabel;
+      const btnClr = document.getElementById('btnClearCanvasText'); if (btnClr) btnClr.textContent = t.btnClearCanvas;
+      const btnVer = document.getElementById('btnVerifyText'); if (btnVer) btnVer.textContent = t.btnVerify;
+      if (!selectedFile) {
+        const hint = document.getElementById('statusHintText'); if (hint) hint.textContent = t.statusStandby;
+      }
+
+      // Report View
+      const gScoreLbl = document.getElementById('gaugeScoreLabel'); if (gScoreLbl) gScoreLbl.textContent = t.gaugeScoreLabel;
+      const btnScanA = document.getElementById('btnScanAnotherText'); if (btnScanA) btnScanA.textContent = t.btnScanAnother;
+      const btnPdf = document.getElementById('btnDownloadPdfText'); if (btnPdf) btnPdf.textContent = t.btnDownloadPdf;
+
+      // Rules & History Headers
+      const rHeadT = document.getElementById('rulesHeaderTitle'); if (rHeadT) rHeadT.textContent = t.rulesHeaderTitle;
+      const rHeadS = document.getElementById('rulesHeaderSub'); if (rHeadS) rHeadS.textContent = t.rulesHeaderSub;
+      const hHeadT = document.getElementById('historyHeaderTitle'); if (hHeadT) hHeadT.textContent = t.historyHeaderTitle;
+      const hHeadS = document.getElementById('historyHeaderSub'); if (hHeadS) hHeadS.textContent = t.historyHeaderSub;
+      const noHist = document.getElementById('noHistoryText'); if (noHist) noHist.textContent = t.noHistoryText;
+
+      // Chatbot
+      const chatTrig = document.getElementById('chatTriggerBtnText'); if (chatTrig) chatTrig.textContent = t.chatTrigger;
+      const chatWel = document.getElementById('chatWelcomeMsg'); if (chatWel) chatWel.textContent = t.chatWelcome;
+
+      // Auth Screen Translations
+      const authTabLoginEl = document.getElementById('authTabLogin'); if (authTabLoginEl) authTabLoginEl.textContent = t.authSignIn;
+      const authTabRegEl = document.getElementById('authTabRegister'); if (authTabRegEl) authTabRegEl.textContent = t.authRegister;
+      const authSubEl = document.getElementById('authSubtitle'); if (authSubEl) authSubEl.textContent = t.authSubtitle;
+
+      // Auth form labels
+      const emailLabels = document.querySelectorAll('[data-i18n="authEmailLabel"]');
+      emailLabels.forEach(el => el.textContent = t.authEmailLabel);
+      const passLabels = document.querySelectorAll('[data-i18n="authPassLabel"]');
+      passLabels.forEach(el => el.textContent = t.authPassLabel);
+      const confirmPassLabels = document.querySelectorAll('[data-i18n="authConfirmPassLabel"]');
+      confirmPassLabels.forEach(el => el.textContent = t.authConfirmPassLabel);
+      const nameLabels = document.querySelectorAll('[data-i18n="authNameLabel"]');
+      nameLabels.forEach(el => el.textContent = t.authNameLabel);
+      const roleLabels = document.querySelectorAll('[data-i18n="authRoleLabel"]');
+      roleLabels.forEach(el => el.textContent = t.authRoleLabel);
+      const loginBtnEl = document.getElementById('loginSubmitBtn'); if (loginBtnEl) loginBtnEl.textContent = t.authLoginBtn;
+      const regBtnEl = document.getElementById('registerSubmitBtn'); if (regBtnEl) regBtnEl.textContent = t.authRegisterBtn;
+
+      populateRulesReference();
+      if (currentScanData && screenReport && screenReport.style.display === 'block') {
         renderComplianceReport(currentScanData);
       }
     }
@@ -2203,7 +2618,8 @@
         scannerActiveStage.style.display = 'flex';
         btnResetCanvas.style.display = 'inline-flex';
         btnRunScan.disabled = false;
-        statusHintText.textContent = `${file.name || 'image.jpg'} loaded • Ready for verification`;
+        const t = I18N[currentLang] || I18N.en;
+        statusHintText.textContent = `${file.name || 'image.jpg'} ${t.statusLoaded}`;
         floatingTagsLayer.innerHTML = '';
       };
       reader.readAsDataURL(file);
@@ -2222,7 +2638,8 @@
       btnRunScan.disabled = true;
       scannerLaser.style.display = 'none';
       floatingTagsLayer.innerHTML = '';
-      statusHintText.textContent = 'AI Engine Standby • Ready for audit';
+      const t = I18N[currentLang] || I18N.en;
+      statusHintText.textContent = t.statusStandby;
       currentScanData = null;
       lucide.createIcons();
     }
@@ -2600,7 +3017,7 @@
 
       btnRunScan.disabled = true;
       scannerLaser.style.display = 'block';
-      statusHintText.textContent = 'AI Neural Engine analyzing packaging declarations...';
+      statusHintText.textContent = currentLang === 'hi' ? 'एआई इंजन पैकेजिंग घोषणाओं का विश्लेषण कर रहा है...' : 'AI Neural Engine analyzing packaging declarations...';
 
       try {
         const enhancedImg = await preprocessImageForOCR(selectedImageDataUrl);
@@ -2632,13 +3049,9 @@
           timestamp: new Date().toISOString()
         };
 
-        // Render floating AI detection points around the package
         showFloatingTags(report);
-
-        // Save to History
         saveToHistory(currentScanData);
 
-        // Transition to Compliance Report Screen
         setTimeout(() => {
           scannerLaser.style.display = 'none';
           screenScan.style.display = 'none';
@@ -2674,13 +3087,13 @@
         Object.keys(pos).forEach(k => tag.style[k] = pos[k]);
         tag.style.animationDelay = `${idx * 110}ms`;
 
-        const shortName = item.field.split(' ')[0];
+        const meta = FIELD_METADATA[item.field];
+        const shortName = currentLang === 'hi' && meta ? meta.hiName.split(' ')[0] : item.field.split(' ')[0];
         tag.innerHTML = `<span>${isPass ? '🟢' : '🔴'}</span> <span>${shortName} ${isPass ? '✓' : '⚠️'}</span>`;
         floatingTagsLayer.appendChild(tag);
       });
     }
 
-    // Render Compliance Report
     function renderComplianceReport(data) {
       const isHindi = (currentLang === 'hi');
       const report = data.report || [];
@@ -2688,17 +3101,15 @@
       const passed = report.filter(r => r.status === 'PASS').length;
       const pct = Math.round((passed / total) * 100);
 
-      // 1. Update Gauge & Top Metrics
       const gaugeValCircle = document.getElementById('gaugeValCircle');
       const gaugeCenterText = document.getElementById('gaugeCenterText');
       const reportScoreTitle = document.getElementById('reportScoreTitle');
       const reportDateStamp = document.getElementById('reportDateStamp');
 
       gaugeCenterText.textContent = `${pct}%`;
-      reportScoreTitle.textContent = `${passed} of ${total} ${isHindi ? 'सत्यापित' : 'Declarations Verified'}`;
-      reportDateStamp.textContent = new Date().toLocaleDateString('en-IN', { month: 'long', day: 'numeric', year: 'numeric' });
+      reportScoreTitle.textContent = `${passed} of ${total} ${isHindi ? 'घोषणाएं सत्यापित' : 'Declarations Verified'}`;
+      reportDateStamp.textContent = new Date().toLocaleDateString(isHindi ? 'hi-IN' : 'en-IN', { month: 'long', day: 'numeric', year: 'numeric' });
 
-      // Update Gauge SVG Arc (circumference = 471.2)
       const offset = 471.2 - (471.2 * (pct / 100));
       gaugeValCircle.style.strokeDashoffset = offset;
 
@@ -2708,19 +3119,20 @@
         } catch (e) {}
       }
 
-      // 2. Surrounding Indicators
+      // Surrounding Indicators
       const surroundContainer = document.getElementById('surroundPillsContainer');
       surroundContainer.innerHTML = '';
       report.slice(0, 5).forEach(item => {
         const isPass = item.status === 'PASS';
         const pill = document.createElement('span');
         pill.className = `surround-indicator-pill ${isPass ? 'indicator-pass' : 'indicator-fail'}`;
-        const shortName = item.field.split(' ')[0];
+        const meta = FIELD_METADATA[item.field];
+        const shortName = isHindi && meta ? meta.hiName.split(' ')[0] : item.field.split(' ')[0];
         pill.innerHTML = `<span>${isPass ? '✓' : '⚠️'}</span> <span>${shortName}</span>`;
         surroundContainer.appendChild(pill);
       });
 
-      // 3. Render Vertical List of Declarations
+      // Vertical Declarations List
       const listContainer = document.getElementById('declarationsList');
       listContainer.innerHTML = '';
 
@@ -2738,13 +3150,13 @@
         if (isPass) {
           valHtml = `
             <div class="dec-extracted-val">
-              ${escapeHtml(item.value || 'Present on packaging')}
+              ${escapeHtml(item.value || (isHindi ? 'पैकेजिंग पर मौजूद' : 'Present on packaging'))}
             </div>
           `;
         } else {
           valHtml = `
             <div class="dec-extracted-val" style="color: var(--text-tertiary);">
-              ${isHindi ? 'लेबल पर नहीं मिला' : 'Missing from scanned label'}
+              ${isHindi ? 'लेबल पर नहीं मिला (अनुपस्थित)' : 'Missing from scanned label'}
             </div>
             <div class="dec-warning-alert-box">
               <i data-lucide="alert-circle" style="width: 16px; height: 16px; flex-shrink: 0;"></i>
@@ -2763,16 +3175,16 @@
             </div>
             ${valHtml}
             <div class="dec-drawer-edit" id="decEditDrawer_${index}">
-              <input type="text" class="input-drawer-field" id="decEditInput_${index}" value="${escapeHtml(item.value || '')}" placeholder="Enter verified text...">
+              <input type="text" class="input-drawer-field" id="decEditInput_${index}" value="${escapeHtml(item.value || '')}" placeholder="${isHindi ? 'सत्यापित विवरण दर्ज करें...' : 'Enter verified text...'}">
               <div style="display: flex; justify-content: flex-end; gap: 6px;">
-                <button type="button" class="btn-lang-switch" style="padding: 4px 10px; font-size: 0.75rem;" onclick="toggleEditDrawer(${index})">Cancel</button>
-                <button type="button" class="btn-action-primary" style="padding: 5px 14px; font-size: 0.75rem;" onclick="saveEdit(${index})">Save & Verify</button>
+                <button type="button" class="btn-lang-switch" style="padding: 4px 10px; font-size: 0.75rem;" onclick="toggleEditDrawer(${index})">${isHindi ? 'रद्द करें' : 'Cancel'}</button>
+                <button type="button" class="btn-action-primary" style="padding: 5px 14px; font-size: 0.75rem;" onclick="saveEdit(${index})">${isHindi ? 'सहेजें और सत्यापित करें' : 'Save & Verify'}</button>
               </div>
             </div>
           </div>
           <div class="dec-status-right">
             <button type="button" class="btn-edit-override" onclick="toggleEditDrawer(${index})">
-              ${isPass ? 'Edit' : 'Override'}
+              ${isPass ? (isHindi ? 'संशोधित करें' : 'Edit') : (isHindi ? 'मैन्युअल प्रविष्टि' : 'Override')}
             </button>
             <div class="status-check-circle ${isPass ? 'circle-pass' : 'circle-fail'}">
               <i data-lucide="${isPass ? 'check' : 'alert-triangle'}" style="width: 16px; height: 16px; stroke-width: 2.5;"></i>
@@ -2783,7 +3195,6 @@
         listContainer.appendChild(row);
       });
 
-      // 4. Update Satya AI explanation
       updateSatyaAiExplainer(report);
       lucide.createIcons();
     }
@@ -2818,36 +3229,141 @@
 
       saveToHistory(currentScanData);
       renderComplianceReport(currentScanData);
-      showToast('Declaration updated.');
+      showToast(currentLang === 'hi' ? 'घोषणा अद्यतन की गई।' : 'Declaration updated.');
     }
 
     function updateSatyaAiExplainer(report) {
       const failed = report.filter(r => r.status === 'FAIL');
       const el = document.getElementById('satyaAiExplanation');
+      const isHindi = (currentLang === 'hi');
       if (failed.length === 0) {
-        el.textContent = "All mandatory packaging declarations comply with Legal Metrology Rule 6. The packaging display panel conforms to statutory standards.";
+        el.textContent = isHindi 
+          ? "सभी अनिवार्य पैकेजिंग घोषणाएं विधिक मापविज्ञान नियम 6 के अनुरूप हैं। पैकेजिंग डिस्प्ले पैनल वैधानिक मानकों का अनुपालन करता है।"
+          : "All mandatory packaging declarations comply with Legal Metrology Rule 6. The packaging display panel conforms to statutory standards.";
       } else {
-        const failedNames = failed.map(f => f.field.split(' ')[0]).join(', ');
-        el.textContent = `The audit identified missing declaration(s): [${failedNames}]. Under Rule 6, missing declarations may incur penal notices under Section 36 of the Act.`;
+        const failedNames = failed.map(f => {
+          const m = FIELD_METADATA[f.field];
+          return isHindi && m ? m.hiName.split(' ')[0] : f.field.split(' ')[0];
+        }).join(', ');
+        el.textContent = isHindi
+          ? `ऑडिट में अनुपस्थित घोषणाएं पाई गईं: [${failedNames}]। नियम 6 के तहत अधूरी घोषणाओं पर अधिनियम की धारा 36 के तहत दंडात्मक नोटिस जारी किया जा सकता है।`
+          : `The audit identified missing declaration(s): [${failedNames}]. Under Rule 6, missing declarations may incur penal notices under Section 36 of the Act.`;
       }
     }
 
     function askSatyaAi(topic) {
       const el = document.getElementById('satyaAiExplanation');
+      const isHindi = (currentLang === 'hi');
       if (topic === 'fail') {
         const failed = currentScanData && currentScanData.report ? currentScanData.report.filter(r => r.status === 'FAIL') : [];
         if (failed.length === 0) {
-          el.textContent = "This product passed all statutory checks. All 9 mandatory Legal Metrology declarations were identified on the display panel.";
+          el.textContent = isHindi
+            ? "यह उत्पाद सभी वैधानिक जांचों में उत्तीर्ण रहा। सभी 9 अनिवार्य घोषणाएं पाई गईं।"
+            : "This product passed all statutory checks. All 9 mandatory Legal Metrology declarations were identified on the display panel.";
         } else {
-          el.textContent = `The product failed because ${failed.length} declaration(s) (${failed.map(f => f.field).join(', ')}) were not clearly detected according to the Legal Metrology (Packaged Commodities) Rules, 2011.`;
+          el.textContent = isHindi
+            ? `उत्पाद इसलिए अनुपालित नहीं हुआ क्योंकि ${failed.length} अनिवार्य घोषणाएं (${failed.map(f => FIELD_METADATA[f.field]?.hiName || f.field).join(', ')}) स्पष्ट रूप से नहीं मिलीं।`
+            : `The product failed because ${failed.length} declaration(s) (${failed.map(f => f.field).join(', ')}) were not clearly detected according to the Legal Metrology (Packaged Commodities) Rules, 2011.`;
         }
       } else if (topic === 'mrp') {
-        el.textContent = "Rule 6(1)(e) mandates that the Maximum Retail Price (MRP) must be clearly stated inclusive of all taxes. Ambiguous or split pricing without tax declaration violates consumer transparency provisions.";
+        el.textContent = isHindi
+          ? "नियम 6(1)(e) के अनुसार अधिकतम खुदरा मूल्य (MRP) 'सभी करों सहित' स्पष्ट लिखा होना चाहिए। अस्पष्ट या विभाजित मूल्य निर्धारण कानूनी उल्लंघन है।"
+          : "Rule 6(1)(e) mandates that the Maximum Retail Price (MRP) must be clearly stated inclusive of all taxes. Ambiguous or split pricing without tax declaration violates consumer transparency provisions.";
       } else if (topic === 'usp') {
-        el.textContent = "Rule 6(11) requires a Unit Sale Price (USP) declared in Rs. per g or per ml on all packages containing more than 100g/100ml to allow direct consumer price comparison across brands.";
+        el.textContent = isHindi
+          ? "नियम 6(11) के अनुसार 100 ग्राम/मिली से अधिक पैकेज पर प्रति ग्राम या मिली इकाई विक्रय मूल्य (USP) घोषित करना अनिवार्य है।"
+          : "Rule 6(11) requires a Unit Sale Price (USP) declared in Rs. per g or per ml on all packages containing more than 100g/100ml to allow direct consumer price comparison across brands.";
       } else if (topic === 'origin') {
-        el.textContent = "Rule 6(1)(g) makes it mandatory for every domestic or imported pre-packaged commodity to declare 'Country of Origin: [Country]' on the principal display panel.";
+        el.textContent = isHindi
+          ? "नियम 6(1)(g) के तहत भारत में निर्मित या आयातित सभी उत्पादों पर 'Country of Origin' प्रमुखता से लिखना अनिवार्य है।"
+          : "Rule 6(1)(g) makes it mandatory for every domestic or imported pre-packaged commodity to declare 'Country of Origin: [Country]' on the principal display panel.";
       }
+    }
+
+    // =========================================================================
+    // FLOATING CHATBOT ENGINE
+    // =========================================================================
+    function toggleChatWindow() {
+      const chatWin = document.getElementById('chatWindow');
+      const isVisible = chatWin.style.display === 'flex';
+      chatWin.style.display = isVisible ? 'none' : 'flex';
+      if (!isVisible) {
+        document.getElementById('chatInputField').focus();
+        lucide.createIcons();
+      }
+    }
+
+    function sendQuickChatMessage(query) {
+      document.getElementById('chatInputField').value = query;
+      handleChatSubmit(new Event('submit'));
+    }
+
+    function handleChatSubmit(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('chatInputField');
+      const query = input.value.trim();
+      if (!query) return;
+
+      const chatMessages = document.getElementById('chatMessages');
+
+      // Append User message
+      const userDiv = document.createElement('div');
+      userDiv.className = 'chat-msg chat-msg-user';
+      userDiv.textContent = query;
+      chatMessages.appendChild(userDiv);
+      input.value = '';
+
+      // Generate AI answer
+      const isHindi = /[\u0900-\u097F]/.test(query) || (currentLang === 'hi');
+      const response = generateChatbotResponse(query, isHindi);
+
+      setTimeout(() => {
+        const aiDiv = document.createElement('div');
+        aiDiv.className = 'chat-msg chat-msg-ai';
+        aiDiv.textContent = response;
+        chatMessages.appendChild(aiDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 450);
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function generateChatbotResponse(q, isHindi) {
+      const qLower = q.toLowerCase();
+
+      if (qLower.includes('9') || qLower.includes('mandatory') || qLower.includes('अनिवार्य') || qLower.includes('declarations')) {
+        return isHindi 
+          ? "विधिक मापविज्ञान नियम 6 के तहत 9 अनिवार्य घोषणाएं हैं: 1. वस्तु का नाम, 2. निर्माता का नाम व पता, 3. शुद्ध मात्रा, 4. निर्माण तिथि (MFD/PKD), 5. अधिकतम खुदरा मूल्य (MRP), 6. उपभोक्ता सहायता (Helpline & Email), 7. इकाई विक्रय मूल्य (USP), 8. उत्पत्ति देश, 9. आयाम / टुकड़ों की संख्या।"
+          : "Under Rule 6 of the Legal Metrology (Packaged Commodities) Rules, 2011, the 9 mandatory declarations are: 1. Generic Commodity Name, 2. Manufacturer/Packer Address, 3. Net Quantity in metric units, 4. Date of Manufacture/Packing, 5. MRP (inclusive of all taxes), 6. Consumer Care details (Helpline/Email), 7. Unit Sale Price (USP), 8. Country of Origin, 9. Item Count / Dimensions.";
+      }
+
+      if (qLower.includes('usp') || qLower.includes('unit sale') || qLower.includes('इकाई') || qLower.includes('प्रति ग्राम')) {
+        return isHindi
+          ? "नियम 6(11) के अनुसार 100 ग्राम/मिली से अधिक वजन वाले पैकेट पर प्रति ग्राम या प्रति मिली मूल्य (उदा. Rs. 0.25/g) लिखना अनिवार्य है जिससे उपभोक्ता विभिन्न ब्रांड्स की तुलना कर सकें।"
+          : "Rule 6(11) mandates Unit Sale Price (USP) in Rs. per g or ml for packages >100g/100ml. This ensures transparent cost comparison for consumers across differently sized packaging.";
+      }
+
+      if (qLower.includes('mrp') || qLower.includes('price') || qLower.includes('मूल्य') || qLower.includes('टैक्स')) {
+        return isHindi
+          ? "एमआरपी को 'MRP Rs. XX.XX (सभी करों सहित / incl. of all taxes)' के रूप में घोषित किया जाना चाहिए। अलग से टैक्स जोड़ना या स्टीकर चिपकाकर दाम बढ़ाना गैरकानूनी है।"
+          : "MRP must be stated explicitly as 'MRP Rs. XX.XX (incl. of all taxes)'. Charging above MRP or affixing unauthorized higher price stickers is a punishable offence under Section 36.";
+      }
+
+      if (qLower.includes('penalty') || qLower.includes('दंड') || qLower.includes('section 36') || qLower.includes('fine') || qLower.includes('सजा')) {
+        return isHindi
+          ? "विधिक मापविज्ञान अधिनियम 2009 की धारा 36(1) के अनुसार गैर-अनुपालक पैकेजिंग पर प्रथम अपराध पर ₹25,000 तक, द्वितीय अपराध पर ₹50,000 तक, और बार-बार उल्लंघन पर ₹1,00,000 तक जुर्माना या 1 वर्ष की जेल हो सकती है।"
+          : "Under Section 36(1) of the Legal Metrology Act, 2009, non-compliant packaging is punishable with fines up to ₹25,000 for first offence, ₹50,000 for second offence, and up to ₹1,00,000 or imprisonment up to 1 year for subsequent violations.";
+      }
+
+      if (qLower.includes('origin') || qLower.includes('देश') || qLower.includes('उत्पत्ति') || qLower.includes('import')) {
+        return isHindi
+          ? "नियम 6(1)(g) के अनुसार हर पैकेज पर निर्माण का देश (उदा. 'Country of Origin: India') साफ अक्षरों में लिखना जरूरी है।"
+          : "Rule 6(1)(g) requires the Country of Origin to be prominently declared on all domestic and imported consumer commodities.";
+      }
+
+      return isHindi
+        ? "सत्य एआई विधिक मापविज्ञान (पैकेज्ड कमोडिटीज) नियमावली 2011 के अनुसार पैकेजिंग लेबल का सत्यापन करता है। आप एमआरपी, विनिर्माण तिथि, शुद्ध मात्रा, या किसी भी नियम पर प्रश्न पूछ सकते हैं।"
+        : "Satya AI conducts compliance verifications under the Legal Metrology (Packaged Commodities) Rules, 2011. You can ask about MRP rules, Net Quantity metric requirements, USP calculation, or penal consequences.";
     }
 
     // =========================================================================
@@ -2869,10 +3385,11 @@
 
     function loadHistory() {
       const container = document.getElementById('historyListContainer');
+      const isHindi = (currentLang === 'hi');
       try {
         const hist = JSON.parse(localStorage.getItem('satyascan_history') || '[]');
         if (hist.length === 0) {
-          container.innerHTML = `<p style="color: var(--text-tertiary); font-size: 0.9rem;">No previous scans recorded yet.</p>`;
+          container.innerHTML = `<p style="color: var(--text-tertiary); font-size: 0.9rem;">${isHindi ? 'अभी तक कोई पूर्व स्कैन रिकॉर्ड नहीं है।' : 'No previous scans recorded yet.'}</p>`;
           return;
         }
 
@@ -2880,7 +3397,7 @@
         hist.forEach(item => {
           const total = item.report ? item.report.length : 9;
           const passed = item.report ? item.report.filter(r => r.status === 'PASS').length : 0;
-          const dateStr = new Date(item.timestamp).toLocaleString();
+          const dateStr = new Date(item.timestamp).toLocaleString(isHindi ? 'hi-IN' : 'en-IN');
 
           const card = document.createElement('div');
           card.className = 'declaration-row-card';
@@ -2892,7 +3409,7 @@
             </div>
             <div class="dec-status-right">
               <span class="surround-indicator-pill ${passed === total ? 'indicator-pass' : 'indicator-fail'}">
-                ${passed}/${total} Verified
+                ${passed}/${total} ${isHindi ? 'सत्यापित' : 'Verified'}
               </span>
             </div>
           `;
@@ -2909,6 +3426,8 @@
 
     function populateRulesReference() {
       const container = document.getElementById('rulesReferenceList');
+      if (!container) return;
+      const isHindi = (currentLang === 'hi');
       container.innerHTML = '';
 
       Object.keys(FIELD_METADATA).forEach(name => {
@@ -2918,10 +3437,10 @@
         row.innerHTML = `
           <div class="dec-content-main">
             <div class="dec-header-title-row">
-              <span class="dec-title-text">${name}</span>
+              <span class="dec-title-text">${isHindi ? meta.hiName : name}</span>
               <span class="dec-rule-badge">${meta.rule}</span>
             </div>
-            <div class="dec-extracted-val">${meta.enFix}</div>
+            <div class="dec-extracted-val">${isHindi ? meta.hiFix : meta.enFix}</div>
           </div>
         `;
         container.appendChild(row);
@@ -2952,7 +3471,6 @@
       const dateStr = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
       const noticeNo = `SATYA-LM-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-      // Navy Header
       doc.setFillColor(16, 24, 40);
       doc.rect(0, 0, pageWidth, 24, 'F');
 
@@ -2966,7 +3484,6 @@
       doc.setTextColor(245, 158, 11);
       doc.text('Issued pursuant to Rule 6 of Legal Metrology (Packaged Commodities) Rules, 2011', pageWidth / 2, 17, { align: 'center' });
 
-      // Metadata
       doc.setTextColor(16, 24, 40);
       doc.setFontSize(8.5);
       doc.setFont('helvetica', 'bold');
@@ -3002,7 +3519,6 @@
         }
       });
 
-      const finalY = doc.lastAutoTable.finalY || 220;
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7.5);
       doc.setTextColor(100, 116, 139);
