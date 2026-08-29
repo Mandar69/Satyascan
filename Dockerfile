@@ -25,29 +25,35 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install Python requirements
-COPY requirements.txt .
 
-# Install PyTorch CPU-only first (avoids downloading 2GB CUDA build)
-# This significantly reduces final image size on Railway (no CUDA drivers needed)
+# Step 1: Pin NumPy <2 first to avoid ABI incompatibility with PyTorch CPU wheels
+# PyTorch CPU-only wheels from the /whl/cpu index are compiled against NumPy 1.x.
+# Using NumPy 2.x causes: "_ARRAY_API not found" → "Numpy is not available" crash.
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir \
+    pip install --no-cache-dir "numpy>=1.26,<2"
+
+# Step 2: Install PyTorch CPU-only (avoids downloading 2GB CUDA build)
+RUN pip install --no-cache-dir \
         torch==2.2.2 \
         torchvision==0.17.2 \
-        --index-url https://download.pytorch.org/whl/cpu && \
-    pip install --no-cache-dir easyocr==1.7.2 && \
-    pip install --no-cache-dir \
-        fastapi==0.141.1 \
-        uvicorn==0.52.4 \
-        python-multipart==0.0.32 \
-        pillow==12.3.0 \
-        pillow-heif==1.5.0 \
-        numpy==2.5.2 \
-        opencv-python-headless==5.0.0.93 \
-        scikit-image==0.26.0 \
-        scipy==1.18.1 \
-        shapely==2.1.2 \
-        pyclipper==1.4.0 \
-        python-bidi==0.6.11
+        --index-url https://download.pytorch.org/whl/cpu
+
+# Step 3: Install EasyOCR (will use the already-installed torch + numpy)
+RUN pip install --no-cache-dir easyocr==1.7.2
+
+# Step 4: Install remaining app dependencies
+RUN pip install --no-cache-dir \
+        fastapi \
+        uvicorn \
+        python-multipart \
+        pillow \
+        pillow-heif \
+        opencv-python-headless \
+        scikit-image \
+        scipy \
+        shapely \
+        pyclipper \
+        python-bidi
 
 # Pre-download EasyOCR English model weights during build
 # (so the container doesn't download them on first user request)
@@ -56,6 +62,14 @@ import easyocr; \
 print('Downloading EasyOCR English model weights...'); \
 reader = easyocr.Reader(['en'], gpu=False, verbose=False); \
 print('Model weights cached successfully.')"
+
+# Verify numpy + torch actually work together
+RUN python -c "\
+import numpy; print(f'NumPy: {numpy.__version__}'); \
+import torch; print(f'PyTorch: {torch.__version__}'); \
+t = torch.tensor([1.0, 2.0, 3.0]); n = t.numpy(); \
+print(f'torch→numpy OK: {n}'); \
+print('All imports verified successfully.')"
 
 # --- Stage 2: Runtime ---
 FROM python:3.12-slim
