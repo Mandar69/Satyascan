@@ -764,14 +764,15 @@
       width: 100%;
       height: 3px;
       background: linear-gradient(90deg, transparent, var(--mint-400), var(--saffron-500), transparent);
-      box-shadow: 0 0 16px var(--mint-400);
-      animation: laserSweep 2.2s ease-in-out infinite alternate;
+      box-shadow: 0 0 12px var(--mint-400);
+      animation: laserSweep 2s ease-in-out infinite alternate;
+      will-change: transform;
       z-index: 15;
     }
 
     @keyframes laserSweep {
-      0% { top: 4%; opacity: 0.6; }
-      100% { top: 96%; opacity: 1; }
+      0% { transform: translateY(10px); opacity: 0.7; }
+      100% { transform: translateY(280px); opacity: 1; }
     }
 
     .ai-detection-layer {
@@ -1256,13 +1257,13 @@
        5. FLOATING INTERACTIVE SATYA AI CHATBOT WIDGET
        ========================================================================= */
     @keyframes chatPulse {
-      0%, 100% { box-shadow: 0 10px 30px rgba(79, 70, 229, 0.45), 0 0 0 0 rgba(79,70,229,0.4); }
-      50% { box-shadow: 0 10px 30px rgba(79, 70, 229, 0.6), 0 0 0 10px rgba(79,70,229,0); }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
     }
 
     @keyframes dotPulse {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 0.7; }
     }
 
     .floating-chat-trigger {
@@ -1281,9 +1282,10 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.45);
-      transition: all var(--tr-smooth);
-      animation: chatPulse 2.5s ease-in-out infinite;
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
+      transition: transform var(--tr-smooth), box-shadow var(--tr-smooth);
+      animation: chatPulse 3s ease-in-out infinite;
+      will-change: transform;
     }
 
     .floating-chat-trigger:hover {
@@ -2337,41 +2339,20 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       // Purge any legacy service worker caches on startup
+      // Clean up legacy service worker caches on startup
       if ('caches' in window) {
         caches.keys().then((names) => {
           names.forEach((name) => {
             if (name !== 'satyascan-v20260830-fresh') {
-              console.log('[SatyaScan] Evicting outdated cache store:', name);
               caches.delete(name);
             }
           });
         });
       }
 
-      // Register & auto-update Service Worker for instant synchronization
+      // Register Service Worker cleanly without infinite reload loops
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js?t=' + Date.now()).then((reg) => {
-          reg.update();
-          reg.onupdatefound = () => {
-            const installing = reg.installing;
-            if (installing) {
-              installing.onstatechange = () => {
-                if (installing.state === 'installed' && navigator.serviceWorker.controller) {
-                  console.log('[SatyaScan] New update downloaded. Applying latest app version...');
-                  window.location.reload();
-                }
-              };
-            }
-          };
-        }).catch((err) => console.warn('SW registration:', err));
-
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (!refreshing) {
-            refreshing = true;
-            window.location.reload();
-          }
-        });
+        navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('SW registration:', err));
       }
 
       applyLanguage(currentLang);
@@ -2693,7 +2674,7 @@
     }
 
     // =========================================================================
-    // IMAGE PREPROCESSING & 9-FIELD EXTRACTION ENGINE
+    // IMAGE PREPROCESSING & 9-FIELD EXTRACTION ENGINE (GPU ACCELERATED)
     // =========================================================================
     function preprocessImageForOCR(imgDataUrl) {
       return new Promise((resolve) => {
@@ -2701,11 +2682,11 @@
         img.onload = () => {
           try {
             const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
             let w = img.naturalWidth || img.width;
             let h = img.naturalHeight || img.height;
-            const MAX_DIM = 1600;
+            const MAX_DIM = 1200;
             if (w > MAX_DIM || h > MAX_DIM) {
               if (w > h) {
                 h = Math.round((h * MAX_DIM) / w);
@@ -2718,27 +2699,14 @@
 
             canvas.width = w;
             canvas.height = h;
+
+            // Hardware-accelerated GPU canvas filter for crisp OCR text
+            if ('filter' in ctx) {
+              ctx.filter = 'grayscale(100%) contrast(140%) brightness(102%)';
+            }
             ctx.drawImage(img, 0, 0, w, h);
 
-            const imgData = ctx.getImageData(0, 0, w, h);
-            const d = imgData.data;
-
-            let minLum = 255, maxLum = 0;
-            for (let i = 0; i < d.length; i += 4) {
-              const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
-              if (lum < minLum) minLum = lum;
-              if (lum > maxLum) maxLum = lum;
-            }
-
-            const range = Math.max(maxLum - minLum, 40);
-            for (let i = 0; i < d.length; i += 4) {
-              const lum = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
-              const stretched = Math.min(255, Math.max(0, ((lum - minLum) / range) * 255));
-              const val = stretched > 128 ? Math.min(255, stretched * 1.04) : Math.max(0, stretched * 0.96);
-              d[i] = val; d[i+1] = val; d[i+2] = val;
-            }
-            ctx.putImageData(imgData, 0, 0);
-            resolve(canvas.toDataURL('image/jpeg', 0.92));
+            resolve(canvas.toDataURL('image/jpeg', 0.85));
           } catch (e) {
             resolve(imgDataUrl);
           }
@@ -3048,8 +3016,21 @@
     }
 
     // =========================================================================
-    // INITIATE SCAN & RENDER REPORT
+    // INITIATE SCAN & RENDER REPORT (OPTIMIZED OCR WORKER SINGLETON)
     // =========================================================================
+    let cachedOcrWorkerPromise = null;
+    function getOcrWorker() {
+      if (!cachedOcrWorkerPromise) {
+        cachedOcrWorkerPromise = (async () => {
+          const worker = await Tesseract.createWorker('eng', 1, {
+            logger: () => {}
+          });
+          return worker;
+        })();
+      }
+      return cachedOcrWorkerPromise;
+    }
+
     async function startScan() {
       if (!selectedFile && !selectedImageDataUrl) {
         showToast('Please select a photo or open camera first.');
@@ -3063,9 +3044,8 @@
       try {
         const enhancedImg = await preprocessImageForOCR(selectedImageDataUrl);
         
-        const worker = await Tesseract.createWorker('eng');
+        const worker = await getOcrWorker();
         const ret = await worker.recognize(enhancedImg);
-        await worker.terminate();
 
         const rawText = ret.data.text || "";
         const extracted = extractAllFields(rawText);
