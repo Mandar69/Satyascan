@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>SatyaScan — Truth behind every package</title>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#101828">
@@ -2333,6 +2336,44 @@
     const statusHintText = document.getElementById('statusHintText');
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Purge any legacy service worker caches on startup
+      if ('caches' in window) {
+        caches.keys().then((names) => {
+          names.forEach((name) => {
+            if (name !== 'satyascan-v20260830-fresh') {
+              console.log('[SatyaScan] Evicting outdated cache store:', name);
+              caches.delete(name);
+            }
+          });
+        });
+      }
+
+      // Register & auto-update Service Worker for instant synchronization
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js?t=' + Date.now()).then((reg) => {
+          reg.update();
+          reg.onupdatefound = () => {
+            const installing = reg.installing;
+            if (installing) {
+              installing.onstatechange = () => {
+                if (installing.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('[SatyaScan] New update downloaded. Applying latest app version...');
+                  window.location.reload();
+                }
+              };
+            }
+          };
+        }).catch((err) => console.warn('SW registration:', err));
+
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
+        });
+      }
+
       applyLanguage(currentLang);
       if (currentUser && currentUser.name) {
         showUserLoggedIn(currentUser);

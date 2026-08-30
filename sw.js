@@ -1,48 +1,38 @@
 /**
  * SatyaScan Service Worker (sw.js)
  * -------------------------------------------------------------
- * ARCHITECTURAL NOTE ON OFFLINE OCR:
- * The SatyaScan app shell, styles, and cached past scan results are available
- * 100% offline via this Service Worker and browser localStorage caching.
- *
- * NOTE FOR FULL ON-DEVICE OFFLINE SCANNING:
- * Currently, heavy deep-learning OCR (EasyOCR with PyTorch) runs on the FastAPI backend
- * (/scan endpoint). To achieve 100% offline text extraction from newly captured images
- * without reaching any backend server, client-side OCR would need to run directly in the
- * browser using WebAssembly / Web Workers (such as Tesseract.js or ONNX Runtime Web with
- * a quantized OCR model), coupled with client-side JavaScript ports of extract_fields.py
- * and compliance.py.
- *
- * For now, previously scanned label results and audit history are cached locally in
- * localStorage so inspectors/consumers can review compliance reports offline anytime.
+ * Ultra-Fresh Network-First Strategy for Instant Real-Time Updates
+ * Caches assets for offline fallback while ensuring connected devices
+ * always receive the newest UI, features, and translations.
  * -------------------------------------------------------------
  */
 
-const CACHE_NAME = 'satyascan-app-v1';
+const CACHE_VERSION = 'satyascan-v20260830-fresh';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json'
 ];
 
-// 1. Install Event: Pre-cache App Shell
+// 1. Install Event: Skip waiting immediately to activate fresh SW
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SatyaScan SW] Pre-caching app shell assets');
+    caches.open(CACHE_VERSION).then((cache) => {
+      console.log('[SatyaScan SW] Pre-caching fresh app shell');
       return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
-// 2. Activate Event: Clean up outdated caches
+// 2. Activate Event: Wipe all legacy/stale caches and claim clients immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((name) => {
-          if (name !== CACHE_NAME) {
-            console.log('[SatyaScan SW] Deleting legacy cache:', name);
+          if (name !== CACHE_VERSION) {
+            console.log('[SatyaScan SW] Purging obsolete cache:', name);
             return caches.delete(name);
           }
         })
@@ -51,55 +41,50 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. Fetch Event: Stale-While-Revalidate / Cache-First for static assets
+// 3. Fetch Event: Network-First for Navigation (HTML), Stale-While-Revalidate for other static assets
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Skip non-GET and API mutation requests (like /scan)
+  // Skip non-GET requests and API calls
   if (event.request.method !== 'GET') {
     return;
   }
 
-  // Handle App Shell and Static Assets
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        // Fetch background update for cache (Stale-While-Revalidate)
-        fetch(event.request)
-          .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(event.request, networkResponse);
-              });
-            }
-          })
-          .catch(() => {
-            // Ignore network errors when offline
-          });
-        return cachedResponse;
-      }
-
-      // Network fallback with dynamic caching for fonts and assets
-      return fetch(event.request)
+  // Network-First for Navigation (Page HTML) to guarantee newest UI updates
+  if (event.request.mode === 'navigate' || url.pathname === '/' || url.pathname === '/index.html') {
+    event.respondWith(
+      fetch(event.request)
         .then((networkResponse) => {
-          if (
-            networkResponse &&
-            networkResponse.status === 200 &&
-            (url.origin === location.origin || url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com'))
-          ) {
+          if (networkResponse && networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
+            caches.open(CACHE_VERSION).then((cache) => {
               cache.put(event.request, responseClone);
             });
           }
           return networkResponse;
         })
         .catch(() => {
-          // If offline and requesting navigation, return cached index.html
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html') || caches.match('/');
-          }
-        });
-    })
+          // Offline fallback
+          return caches.match('/index.html') || caches.match('/');
+        })
+    );
+    return;
+  }
+
+  // For other static assets: Network first with cache fallback
+  event.respondWith(
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && url.origin === location.origin) {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_VERSION).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
