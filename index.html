@@ -1799,6 +1799,148 @@
       pointer-events: none;
     }
 
+    /* Scanned Product Label Preview Card in Results & Lightbox (Requirement 1 & 3) */
+    .scanned-label-preview-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      transition: all var(--tr-smooth);
+    }
+    .scanned-label-preview-card:hover {
+      border-color: rgba(79, 70, 229, 0.3);
+      box-shadow: 0 6px 24px rgba(79, 70, 229, 0.06);
+    }
+    .scanned-label-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .scanned-label-card-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .scanned-label-tap-hint {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--indigo-600);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--indigo-50);
+      transition: background var(--tr-smooth);
+    }
+    .scanned-label-tap-hint:hover {
+      background: #E0E7FF;
+    }
+    .scanned-label-media-container {
+      position: relative;
+      background: linear-gradient(180deg, #F8FAFC 0%, #EEF2F6 100%);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-in;
+      min-height: 140px;
+      max-height: 250px;
+      overflow: hidden;
+    }
+    .scanned-label-img {
+      max-height: 220px;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      transition: transform 0.25s ease;
+    }
+    .scanned-label-media-container:hover .scanned-label-img {
+      transform: scale(1.02);
+    }
+    .scanned-label-no-image {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 36px 20px;
+      color: var(--text-tertiary);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    /* Image Lightbox Modal */
+    .image-lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .image-lightbox-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox-content-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-large-img {
+      max-width: 100%;
+      max-height: 84vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    .lightbox-close-btn {
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      width: 36px;
+      height: 36px;
+      background: #FFFFFF;
+      color: var(--navy-900);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      transition: transform 0.15s ease;
+      z-index: 10;
+    }
+    .lightbox-close-btn:hover {
+      transform: scale(1.1);
+    }
+
     footer {
       border-top: 1px solid var(--border-light);
       padding: 24px 20px;
@@ -2210,6 +2352,27 @@
 
           </div>
 
+          <!-- Scanned Product Label Section (Requirement 1 & 3) -->
+          <div class="scanned-label-preview-card" id="reportLabelImageSection">
+            <div class="scanned-label-card-header">
+              <div class="scanned-label-card-title">
+                <i data-lucide="image" style="width: 16px; height: 16px; color: var(--indigo-600);"></i>
+                <span id="reportLabelHeadingText">Scanned Product Label</span>
+              </div>
+              <span class="scanned-label-tap-hint" id="reportLabelHintText" onclick="openImageModal()">
+                <i data-lucide="maximize-2" style="width: 13px; height: 13px;"></i>
+                <span id="reportLabelHintSpan">Click to expand</span>
+              </span>
+            </div>
+            <div class="scanned-label-media-container" id="reportLabelMediaWrapper" onclick="openImageModal()">
+              <img id="reportLabelImage" class="scanned-label-img" src="" alt="Scanned Product Label" />
+              <div id="reportLabelNoImagePlaceholder" class="scanned-label-no-image" style="display: none;">
+                <i data-lucide="image-off" style="width: 28px; height: 28px; color: var(--text-tertiary);"></i>
+                <span id="reportNoImageText">Image not available for this record</span>
+              </div>
+            </div>
+          </div>
+
           <!-- Vertical Declarations List -->
           <div class="declarations-container" id="declarationsList">
             <!-- Populated dynamically -->
@@ -2416,6 +2579,16 @@
     </form>
   </div>
 
+  <!-- Image Lightbox Modal (Requirement 1) -->
+  <div class="image-lightbox-modal" id="imageLightboxModal" onclick="closeImageModal(event)">
+    <div class="lightbox-content-wrap" onclick="event.stopPropagation()">
+      <button type="button" class="lightbox-close-btn" onclick="closeImageModal()" aria-label="Close image preview">
+        <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+      </button>
+      <img id="lightboxModalImage" src="" alt="Enlarged Product Label View" class="lightbox-large-img" />
+    </div>
+  </div>
+
   <!-- Clean Toast -->
   <div class="toast-clean" id="toastMsg">Notification message</div>
 
@@ -2500,7 +2673,10 @@
         labelViolationBreakdownTitle: "Most Common Violation Types",
         labelRecentScansTitle: "Audit Records & Search",
         dashboardSearchPlaceholder: "Search past scans by commodity name or date (e.g. 'Nutritional', '2026-08')...",
-        fontSizeComplianceLabel: "Font Size Compliance (Rule 6)"
+        fontSizeComplianceLabel: "Font Size Compliance (Rule 6)",
+        reportLabelHeading: "Scanned Product Label",
+        reportLabelHint: "Click to expand",
+        reportNoImage: "Label image not available for this record"
       },
       hi: {
         brandBadge: "एआई निरीक्षक",
@@ -2572,7 +2748,10 @@
         labelViolationBreakdownTitle: "सर्वाधिक सामान्य उल्लंघन प्रकार",
         labelRecentScansTitle: "ऑडिट रिकॉर्ड एवं खोज",
         dashboardSearchPlaceholder: "उत्पाद के नाम या तिथि से खोजें (उदा. 'Nutritional', '2026-08')...",
-        fontSizeComplianceLabel: "फ़ॉन्ट आकार अनुपालन (नियम 6)"
+        fontSizeComplianceLabel: "फ़ॉन्ट आकार अनुपालन (नियम 6)",
+        reportLabelHeading: "स्कैन किया गया उत्पाद लेबल",
+        reportLabelHint: "बड़ा देखने के लिए क्लिक करें",
+        reportNoImage: "इस रिकॉर्ड के लिए लेबल छवि उपलब्ध नहीं है"
       }
     };
 
@@ -2810,6 +2989,9 @@
       const gScoreLbl = document.getElementById('gaugeScoreLabel'); if (gScoreLbl) gScoreLbl.textContent = t.gaugeScoreLabel;
       const btnScanA = document.getElementById('btnScanAnotherText'); if (btnScanA) btnScanA.textContent = t.btnScanAnother;
       const btnPdf = document.getElementById('btnDownloadPdfText'); if (btnPdf) btnPdf.textContent = t.btnDownloadPdf;
+      const lblHead = document.getElementById('reportLabelHeadingText'); if (lblHead) lblHead.textContent = t.reportLabelHeading;
+      const lblHint = document.getElementById('reportLabelHintSpan'); if (lblHint) lblHint.textContent = t.reportLabelHint;
+      const lblNoImg = document.getElementById('reportNoImageText'); if (lblNoImg) lblNoImg.textContent = t.reportNoImage;
 
       // Dashboard View (Feature 3 & 4)
       const dHeadT = document.getElementById('dashboardHeaderTitle'); if (dHeadT) dHeadT.textContent = t.dashboardHeaderTitle;
@@ -3461,6 +3643,39 @@
       return cachedOcrWorkerPromise;
     }
 
+    // Helper to compress image for fast, durable localStorage persistence (Requirement 4)
+    function compressImageForStorage(imgSrc, maxDim = 850, quality = 0.78) {
+      return new Promise((resolve) => {
+        if (!imgSrc) return resolve('');
+        const img = new Image();
+        img.onload = () => {
+          try {
+            let w = img.width || 800;
+            let h = img.height || 600;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          } catch (e) {
+            resolve(imgSrc);
+          }
+        };
+        img.onerror = () => resolve(imgSrc);
+        img.src = imgSrc;
+      });
+    }
+
     async function startScan() {
       if (!selectedFile && !selectedImageDataUrl) {
         showToast('Please select a photo or open camera first.');
@@ -3473,6 +3688,7 @@
 
       try {
         const enhancedImg = await preprocessImageForOCR(selectedImageDataUrl);
+        const compressedDataUrl = await compressImageForStorage(selectedImageDataUrl, 850, 0.78);
         
         const worker = await getOcrWorker();
         const ret = await worker.recognize(enhancedImg);
@@ -3511,7 +3727,7 @@
           report: report,
           productName: detectedProdName,
           filename: selectedFile ? selectedFile.name : 'scanned_label.jpg',
-          imageDataUrl: selectedImageDataUrl,
+          imageDataUrl: compressedDataUrl || selectedImageDataUrl,
           timestamp: new Date().toISOString()
         };
 
@@ -3608,6 +3824,27 @@
         pill.innerHTML = `<span>${isPass ? '✓' : '⚠️'}</span> <span>${shortName}</span>`;
         surroundContainer.appendChild(pill);
       });
+
+      // Render Scanned Product Label Image (Requirement 1, 3, 5)
+      const reportLabelImg = document.getElementById('reportLabelImage');
+      const reportLabelNoImg = document.getElementById('reportLabelNoImagePlaceholder');
+      const reportLabelWrapper = document.getElementById('reportLabelMediaWrapper');
+
+      if (data && data.imageDataUrl && String(data.imageDataUrl).trim().length > 20) {
+        if (reportLabelImg) {
+          reportLabelImg.src = data.imageDataUrl;
+          reportLabelImg.style.display = 'block';
+        }
+        if (reportLabelNoImg) reportLabelNoImg.style.display = 'none';
+        if (reportLabelWrapper) reportLabelWrapper.style.cursor = 'zoom-in';
+      } else {
+        if (reportLabelImg) {
+          reportLabelImg.src = '';
+          reportLabelImg.style.display = 'none';
+        }
+        if (reportLabelNoImg) reportLabelNoImg.style.display = 'flex';
+        if (reportLabelWrapper) reportLabelWrapper.style.cursor = 'default';
+      }
 
       // Vertical Declarations List
       const listContainer = document.getElementById('declarationsList');
@@ -3797,6 +4034,33 @@
           : "Rule 6(1)(g) makes it mandatory for every domestic or imported pre-packaged commodity to declare 'Country of Origin: [Country]' on the principal display panel.";
       }
     }
+
+    // =========================================================================
+    // LIGHTBOX IMAGE MODAL CONTROLLER (REQUIREMENT 1)
+    // =========================================================================
+    function openImageModal() {
+      if (!currentScanData || !currentScanData.imageDataUrl) return;
+      const modal = document.getElementById('imageLightboxModal');
+      const modalImg = document.getElementById('lightboxModalImage');
+      if (modal && modalImg) {
+        modalImg.src = currentScanData.imageDataUrl;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        lucide.createIcons();
+      }
+    }
+
+    function closeImageModal(e) {
+      const modal = document.getElementById('imageLightboxModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeImageModal();
+    });
 
     // =========================================================================
     // FLOATING CHATBOT ENGINE
@@ -4281,7 +4545,7 @@
     }
 
     // =========================================================================
-    // CLEAN OFFICIAL PDF VIOLATION NOTICE GENERATOR
+    // CLEAN OFFICIAL PDF VIOLATION NOTICE GENERATOR (WITH SCANNED LABEL IMAGE)
     // =========================================================================
     function generateOfficialPDF() {
       if (!currentScanData || !currentScanData.report) {
@@ -4319,6 +4583,47 @@
       doc.setFont('helvetica', 'normal');
       doc.text(`Audited Item: ${currentScanData.productName || currentScanData.filename || 'Packaging_Sample.jpg'}`, 14, 38);
 
+      // Embed Scanned Product Label Image into PDF (Requirement 2)
+      let tableStartY = 45;
+      if (currentScanData.imageDataUrl && String(currentScanData.imageDataUrl).length > 20) {
+        try {
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(8);
+          doc.setTextColor(16, 24, 40);
+          doc.text('Scanned Product Label:', 14, 44);
+
+          const maxBoxW = 55; // mm
+          const maxBoxH = 32; // mm
+          let renderW = maxBoxW;
+          let renderH = maxBoxH;
+
+          const reportImgEl = document.getElementById('reportLabelImage');
+          let natW = reportImgEl ? (reportImgEl.naturalWidth || 800) : 800;
+          let natH = reportImgEl ? (reportImgEl.naturalHeight || 600) : 600;
+          if (natW && natH) {
+            const ratio = natW / natH;
+            if (ratio > (maxBoxW / maxBoxH)) {
+              renderW = maxBoxW;
+              renderH = maxBoxW / ratio;
+            } else {
+              renderH = maxBoxH;
+              renderW = maxBoxH * ratio;
+            }
+          }
+
+          // Subtle frame around image
+          doc.setFillColor(248, 250, 252);
+          doc.setDrawColor(226, 232, 240);
+          doc.roundedRect(14, 46.5, renderW + 3, renderH + 3, 1, 1, 'FD');
+
+          doc.addImage(currentScanData.imageDataUrl, 'JPEG', 15.5, 48, renderW, renderH, undefined, 'FAST');
+          tableStartY = 48 + renderH + 6;
+        } catch (imgErr) {
+          console.warn('PDF image embed exception:', imgErr);
+          tableStartY = 45;
+        }
+      }
+
       const tableRows = report.map(item => {
         const meta = FIELD_METADATA[item.field] || { rule: 'Rule 6' };
         const isPass = item.status === 'PASS';
@@ -4333,7 +4638,7 @@
       });
 
       doc.autoTable({
-        startY: 44,
+        startY: tableStartY,
         head: [['Mandatory Declaration', 'Rule Ref', 'Status & Severity', 'Audit Finding & Remediation']],
         body: tableRows,
         theme: 'plain',
