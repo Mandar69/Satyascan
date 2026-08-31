@@ -1941,6 +1941,109 @@
       transform: scale(1.1);
     }
 
+    /* =========================================================================
+       PRODUCT LABEL VALIDATION ERROR MODAL
+    ========================================================================= */
+    .validation-error-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .validation-error-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    .validation-error-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 36px 32px 28px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.35);
+      text-align: center;
+      animation: validErrPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes validErrPop {
+      from { transform: scale(0.88); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+    .validation-error-icon-ring {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2rem;
+    }
+    .validation-error-title {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .validation-error-body {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .validation-error-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-val-retry {
+      padding: 10px 22px;
+      background: var(--navy-900);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-val-retry:hover { background: var(--indigo-600); }
+    .btn-val-upload-diff {
+      padding: 10px 22px;
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-light);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-val-upload-diff:hover { border-color: var(--indigo-600); color: var(--indigo-600); }
+
+    /* Camera guidance strip */
+    .camera-guide-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+      padding: 8px 14px;
+      background: rgba(245, 158, 11, 0.09);
+      border: 1px solid rgba(245, 158, 11, 0.22);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--saffron-600);
+    }
+
     footer {
       border-top: 1px solid var(--border-light);
       padding: 24px 20px;
@@ -2266,6 +2369,12 @@
                 </button>
               </div>
 
+              <!-- Camera Guidance Strip -->
+              <div class="camera-guide-strip" id="cameraGuideStrip">
+                <i data-lucide="package" style="width: 14px; height: 14px; flex-shrink: 0;"></i>
+                <span id="cameraGuideText">Product labels only — Position the label inside the scanner frame</span>
+              </div>
+
               <!-- Hidden Inputs -->
               <input type="file" id="fileInput" accept="image/*" style="display: none;">
               <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
@@ -2586,6 +2695,27 @@
         <i data-lucide="x" style="width: 18px; height: 18px;"></i>
       </button>
       <img id="lightboxModalImage" src="" alt="Enlarged Product Label View" class="lightbox-large-img" />
+    </div>
+  </div>
+
+  <!-- Product Label Validation Error Modal -->
+  <div class="validation-error-modal" id="validationErrorModal">
+    <div class="validation-error-card">
+      <div class="validation-error-icon-ring">📦</div>
+      <div class="validation-error-title" id="validationErrorTitle">Not a Product Label</div>
+      <div class="validation-error-body" id="validationErrorMsg">
+        This image doesn't appear to be a packaged product label.
+        Please capture or upload a clear photo of a packaged commodity label showing MRP,
+        Net Quantity, and Manufacturer details.
+      </div>
+      <div class="validation-error-actions">
+        <button type="button" class="btn-val-retry" onclick="closeValidationErrorAndRetry()">
+          📷 Try Again
+        </button>
+        <button type="button" class="btn-val-upload-diff" onclick="closeValidationErrorAndUpload()">
+          Upload Different Image
+        </button>
+      </div>
     </div>
   </div>
 
@@ -3643,6 +3773,220 @@
       return cachedOcrWorkerPromise;
     }
 
+    // =========================================================================
+    // PRODUCT LABEL VALIDATION — MULTI-SIGNAL PRE-SCAN VALIDATOR
+    // =========================================================================
+
+    /**
+     * Step A — Canvas pixel analysis (runs BEFORE OCR, no Tesseract needed).
+     * Detects:
+     *   - Blank / very dark images (reject)
+     *   - Images with very high skin-tone pixel ratio (likely face/selfie)
+     *   - Completely uniform images (solid colour, blank screen)
+     * Returns {valid, reason}
+     */
+    async function validateImagePreOCR(dataUrl) {
+      return new Promise((resolve) => {
+        if (!dataUrl) return resolve({ valid: true }); // Don't block on missing data
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const MAX_DIM = 280;
+            let w = Math.min(img.width, MAX_DIM);
+            let h = Math.min(img.height, MAX_DIM);
+            // Maintain aspect
+            if (img.width > img.height) { h = Math.round((img.height / img.width) * w); }
+            else { w = Math.round((img.width / img.height) * h); }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            const data = ctx.getImageData(0, 0, w, h).data;
+
+            let skinPixels = 0, darkPixels = 0, total = 0;
+            let rSum = 0, gSum = 0, bSum = 0;
+            let pixelVariance = 0;
+            const lumValues = [];
+
+            for (let i = 0; i < data.length; i += 4) {
+              const r = data[i], g = data[i + 1], b = data[i + 2];
+              const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+              rSum += r; gSum += g; bSum += b;
+              lumValues.push(lum);
+              total++;
+
+              // Skin-tone heuristic (RGB range for human skin across ethnicities)
+              if (
+                r > 80 && g > 35 && b > 15 &&       // Base skin-tone range
+                r > g && r > b &&                    // Red dominant
+                (r - Math.min(g, b)) > 14 &&         // Clear R dominance
+                Math.abs(r - g) > 10 &&              // R-G separation
+                r < 250 && g < 230 && b < 210        // Not overexposed/white
+              ) { skinPixels++; }
+
+              // Dark pixel
+              if (lum < 28) darkPixels++;
+            }
+
+            if (total === 0) return resolve({ valid: true });
+
+            const skinRatio  = skinPixels / total;
+            const darkRatio  = darkPixels / total;
+
+            // Compute pixel luminance variance (uniform images have near-zero variance)
+            const avgLum = lumValues.reduce((a, b) => a + b, 0) / lumValues.length;
+            lumValues.forEach(l => { pixelVariance += (l - avgLum) ** 2; });
+            pixelVariance /= lumValues.length;
+
+            // ── Reject: image too dark / blank ───────────────────────────────────
+            if (darkRatio > 0.82) {
+              return resolve({ valid: false, reason: 'dark' });
+            }
+
+            // ── Reject: nearly uniform / solid colour (blank screen etc.) ─────────
+            if (pixelVariance < 90 && darkRatio < 0.5) {
+              return resolve({ valid: false, reason: 'uniform' });
+            }
+
+            // ── Reject: very high skin-tone ratio (face/selfie) ──────────────────
+            if (skinRatio > 0.40) {
+              return resolve({ valid: false, reason: 'face' });
+            }
+
+            // Close-up face: moderate skin ratio but very high avg R channel
+            const avgR = rSum / total, avgG = gSum / total;
+            if (skinRatio > 0.28 && avgR > 170 && avgR - avgG > 18) {
+              return resolve({ valid: false, reason: 'face' });
+            }
+
+            resolve({ valid: true });
+          } catch (e) {
+            resolve({ valid: true }); // Don't block scan on canvas errors
+          }
+        };
+        img.onerror = () => resolve({ valid: true });
+        img.src = dataUrl;
+      });
+    }
+
+    /**
+     * Step B — Post-OCR multi-signal text analysis.
+     * Runs AFTER Tesseract extracts text (no extra OCR pass).
+     * Scores 5 independent signals. Threshold ≥ 2.0 to pass as a product label.
+     * Returns {valid, score, signals}
+     */
+    function validateProductLabelText(rawText, wordData) {
+      if (!rawText || rawText.trim().length < 30) {
+        return { valid: false, reason: 'insufficient_text', score: 0 };
+      }
+
+      const text = rawText.toUpperCase();
+      let score = 0;
+      const signals = {};
+
+      // S1 — Text / word density
+      const wordCount = wordData ? wordData.length : rawText.trim().split(/\s+/).length;
+      if (wordCount >= 18) { score += 1; signals.density = true; }
+      else if (wordCount >= 9) { score += 0.5; }
+
+      // S2 — Label-specific keyword matches
+      const LABEL_KEYWORDS = [
+        'MRP', 'NET QUANTITY', 'NET QTY', 'NET WT', 'NET CONTENT', 'NET WEIGHT',
+        'MFG', 'MANUFACTURED BY', 'PACKER', 'MARKETED BY', 'PACKED BY', 'IMPORTER',
+        'CONSUMER CARE', 'FSSAI', 'EXPIRY', 'BEST BEFORE', 'USE BY', 'USE BEFORE',
+        'COUNTRY OF ORIGIN', 'MADE IN', 'BATCH NO', 'LOT NO',
+        'INGREDIENTS', 'NUTRITIONAL', 'SERVING SIZE',
+        'CUSTOMER CARE', 'HELPLINE', 'TOLL FREE',
+        'LIC NO', 'REG NO', 'LICENSED BY',
+      ];
+      const keywordHits = LABEL_KEYWORDS.filter(kw => text.includes(kw)).length;
+      if (keywordHits >= 2) { score += 1; signals.keywords = keywordHits; }
+      else if (keywordHits === 1) { score += 0.5; signals.keywords = keywordHits; }
+
+      // S3 — Price / currency pattern
+      if (/(?:₹|RS\.?|MRP|INR)\s*[\d,]+|\bMRP\b/.test(text)) {
+        score += 1; signals.price = true;
+      }
+
+      // S4 — Weight / quantity / count unit
+      if (/\d+\s*(?:G|KG|ML|L|GM|GMS|LTR|MG|PIECES|PCS|TABLETS|SACHETS|CAPSULES|N\b|COUNT)/.test(text)) {
+        score += 1; signals.quantity = true;
+      }
+
+      // S5 — Numeric density (labels are number-rich)
+      const numericChars = (rawText.match(/\d/g) || []).length;
+      const numericDensity = numericChars / Math.max(rawText.length, 1);
+      if (numericChars >= 14 && numericDensity >= 0.04) {
+        score += 1; signals.numeric = true;
+      } else if (numericChars >= 7) {
+        score += 0.5;
+      }
+
+      const valid = score >= 2.0;
+      return { valid, score, signals, reason: valid ? 'ok' : 'not_a_label' };
+    }
+
+    /**
+     * Show the validation error modal with appropriate message.
+     * @param {string} reason - 'dark' | 'face' | 'uniform' | 'insufficient_text' | 'not_a_label'
+     */
+    function showValidationError(reason) {
+      const modal = document.getElementById('validationErrorModal');
+      const titleEl = document.getElementById('validationErrorTitle');
+      const msgEl = document.getElementById('validationErrorMsg');
+      const isHi = currentLang === 'hi';
+
+      const messages = {
+        dark: {
+          en: { title: 'Image Too Dark or Blank', body: 'The captured image appears to be blank or too dark to analyse. Please ensure the product label is well-lit and clearly visible.' },
+          hi: { title: 'छवि बहुत अंधेरी है', body: 'कैप्चर की गई छवि बहुत अंधेरी या खाली है। कृपया उत्पाद लेबल को अच्छी रोशनी में स्पष्ट रूप से कैप्चर करें।' }
+        },
+        uniform: {
+          en: { title: 'Blank or Uniform Image Detected', body: 'The image appears to be a solid colour or blank screen. Please capture a real packaged product label.' },
+          hi: { title: 'खाली छवि मिली', body: 'यह छवि खाली या एक रंग की दिखती है। कृपया पैकेज्ड उत्पाद लेबल की फोटो लें।' }
+        },
+        face: {
+          en: { title: 'Face / Person Detected', body: 'This appears to be a photo of a person or selfie — not a product label. Please capture a clear image of a packaged commodity label.' },
+          hi: { title: 'चेहरा / व्यक्ति पाया गया', body: 'यह किसी व्यक्ति या सेल्फी की फोटो लगती है — उत्पाद लेबल नहीं। कृपया पैकेज्ड उत्पाद लेबल की स्पष्ट छवि लें।' }
+        },
+        not_a_label: {
+          en: { title: 'Not a Product Label', body: "This image doesn't appear to be a packaged product label. Please capture a clear photo of a product label showing MRP, Net Quantity, and Manufacturer details." },
+          hi: { title: 'यह उत्पाद लेबल नहीं है', body: 'यह छवि पैकेज्ड उत्पाद लेबल नहीं लगती। कृपया MRP, नेट मात्रा और निर्माता विवरण दिखाने वाले उत्पाद लेबल की स्पष्ट फोटो लें।' }
+        },
+        insufficient_text: {
+          en: { title: 'No Label Text Found', body: 'Very little text was detected in this image. A valid product label should contain MRP, Net Quantity, Manufacturer info, and other declarations. Please try again with a clearer image.' },
+          hi: { title: 'लेबल टेक्स्ट नहीं मिला', body: 'इस छवि में बहुत कम टेक्स्ट पाया गया। कृपया MRP, नेट मात्रा और निर्माता जानकारी वाले उत्पाद लेबल की स्पष्ट फोटो लें।' }
+        }
+      };
+
+      const info = messages[reason] || messages['not_a_label'];
+      const lang = isHi ? 'hi' : 'en';
+
+      if (titleEl) titleEl.textContent = info[lang].title;
+      if (msgEl) msgEl.textContent = info[lang].body;
+      if (modal) modal.classList.add('active');
+      lucide.createIcons();
+    }
+
+    function closeValidationError() {
+      const modal = document.getElementById('validationErrorModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function closeValidationErrorAndRetry() {
+      closeValidationError();
+      // Re-enable scan button to let user try again with same image cleared
+      resetCanvas();
+      showToast(currentLang === 'hi' ? 'कृपया उत्पाद लेबल की फोटो लें।' : 'Please capture or upload a product label.');
+    }
+
+    function closeValidationErrorAndUpload() {
+      closeValidationError();
+      resetCanvas();
+      setTimeout(() => triggerFileUpload(), 300);
+    }
+
     // Helper to compress image for fast, durable localStorage persistence (Requirement 4)
     function compressImageForStorage(imgSrc, maxDim = 850, quality = 0.78) {
       return new Promise((resolve) => {
@@ -3684,16 +4028,52 @@
 
       btnRunScan.disabled = true;
       scannerLaser.style.display = 'block';
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // STEP 1 — PRE-OCR PIXEL VALIDATION (fast canvas analysis, no OCR needed)
+      // Rejects blank/dark images and face/selfie photos immediately.
+      // ═══════════════════════════════════════════════════════════════════════
+      statusHintText.textContent = currentLang === 'hi' ? 'छवि की जाँच की जा रही है...' : 'Validating image...';
+
+      const preCheck = await validateImagePreOCR(selectedImageDataUrl);
+      if (!preCheck.valid) {
+        scannerLaser.style.display = 'none';
+        btnRunScan.disabled = false;
+        showValidationError(preCheck.reason);
+        return;
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // STEP 2 — OCR (only runs if pre-check passes)
+      // ═══════════════════════════════════════════════════════════════════════
       statusHintText.textContent = currentLang === 'hi' ? 'एआई इंजन पैकेजिंग घोषणाओं का विश्लेषण कर रहा है...' : 'AI Neural Engine analyzing packaging declarations...';
 
       try {
         const enhancedImg = await preprocessImageForOCR(selectedImageDataUrl);
         const compressedDataUrl = await compressImageForStorage(selectedImageDataUrl, 850, 0.78);
-        
+
         const worker = await getOcrWorker();
         const ret = await worker.recognize(enhancedImg);
 
         const rawText = ret.data.text || "";
+
+        // ═════════════════════════════════════════════════════════════════════
+        // STEP 3 — POST-OCR MULTI-SIGNAL LABEL VALIDATION
+        // Uses extracted text to confirm this is a packaged product label.
+        // Checks keyword presence, price patterns, quantity units, numeric density.
+        // A face photo with background text still fails here (no MRP/qty signals).
+        // ═════════════════════════════════════════════════════════════════════
+        const labelCheck = validateProductLabelText(rawText, ret.data.words || []);
+        if (!labelCheck.valid) {
+          scannerLaser.style.display = 'none';
+          btnRunScan.disabled = false;
+          showValidationError(labelCheck.reason);
+          return;
+        }
+
+        // ═════════════════════════════════════════════════════════════════════
+        // STEP 4 — Compliance analysis (only for confirmed product labels)
+        // ═════════════════════════════════════════════════════════════════════
         const extracted = extractAllFields(rawText);
 
         const report = Object.keys(FIELD_METADATA).map(fieldName => {

@@ -1,4 +1,5 @@
 import os
+import re
 import asyncio
 import traceback
 from fastapi import FastAPI, File, UploadFile, HTTPException
@@ -23,6 +24,89 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# ==================================================================================
+# PRODUCT LABEL VALIDATION — Multi-Signal Heuristic
+# Runs AFTER EasyOCR (no duplicate pass) but BEFORE expensive compliance analysis.
+# Blocks non-label images (faces, selfies, landscapes, blanks) from generating reports.
+# ==================================================================================
+def validate_product_label(full_text: str, raw_boxes: list) -> dict:
+    """
+    Multi-signal product-label validator using EasyOCR output.
+
+    Scores 5 independent signals:
+      S1 — Text density    : enough OCR bounding boxes for a label
+      S2 — Label keywords  : MRP, Net Qty, Mfg, FSSAI, Packer, Batch, etc.
+      S3 — Price pattern   : currency symbols / MRP numeric values
+      S4 — Quantity pattern: g / kg / ml / L / N / pcs / sachets
+      S5 — Numeric density : labels are number-rich (prices, dates, quantities)
+
+    Threshold: score >= 2.0 to be accepted as a product label.
+
+    Returns:
+        {"valid": bool, "reason": str, "score": float}
+    """
+    score = 0.0
+
+    # ── S1: Text density ─────────────────────────────────────────────────────────
+    box_count = len(raw_boxes) if raw_boxes else 0
+    char_count = len((full_text or "").strip())
+
+    if box_count >= 10 or char_count >= 150:
+        score += 1.0
+    elif box_count >= 5 or char_count >= 60:
+        score += 0.5
+
+    if not full_text or char_count < 25:
+        # Definitely not a label — exit early
+        return {"valid": False, "reason": "insufficient_text", "score": score}
+
+    text_upper = full_text.upper()
+
+    # ── S2: Label-specific keywords ───────────────────────────────────────────────
+    label_keywords = [
+        "MRP", "NET QUANTITY", "NET QTY", "NET WT", "NET CONTENT", "NET WEIGHT",
+        "MFG", "MANUFACTURED BY", "PACKER", "MARKETED BY", "PACKED BY", "IMPORTER",
+        "CONSUMER CARE", "FSSAI", "EXPIRY", "BEST BEFORE", "USE BY", "USE BEFORE",
+        "COUNTRY OF ORIGIN", "MADE IN", "BATCH NO", "LOT NO",
+        "INGREDIENTS", "NUTRITIONAL", "SERVING SIZE", "ALLERGEN",
+        "CUSTOMER CARE", "HELPLINE", "TOLL FREE", "DISTRIBUTOR",
+        "LICENSED BY", "LIC NO", "REG NO",
+    ]
+    keyword_hits = sum(1 for kw in label_keywords if kw in text_upper)
+    if keyword_hits >= 2:
+        score += 1.0
+    elif keyword_hits == 1:
+        score += 0.5
+
+    # ── S3: Price / currency pattern ──────────────────────────────────────────────
+    price_pattern = re.search(
+        r'(?:₹|RS\.?|MRP|INR)\s*\d|MRP\s*:?\s*\d|\bMRP\b',
+        text_upper
+    )
+    if price_pattern:
+        score += 1.0
+
+    # ── S4: Weight / quantity / count unit pattern ────────────────────────────────
+    qty_pattern = re.search(
+        r'\d+\s*(?:G|KG|ML|L|GM|GMS|LTR|MG|PIECES|PCS|TABLETS|SACHETS|CAPSULES|N\b|COUNT)',
+        text_upper
+    )
+    if qty_pattern:
+        score += 1.0
+
+    # ── S5: Numeric density (labels are number-rich) ───────────────────────────────
+    numeric_chars = len(re.findall(r'\d', full_text))
+    total_chars = max(len(full_text), 1)
+    if numeric_chars >= 12 and (numeric_chars / total_chars) >= 0.04:
+        score += 1.0
+    elif numeric_chars >= 6:
+        score += 0.5
+
+    valid = score >= 2.0
+    reason = "ok" if valid else "not_a_product_label"
+    return {"valid": valid, "reason": reason, "score": round(score, 2)}
 
 
 @app.get("/")
@@ -175,6 +259,17 @@ async def scan_label(file: UploadFile = File(...)):
             img_h, img_w = img_arr.shape[:2]
             full_text, raw_boxes = extract_text(img_arr)
             raw_text = " ".join([box[1] for box in raw_boxes]) if raw_boxes else full_text
+
+            # ── Backend Label Validation Gate ──────────────────────────────────────
+            # Runs AFTER OCR (no duplicate pass), BEFORE expensive compliance analysis.
+            # Rejects faces, selfies, random photos, and blank images.
+            validation = validate_product_label(raw_text, raw_boxes)
+            if not validation["valid"]:
+                raise ValueError(
+                    f"__LABEL_VALIDATION_FAILED__|{validation['reason']}|score:{validation['score']}"
+                )
+            # ───────────────────────────────────────────────────────────────────────
+
             extracted_fields = extract_all_fields(raw_text)
             report = check_compliance(extracted_fields, raw_boxes, (img_w, img_h))
             field_locations = find_field_boxes(report, raw_boxes, img_w, img_h)
@@ -194,7 +289,22 @@ async def scan_label(file: UploadFile = File(...)):
     except HTTPException:
         raise
     except ValueError as ve:
-        raise HTTPException(status_code=400, detail=str(ve))
+        detail = str(ve)
+        if detail.startswith("__LABEL_VALIDATION_FAILED__"):
+            # Structured response so the frontend can show the correct message
+            parts = detail.split("|")
+            reason = parts[1] if len(parts) > 1 else "not_a_product_label"
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "error": "not_a_product_label",
+                    "reason": reason,
+                    "message": "The uploaded image does not appear to be a packaged product label. "
+                               "Please upload a clear image of a product label showing MRP, "
+                               "Net Quantity, and Manufacturer details."
+                }
+            )
+        raise HTTPException(status_code=400, detail=detail)
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Internal processing error: {str(e)}")
