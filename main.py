@@ -176,7 +176,7 @@ async def scan_label(file: UploadFile = File(...)):
             full_text, raw_boxes = extract_text(img_arr)
             raw_text = " ".join([box[1] for box in raw_boxes]) if raw_boxes else full_text
             extracted_fields = extract_all_fields(raw_text)
-            report = check_compliance(extracted_fields)
+            report = check_compliance(extracted_fields, raw_boxes, (img_w, img_h))
             field_locations = find_field_boxes(report, raw_boxes, img_w, img_h)
             return {
                 "raw_text": raw_text,

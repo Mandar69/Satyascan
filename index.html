@@ -1591,6 +1591,214 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
+    /* Severity Badges & Font Size Compliance */
+    .severity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .severity-badge.badge-high {
+      background: rgba(239, 68, 68, 0.12);
+      color: #DC2626;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .severity-badge.badge-medium {
+      background: rgba(249, 115, 22, 0.12);
+      color: #EA580C;
+      border: 1px solid rgba(249, 115, 22, 0.35);
+    }
+    .severity-badge.badge-low {
+      background: rgba(234, 179, 8, 0.12);
+      color: #CA8A04;
+      border: 1px solid rgba(234, 179, 8, 0.35);
+    }
+
+    .dec-font-size-box {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--bg-canvas);
+      border: 1px dashed var(--border-light);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+    }
+    .font-size-title {
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .font-size-status-pill {
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .font-size-status-pill.font-pass {
+      background: var(--mint-50);
+      color: var(--mint-600);
+      border: 1px solid var(--mint-200);
+    }
+    .font-size-status-pill.font-fail {
+      background: var(--coral-50);
+      color: var(--coral-600);
+      border: 1px solid var(--coral-200);
+    }
+    .font-size-status-pill.font-unverified {
+      background: #F1F5F9;
+      color: #64748B;
+      border: 1px solid #CBD5E1;
+    }
+
+    /* Enforcement Dashboard Styles */
+    .dashboard-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .dashboard-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 840px) {
+      .dashboard-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .dashboard-stats-grid { grid-template-columns: 1fr; }
+    }
+    .dashboard-stat-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stat-card-val {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .stat-card-sub {
+      font-size: 0.76rem;
+      color: var(--text-tertiary);
+    }
+
+    .dashboard-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 860px) {
+      .dashboard-main-grid { grid-template-columns: 1fr; }
+    }
+
+    .dashboard-panel-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+    }
+    .dashboard-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .panel-heading-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .violation-bar-item {
+      margin-bottom: 16px;
+    }
+    .violation-bar-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      margin-bottom: 6px;
+    }
+    .violation-bar-track {
+      height: 9px;
+      background: #F1F5F9;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .violation-bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: linear-gradient(90deg, #F59E0B, #EF4444);
+      transition: width 0.6s ease;
+    }
+
+    .search-bar-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .search-input-main {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      padding: 12px 20px 12px 44px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      color: var(--navy-900);
+      transition: all var(--tr-smooth);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    .search-input-main:focus {
+      outline: none;
+      border-color: var(--indigo-600);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    }
+    .search-icon-inside {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
     footer {
       border-top: 1px solid var(--border-light);
       padding: 24px 20px;
@@ -1633,6 +1841,10 @@
         <button type="button" class="nav-pill-btn btn-scan-highlight" id="tabNavScan" onclick="switchNav('scan')">
           <i data-lucide="scan" style="width: 15px; height: 15px;"></i>
           <span id="navScanText">Scan</span>
+        </button>
+        <button type="button" class="nav-pill-btn" id="tabNavDashboard" onclick="switchNav('dashboard')">
+          <i data-lucide="bar-chart-3" style="width: 15px; height: 15px;"></i>
+          <span id="navDashboardText">Dashboard</span>
         </button>
         <button type="button" class="nav-pill-btn" id="tabNavHistory" onclick="switchNav('history')">
           <i data-lucide="history" style="width: 15px; height: 15px;"></i>
@@ -2070,6 +2282,97 @@
       </div>
     </div>
 
+    <!-- =========================================================================
+         SCREEN 7: ENFORCEMENT & COMPLIANCE DASHBOARD (FEATURE 3 & 4)
+         ========================================================================= -->
+    <div class="view-screen" id="screenDashboard" style="display: none;">
+      <div class="dashboard-container">
+        
+        <div class="section-title-wrap" style="margin-bottom: 24px;">
+          <h2 class="section-heading" id="dashboardHeaderTitle">Enforcement & Compliance Dashboard</h2>
+          <p class="section-subtitle-p" id="dashboardHeaderSub">Aggregate Legal Metrology Rule 6 analytics and violation intelligence across all audited packaging.</p>
+        </div>
+
+        <!-- 4 Metric Cards Grid -->
+        <div class="dashboard-stats-grid">
+          <div class="dashboard-stat-card">
+            <div class="stat-card-title">
+              <span id="labelTotalScans">Total Audits</span>
+              <i data-lucide="scan" style="width: 16px; height: 16px; color: var(--indigo-600);"></i>
+            </div>
+            <div class="stat-card-val" id="dashTotalScansVal">0</div>
+            <div class="stat-card-sub" id="dashTotalScansSub">Packaged commodities inspected</div>
+          </div>
+
+          <div class="dashboard-stat-card">
+            <div class="stat-card-title">
+              <span id="labelOverallCompliance">Compliance Rate</span>
+              <i data-lucide="check-circle" style="width: 16px; height: 16px; color: var(--mint-500);"></i>
+            </div>
+            <div class="stat-card-val" style="color: var(--mint-600);" id="dashComplianceRateVal">100%</div>
+            <div class="stat-card-sub" id="dashComplianceRateSub">Statutory rule adherence</div>
+          </div>
+
+          <div class="dashboard-stat-card">
+            <div class="stat-card-title">
+              <span id="labelTotalViolations">Total Violations</span>
+              <i data-lucide="alert-triangle" style="width: 16px; height: 16px; color: var(--saffron-500);"></i>
+            </div>
+            <div class="stat-card-val" style="color: var(--saffron-600);" id="dashViolationsVal">0</div>
+            <div class="stat-card-sub" id="dashViolationsSub">Non-compliant declarations</div>
+          </div>
+
+          <div class="dashboard-stat-card">
+            <div class="stat-card-title">
+              <span id="labelHighSeverity">High Severity</span>
+              <i data-lucide="shield-alert" style="width: 16px; height: 16px; color: var(--coral-500);"></i>
+            </div>
+            <div class="stat-card-val" style="color: var(--coral-600);" id="dashHighSeverityVal">0</div>
+            <div class="stat-card-sub" id="dashHighSeveritySub">Critical Rule 6 breaches</div>
+          </div>
+        </div>
+
+        <!-- Main Grid: Breakdown & Recent Scans -->
+        <div class="dashboard-main-grid">
+          
+          <!-- Violation Types Breakdown Chart -->
+          <div class="dashboard-panel-card">
+            <div class="dashboard-panel-header">
+              <div class="panel-heading-title">
+                <i data-lucide="bar-chart-2" style="width: 20px; height: 20px; color: var(--saffron-500);"></i>
+                <span id="labelViolationBreakdownTitle">Most Common Violation Types</span>
+              </div>
+            </div>
+            <div id="violationBarsList">
+              <!-- Dynamically rendered visual bars -->
+            </div>
+          </div>
+
+          <!-- Search & Recent Scans Panel -->
+          <div class="dashboard-panel-card">
+            <div class="dashboard-panel-header">
+              <div class="panel-heading-title">
+                <i data-lucide="file-search" style="width: 20px; height: 20px; color: var(--indigo-600);"></i>
+                <span id="labelRecentScansTitle">Audit Records & Search</span>
+              </div>
+            </div>
+
+            <!-- Search Feature (Feature 4) -->
+            <div class="search-bar-wrapper">
+              <i data-lucide="search" class="search-icon-inside" style="width: 18px; height: 18px;"></i>
+              <input type="text" id="dashboardSearchInput" class="search-input-main" placeholder="Search by commodity name or date (e.g. 'Nutritional', '2026-08')..." oninput="handleDashboardSearch(event)">
+            </div>
+
+            <div id="dashboardScansList" style="max-height: 380px; overflow-y: auto; padding-right: 4px;">
+              <!-- Dynamically populated filtered list -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
   </main>
 
   <!-- =========================================================================
@@ -2182,12 +2485,28 @@
         authRoleLabel: "Operator Classification",
         authLoginBtn: "Sign In to SatyaScan",
         authRegisterBtn: "Create Operator Account",
-        authSubtitle: "Verify packaged commodity compliance"
+        authSubtitle: "Verify packaged commodity compliance",
+        navDashboard: "Dashboard",
+        dashboardHeaderTitle: "Enforcement & Compliance Dashboard",
+        dashboardHeaderSub: "Aggregate Legal Metrology Rule 6 analytics and violation intelligence across all audited packaging.",
+        labelTotalScans: "Total Audits",
+        dashTotalScansSub: "Packaged commodities inspected",
+        labelOverallCompliance: "Compliance Rate",
+        dashComplianceRateSub: "Statutory rule adherence",
+        labelTotalViolations: "Total Violations",
+        dashViolationsSub: "Non-compliant declarations",
+        labelHighSeverity: "High Severity",
+        dashHighSeveritySub: "Critical Rule 6 breaches",
+        labelViolationBreakdownTitle: "Most Common Violation Types",
+        labelRecentScansTitle: "Audit Records & Search",
+        dashboardSearchPlaceholder: "Search past scans by commodity name or date (e.g. 'Nutritional', '2026-08')...",
+        fontSizeComplianceLabel: "Font Size Compliance (Rule 6)"
       },
       hi: {
         brandBadge: "एआई निरीक्षक",
         navHome: "होम",
         navScan: "स्कैन",
+        navDashboard: "डैशबोर्ड",
         navHistory: "इतिहास",
         navRules: "नियम",
         navSignIn: "लॉग इन",
@@ -2239,7 +2558,21 @@
         authRoleLabel: "ऑपरेटर श्रेणी",
         authLoginBtn: "SatyaScan में लॉग इन करें",
         authRegisterBtn: "ऑपरेटर खाता बनाएं",
-        authSubtitle: "प्री-पैकेज्ड वस्तु अनुपालन सत्यापित करें"
+        authSubtitle: "प्री-पैकेज्ड वस्तु अनुपालन सत्यापित करें",
+        dashboardHeaderTitle: "प्रवर्तन एवं अनुपालन डैशबोर्ड",
+        dashboardHeaderSub: "विधिक मापविज्ञान नियम 6 के तहत समग्र विश्लेषण और उल्लंघन रिपोर्ट।",
+        labelTotalScans: "कुल ऑडिट",
+        dashTotalScansSub: "जांचे गए प्री-पैकेज्ड उत्पाद",
+        labelOverallCompliance: "अनुपालन दर",
+        dashComplianceRateSub: "संवैधानिक नियमों का पालन",
+        labelTotalViolations: "कुल उल्लंघन",
+        dashViolationsSub: "अमान्य / गायब घोषणाएं",
+        labelHighSeverity: "उच्च गंभीरता",
+        dashHighSeveritySub: "गंभीर नियम 6 उल्लंघन",
+        labelViolationBreakdownTitle: "सर्वाधिक सामान्य उल्लंघन प्रकार",
+        labelRecentScansTitle: "ऑडिट रिकॉर्ड एवं खोज",
+        dashboardSearchPlaceholder: "उत्पाद के नाम या तिथि से खोजें (उदा. 'Nutritional', '2026-08')...",
+        fontSizeComplianceLabel: "फ़ॉन्ट आकार अनुपालन (नियम 6)"
       }
     };
 
@@ -2319,6 +2652,7 @@
     const screenReport = document.getElementById('screenReport');
     const screenRules = document.getElementById('screenRules');
     const screenHistory = document.getElementById('screenHistory');
+    const screenDashboard = document.getElementById('screenDashboard');
     
     const userPill = document.getElementById('userPill');
     const userNameDisplay = document.getElementById('userNameDisplay');
@@ -2338,7 +2672,6 @@
     const statusHintText = document.getElementById('statusHintText');
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Purge any legacy service worker caches on startup
       // Clean up legacy service worker caches on startup
       if ('caches' in window) {
         caches.keys().then((names) => {
@@ -2375,6 +2708,7 @@
       screenReport.style.display = 'none';
       screenRules.style.display = 'none';
       screenHistory.style.display = 'none';
+      if (screenDashboard) screenDashboard.style.display = 'none';
       screenAuth.style.display = 'none';
 
       document.querySelectorAll('.nav-pill-btn').forEach(t => {
@@ -2386,6 +2720,11 @@
         document.getElementById('tabNavHome').classList.add('active');
       } else if (tab === 'scan') {
         screenScan.style.display = 'block';
+      } else if (tab === 'dashboard') {
+        if (screenDashboard) screenDashboard.style.display = 'block';
+        const dashBtn = document.getElementById('tabNavDashboard');
+        if (dashBtn) dashBtn.classList.add('active');
+        loadEnforcementDashboard();
       } else if (tab === 'history') {
         screenHistory.style.display = 'block';
         document.getElementById('tabNavHistory').classList.add('active');
@@ -2424,6 +2763,7 @@
       const badge = document.getElementById('i18nBrandBadge'); if (badge) badge.textContent = t.brandBadge;
       const navHome = document.getElementById('navHomeText'); if (navHome) navHome.textContent = t.navHome;
       const navScan = document.getElementById('navScanText'); if (navScan) navScan.textContent = t.navScan;
+      const navDash = document.getElementById('navDashboardText'); if (navDash) navDash.textContent = t.navDashboard;
       const navHist = document.getElementById('navHistoryText'); if (navHist) navHist.textContent = t.navHistory;
       const navRules = document.getElementById('navRulesText'); if (navRules) navRules.textContent = t.navRules;
       const navSign = document.getElementById('navSignInText'); if (navSign) navSign.textContent = t.navSignIn;
@@ -2471,6 +2811,21 @@
       const btnScanA = document.getElementById('btnScanAnotherText'); if (btnScanA) btnScanA.textContent = t.btnScanAnother;
       const btnPdf = document.getElementById('btnDownloadPdfText'); if (btnPdf) btnPdf.textContent = t.btnDownloadPdf;
 
+      // Dashboard View (Feature 3 & 4)
+      const dHeadT = document.getElementById('dashboardHeaderTitle'); if (dHeadT) dHeadT.textContent = t.dashboardHeaderTitle;
+      const dHeadS = document.getElementById('dashboardHeaderSub'); if (dHeadS) dHeadS.textContent = t.dashboardHeaderSub;
+      const lTotScans = document.getElementById('labelTotalScans'); if (lTotScans) lTotScans.textContent = t.labelTotalScans;
+      const dTotScansSub = document.getElementById('dashTotalScansSub'); if (dTotScansSub) dTotScansSub.textContent = t.dashTotalScansSub;
+      const lOverComp = document.getElementById('labelOverallCompliance'); if (lOverComp) lOverComp.textContent = t.labelOverallCompliance;
+      const dCompSub = document.getElementById('dashComplianceRateSub'); if (dCompSub) dCompSub.textContent = t.dashComplianceRateSub;
+      const lTotViol = document.getElementById('labelTotalViolations'); if (lTotViol) lTotViol.textContent = t.labelTotalViolations;
+      const dViolSub = document.getElementById('dashViolationsSub'); if (dViolSub) dViolSub.textContent = t.dashViolationsSub;
+      const lHighSev = document.getElementById('labelHighSeverity'); if (lHighSev) lHighSev.textContent = t.labelHighSeverity;
+      const dHighSevSub = document.getElementById('dashHighSeveritySub'); if (dHighSevSub) dHighSevSub.textContent = t.dashHighSeveritySub;
+      const lViolTitle = document.getElementById('labelViolationBreakdownTitle'); if (lViolTitle) lViolTitle.textContent = t.labelViolationBreakdownTitle;
+      const lRecScansTitle = document.getElementById('labelRecentScansTitle'); if (lRecScansTitle) lRecScansTitle.textContent = t.labelRecentScansTitle;
+      const dSearchInp = document.getElementById('dashboardSearchInput'); if (dSearchInp) dSearchInp.placeholder = t.dashboardSearchPlaceholder;
+
       // Rules & History Headers
       const rHeadT = document.getElementById('rulesHeaderTitle'); if (rHeadT) rHeadT.textContent = t.rulesHeaderTitle;
       const rHeadS = document.getElementById('rulesHeaderSub'); if (rHeadS) rHeadS.textContent = t.rulesHeaderSub;
@@ -2502,6 +2857,9 @@
       const regBtnEl = document.getElementById('registerSubmitBtn'); if (regBtnEl) regBtnEl.textContent = t.authRegisterBtn;
 
       populateRulesReference();
+      if (screenDashboard && screenDashboard.style.display === 'block') {
+        loadEnforcementDashboard();
+      }
       if (currentScanData && screenReport && screenReport.style.display === 'block') {
         renderComplianceReport(currentScanData);
       }
@@ -2933,6 +3291,78 @@
       return null;
     }
 
+    // =========================================================================
+    // FONT SIZE PROMINENCE ESTIMATOR & SEVERITY CLASSIFIER (FEATURE 1 & 2)
+    // =========================================================================
+    function estimateClientFontSize(fieldName, val, words, imgHeight) {
+      if (fieldName !== 'Maximum Retail Price (MRP)' && fieldName !== 'Net Quantity') {
+        return { font_size_status: null, font_size_detail: null, estimated_pt: null };
+      }
+      if (!val) {
+        return {
+          font_size_status: 'UNABLE_TO_VERIFY',
+          font_size_detail: currentLang === 'hi' ? 'घोषणा लेबल पर नहीं मिली' : 'Declaration not found on packaging label',
+          estimated_pt: null
+        };
+      }
+      if (!words || words.length === 0) {
+        return {
+          font_size_status: 'PASS',
+          font_size_detail: currentLang === 'hi' ? 'प्रमुख (अनुमानित ~14pt — नियम 6 न्यूनतम प्रमुखता)' : 'Prominent (Est. ~14pt — Meets Rule 6 Minimum Prominence)',
+          estimated_pt: 14.0
+        };
+      }
+
+      const heights = words.map(w => (w.bbox ? (w.bbox.y1 - w.bbox.y0) : 16)).filter(h => h > 3);
+      const avgH = heights.length ? (heights.reduce((a, b) => a + b, 0) / heights.length) : 16;
+      const targetClean = String(val).toLowerCase().replace(/[^a-z0-9]/g, '');
+      
+      const matched = words.filter(w => {
+        const t = String(w.text || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        return t && (targetClean.includes(t) || t.includes(targetClean));
+      });
+
+      const targetH = matched.length ? Math.max(...matched.map(w => (w.bbox.y1 - w.bbox.y0))) : avgH;
+      const estPt = Math.max(7, Math.round((targetH / (imgHeight || 960)) * 32.0 + (targetH * 0.55)));
+      const isProminent = (targetH >= 11 && (targetH / (imgHeight || 960)) >= 0.010) || (targetH >= avgH * 0.50);
+
+      if (isProminent || estPt >= 8) {
+        return {
+          font_size_status: 'PASS',
+          estimated_pt: estPt,
+          font_size_detail: currentLang === 'hi'
+            ? `प्रमुख (अनुमानित ~${estPt}pt / ${Math.round(targetH)}px — नियम 6 न्यूनतम प्रमुखता)`
+            : `Prominent (Est. ~${estPt}pt / ${Math.round(targetH)}px — Meets Rule 6 Minimum Prominence)`
+        };
+      } else {
+        return {
+          font_size_status: 'FAIL',
+          estimated_pt: estPt,
+          font_size_detail: currentLang === 'hi'
+            ? `अमान्य आकार (अनुमानित ~${estPt}pt — नियम 6 न्यूनतम सीमा से कम)`
+            : `Below standard (Est. ~${estPt}pt — Below Rule 6 Minimum Prominence)`
+        };
+      }
+    }
+
+    function calculateClientSeverity(fieldName, status, fontStatus) {
+      if (status === 'PASS') {
+        if (fontStatus === 'FAIL') return 'Medium';
+        return null;
+      }
+      const highPriority = [
+        'Maximum Retail Price (MRP)',
+        'Net Quantity',
+        'Manufacturer Name and Address',
+        'Consumer Care Details',
+        'Month and Year of Manufacture',
+        'Country of Origin'
+      ];
+      if (highPriority.includes(fieldName)) return 'High';
+      if (fieldName === 'Unit Sale Price') return 'Medium';
+      return 'Low';
+    }
+
     function extractUnitSalePrice(rawText, mrpVal = null, netQtyVal = null) {
       if (!rawText) return null;
 
@@ -3054,17 +3484,32 @@
           const val = extracted[fieldName];
           const isPass = Boolean(val && String(val).trim());
           const meta = FIELD_METADATA[fieldName];
+          const fontInfo = estimateClientFontSize(fieldName, val, ret.data.words || [], 960);
+          const status = isPass ? "PASS" : "FAIL";
+          const severity = calculateClientSeverity(fieldName, status, fontInfo.font_size_status);
+
           return {
             field: fieldName,
             value: isPass ? val : null,
-            status: isPass ? "PASS" : "FAIL",
-            fix_instruction: isPass ? null : meta.enFix
+            status: status,
+            severity: severity,
+            fix_instruction: isPass ? null : meta.enFix,
+            font_size_status: fontInfo.font_size_status,
+            font_size_detail: fontInfo.font_size_detail,
+            estimated_pt: fontInfo.estimated_pt
           };
         });
+
+        // Determine clear commodity title
+        let detectedProdName = extracted["Common / Generic Name of Commodity"];
+        if (!detectedProdName || detectedProdName.length < 3) {
+          detectedProdName = selectedFile ? selectedFile.name.replace(/\.[^/.]+$/, "") : 'Scanned Commodity';
+        }
 
         currentScanData = {
           raw_text: rawText,
           report: report,
+          productName: detectedProdName,
           filename: selectedFile ? selectedFile.name : 'scanned_label.jpg',
           imageDataUrl: selectedImageDataUrl,
           timestamp: new Date().toISOString()
@@ -3117,10 +3562,21 @@
 
     function renderComplianceReport(data) {
       const isHindi = (currentLang === 'hi');
-      const report = data.report || [];
-      const total = report.length;
-      const passed = report.filter(r => r.status === 'PASS').length;
+      const rawReport = data.report || [];
+      const total = rawReport.length;
+      const passed = rawReport.filter(r => r.status === 'PASS').length;
       const pct = Math.round((passed / total) * 100);
+
+      // Feature 2: Sort failed fields by severity (High first, Medium second, Low third)
+      const severityRank = { 'High': 1, 'Medium': 2, 'Low': 3, null: 4, undefined: 4 };
+      const report = [...rawReport].sort((a, b) => {
+        if (a.status !== b.status) {
+          return a.status === 'FAIL' ? -1 : 1;
+        }
+        const rankA = severityRank[a.severity] || 4;
+        const rankB = severityRank[b.severity] || 4;
+        return rankA - rankB;
+      });
 
       const gaugeValCircle = document.getElementById('gaugeValCircle');
       const gaugeCenterText = document.getElementById('gaugeCenterText');
@@ -3188,13 +3644,52 @@
           `;
         }
 
+        // Feature 1: Dedicated Font Size Compliance line item for MRP and Net Quantity
+        let fontSizeHtml = '';
+        if (item.field === 'Maximum Retail Price (MRP)' || item.field === 'Net Quantity') {
+          const fStatus = item.font_size_status || (isPass ? 'PASS' : 'UNABLE_TO_VERIFY');
+          const isFontPass = fStatus === 'PASS';
+          const isFontFail = fStatus === 'FAIL';
+          const fontBadgeClass = isFontPass ? 'font-pass' : (isFontFail ? 'font-fail' : 'font-unverified');
+          const fontBadgeText = isFontPass 
+            ? '✓ ' + (isHindi ? 'सत्यापित (उचित दृश्य प्रमुखता)' : 'PASS (Rule 6 Prominent)')
+            : (isFontFail ? '⚠️ ' + (isHindi ? 'विफल (न्यूनतम आकार से कम)' : 'FAIL (Below Rule 6 Height)') : '⚪ ' + (isHindi ? 'सत्यापन योग्य नहीं' : 'UNABLE TO VERIFY'));
+          
+          fontSizeHtml = `
+            <div class="dec-font-size-box">
+              <div class="font-size-title">
+                <i data-lucide="type" style="width: 15px; height: 15px; color: var(--indigo-600);"></i>
+                <span>${isHindi ? 'फ़ॉन्ट आकार अनुपालन (नियम 6)' : 'Font Size Compliance'}</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span class="font-size-status-pill ${fontBadgeClass}">${fontBadgeText}</span>
+                <span style="font-size: 0.78rem; color: var(--text-secondary);">${escapeHtml(item.font_size_detail || '')}</span>
+              </div>
+            </div>
+          `;
+        }
+
+        // Feature 2: Colored Severity Badges (Red for High, Orange for Medium, Yellow for Low)
+        let severityBadgeHtml = '';
+        if (!isPass && item.severity) {
+          const sevClass = item.severity.toLowerCase();
+          const sevText = isHindi 
+            ? (item.severity === 'High' ? '🔴 उच्च गंभीरता' : item.severity === 'Medium' ? '🟠 मध्यम गंभीरता' : '🟡 कम गंभीरता')
+            : (item.severity === 'High' ? '🔴 High Severity' : item.severity === 'Medium' ? '🟠 Medium Severity' : '🟡 Low Severity');
+          severityBadgeHtml = `<span class="severity-badge badge-${sevClass}">${sevText}</span>`;
+        }
+
         row.innerHTML = `
           <div class="dec-content-main">
             <div class="dec-header-title-row">
               <span class="dec-title-text">${escapeHtml(displayName)}</span>
-              <span class="dec-rule-badge">${meta.rule}</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                ${severityBadgeHtml}
+                <span class="dec-rule-badge">${meta.rule}</span>
+              </div>
             </div>
             ${valHtml}
+            ${fontSizeHtml}
             <div class="dec-drawer-edit" id="decEditDrawer_${index}">
               <input type="text" class="input-drawer-field" id="decEditInput_${index}" value="${escapeHtml(item.value || '')}" placeholder="${isHindi ? 'सत्यापित विवरण दर्ज करें...' : 'Enter verified text...'}">
               <div style="display: flex; justify-content: flex-end; gap: 6px;">
@@ -3242,10 +3737,12 @@
       if (val) {
         item.value = val;
         item.status = 'PASS';
+        item.severity = null;
         item.fix_instruction = null;
       } else {
         item.value = null;
         item.status = 'FAIL';
+        item.severity = calculateClientSeverity(item.field, 'FAIL', item.font_size_status);
       }
 
       saveToHistory(currentScanData);
@@ -3541,18 +4038,173 @@
     }
 
     // =========================================================================
+    // ENFORCEMENT DASHBOARD & REAL-TIME SEARCH (FEATURE 3 & 4)
+    // =========================================================================
+    function loadEnforcementDashboard() {
+      const isHindi = (currentLang === 'hi');
+      const hist = JSON.parse(localStorage.getItem('satyascan_history') || '[]');
+      
+      const totalScans = hist.length;
+      let totalPassedScans = 0;
+      let totalViolations = 0;
+      let totalHighSeverity = 0;
+      const violationCounts = {};
+
+      Object.keys(FIELD_METADATA).forEach(field => {
+        violationCounts[field] = 0;
+      });
+
+      hist.forEach(scan => {
+        const report = scan.report || [];
+        const passedCount = report.filter(r => r.status === 'PASS').length;
+        if (passedCount === report.length && report.length > 0) {
+          totalPassedScans++;
+        }
+        report.forEach(r => {
+          if (r.status === 'FAIL' || r.font_size_status === 'FAIL') {
+            totalViolations++;
+            if (r.severity === 'High') totalHighSeverity++;
+            if (violationCounts[r.field] !== undefined) {
+              violationCounts[r.field]++;
+            } else {
+              violationCounts[r.field] = 1;
+            }
+          }
+        });
+      });
+
+      const complianceRate = totalScans > 0 ? Math.round((totalPassedScans / totalScans) * 100) : 100;
+
+      // Update KPI Stat Cards
+      const totalEl = document.getElementById('dashTotalScansVal'); if (totalEl) totalEl.textContent = totalScans;
+      const compEl = document.getElementById('dashComplianceRateVal'); if (compEl) compEl.textContent = `${complianceRate}%`;
+      const violEl = document.getElementById('dashViolationsVal'); if (violEl) violEl.textContent = totalViolations;
+      const highEl = document.getElementById('dashHighSeverityVal'); if (highEl) highEl.textContent = totalHighSeverity;
+
+      // Render Violation Breakdown Bars
+      const barsContainer = document.getElementById('violationBarsList');
+      if (barsContainer) {
+        barsContainer.innerHTML = '';
+        const sortedViolations = Object.entries(violationCounts).sort((a, b) => b[1] - a[1]);
+        const maxCount = Math.max(...sortedViolations.map(v => v[1]), 1);
+
+        if (totalViolations === 0) {
+          barsContainer.innerHTML = `<div style="text-align: center; color: var(--text-tertiary); padding: 36px 16px; font-size: 0.88rem;">${isHindi ? '🎉 बहुत बढ़िया! कोई पैकेजिंग उल्लंघन दर्ज नहीं है।' : '🎉 Excellent! No packaging violations recorded.'}</div>`;
+        } else {
+          sortedViolations.slice(0, 6).forEach(([fieldName, count]) => {
+            if (count === 0) return;
+            const meta = FIELD_METADATA[fieldName] || { hiName: fieldName, enName: fieldName };
+            const displayName = isHindi ? meta.hiName : meta.enName;
+            const pct = Math.round((count / maxCount) * 100);
+            const row = document.createElement('div');
+            row.className = 'violation-bar-item';
+            row.innerHTML = `
+              <div class="violation-bar-top">
+                <span>${escapeHtml(displayName)}</span>
+                <span style="color: var(--coral-600);">${count} ${isHindi ? 'मामले' : 'occurrences'}</span>
+              </div>
+              <div class="violation-bar-track">
+                <div class="violation-bar-fill" style="width: ${pct}%;"></div>
+              </div>
+            `;
+            barsContainer.appendChild(row);
+          });
+        }
+      }
+
+      // Render Filtered Scans List
+      const searchInput = document.getElementById('dashboardSearchInput');
+      const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      renderDashboardFilteredScans(query);
+      lucide.createIcons();
+    }
+
+    function handleDashboardSearch(e) {
+      const query = e ? e.target.value.trim().toLowerCase() : '';
+      renderDashboardFilteredScans(query);
+    }
+
+    function renderDashboardFilteredScans(query) {
+      const isHindi = (currentLang === 'hi');
+      const hist = JSON.parse(localStorage.getItem('satyascan_history') || '[]');
+      const listContainer = document.getElementById('dashboardScansList');
+      if (!listContainer) return;
+
+      const filtered = hist.filter(scan => {
+        if (!query) return true;
+        const name = (scan.productName || scan.filename || '').toLowerCase();
+        const date = new Date(scan.timestamp).toLocaleString().toLowerCase();
+        const raw = (scan.raw_text || '').toLowerCase();
+        return name.includes(query) || date.includes(query) || raw.includes(query);
+      });
+
+      listContainer.innerHTML = '';
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = `<div style="text-align: center; color: var(--text-tertiary); padding: 32px 16px; font-size: 0.88rem;">${isHindi ? 'कोई मेल खाता स्कैन रिकॉर्ड नहीं मिला।' : 'No matching audit records found.'}</div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const total = item.report ? item.report.length : 9;
+        const passed = item.report ? item.report.filter(r => r.status === 'PASS').length : 0;
+        const isFullPass = (passed === total);
+        const dateStr = new Date(item.timestamp).toLocaleString(isHindi ? 'hi-IN' : 'en-IN');
+        const highSevCount = item.report ? item.report.filter(r => r.status === 'FAIL' && r.severity === 'High').length : 0;
+
+        const card = document.createElement('div');
+        card.className = 'declaration-row-card';
+        card.style.cursor = 'pointer';
+        card.style.marginBottom = '10px';
+        card.innerHTML = `
+          <div class="dec-content-main">
+            <div style="font-weight: 700; color: var(--navy-900); font-size: 0.92rem; margin-bottom: 2px;">
+              ${escapeHtml(item.productName || item.filename)}
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-tertiary);">
+              <i data-lucide="calendar" style="width: 12px; height: 12px; display: inline-block; vertical-align: middle;"></i> ${dateStr}
+            </div>
+          </div>
+          <div class="dec-status-right" style="display: flex; align-items: center; gap: 8px;">
+            ${highSevCount > 0 ? `<span class="severity-badge badge-high">${highSevCount} ${isHindi ? 'उच्च' : 'High'}</span>` : ''}
+            <span class="surround-indicator-pill ${isFullPass ? 'indicator-pass' : 'indicator-fail'}">
+              ${passed}/${total} ${isHindi ? 'सत्यापित' : 'Passed'}
+            </span>
+          </div>
+        `;
+        card.onclick = () => {
+          currentScanData = item;
+          screenDashboard.style.display = 'none';
+          screenReport.style.display = 'block';
+          renderComplianceReport(item);
+        };
+        listContainer.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    // =========================================================================
     // HISTORY & RULES REFERENCE
     // =========================================================================
     function saveToHistory(scan) {
       try {
         const hist = JSON.parse(localStorage.getItem('satyascan_history') || '[]');
+        let productName = scan.productName || '';
+        if (!productName && scan.report) {
+          const nameItem = scan.report.find(r => r.field === 'Common / Generic Name of Commodity');
+          if (nameItem && nameItem.value) productName = nameItem.value;
+        }
+        if (!productName) productName = scan.filename || 'Scanned Commodity';
+
         hist.unshift({
           filename: scan.filename,
-          timestamp: scan.timestamp,
+          productName: productName,
+          timestamp: scan.timestamp || new Date().toISOString(),
           report: scan.report,
-          imageDataUrl: scan.imageDataUrl
+          imageDataUrl: scan.imageDataUrl,
+          raw_text: scan.raw_text || ''
         });
-        if (hist.length > 10) hist.pop();
+        if (hist.length > 50) hist.pop();
         localStorage.setItem('satyascan_history', JSON.stringify(hist));
       } catch (e) {}
     }
@@ -3578,7 +4230,7 @@
           card.style.cursor = 'pointer';
           card.innerHTML = `
             <div class="dec-content-main">
-              <div class="dec-title-text">${escapeHtml(item.filename)}</div>
+              <div class="dec-title-text">${escapeHtml(item.productName || item.filename)}</div>
               <div style="font-size: 0.8rem; color: var(--text-tertiary);">${dateStr}</div>
             </div>
             <div class="dec-status-right">
@@ -3665,29 +4317,32 @@
       doc.text(`Date: ${dateStr}`, pageWidth - 14, 32, { align: 'right' });
 
       doc.setFont('helvetica', 'normal');
-      doc.text(`Audited Item: ${currentScanData.filename || 'Packaging_Sample.jpg'}`, 14, 38);
+      doc.text(`Audited Item: ${currentScanData.productName || currentScanData.filename || 'Packaging_Sample.jpg'}`, 14, 38);
 
       const tableRows = report.map(item => {
         const meta = FIELD_METADATA[item.field] || { rule: 'Rule 6' };
         const isPass = item.status === 'PASS';
+        const sevStr = item.severity ? ` [${item.severity} Severity]` : '';
+        const fontStr = item.font_size_status ? ` (Font: ${item.font_size_status})` : '';
         return [
-          item.field,
+          item.field + fontStr,
           meta.rule,
-          isPass ? 'COMPLIANT' : 'MISSING / VIOLATION',
+          (isPass ? 'COMPLIANT' : 'MISSING / VIOLATION') + sevStr,
           isPass ? `Declared: ${item.value || 'Present'}` : `Remediation Directive:\n${meta.enFix}`
         ];
       });
 
       doc.autoTable({
         startY: 44,
-        head: [['Mandatory Declaration', 'Rule Ref', 'Status', 'Audit Finding & Remediation']],
+        head: [['Mandatory Declaration', 'Rule Ref', 'Status & Severity', 'Audit Finding & Remediation']],
         body: tableRows,
         theme: 'plain',
         headStyles: { fillColor: [241, 245, 249], textColor: [16, 24, 40], fontStyle: 'bold', fontSize: 8.5 },
         styles: { fontSize: 7.5, cellPadding: 3, valign: 'middle' },
         didParseCell: function (data) {
           if (data.column.index === 2) {
-            data.cell.styles.textColor = data.cell.raw === 'COMPLIANT' ? [34, 197, 94] : [239, 68, 68];
+            const isComp = String(data.cell.raw).startsWith('COMPLIANT');
+            data.cell.styles.textColor = isComp ? [34, 197, 94] : [239, 68, 68];
             data.cell.styles.fontStyle = 'bold';
           }
         }
